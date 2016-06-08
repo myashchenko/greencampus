@@ -1,0 +1,22 @@
+<div class="col-lg-3 col-md-3">
+    <script>
+        $('document').ready(function() {
+            $('#send-message-item').click(function() {
+                var form = document.createElement("form");
+                form.setAttribute("method", 'POST');
+                form.setAttribute("action", '/chat/new/' + $('#userid').val());
+                form.submit();
+            });
+        });
+    </script>
+    <ul class="nav nav-pills nav-stacked col-lg-5">
+        <li><h3>Menu</h3></li>
+        <li>
+            <sec:authorize access="isAuthenticated()">
+                <a id="send-message-item" class="btn btn-primary" type="button">Send message</a>
+            </sec:authorize>
+        </li>
+        <li><a href="/course/all" class="btn btn-primary" type="button">Courses</a></li>
+        <li><a href="/users" class="btn btn-primary" type="button">Users</a></li>
+    </ul>
+</div>

@@ -1,0 +1,11 @@
+dataSource.driverClassName=org.postgresql.Driver
+dataSource.url=jdbc:postgresql://localhost:5432/greencampus
+dataSource.username=username
+dataSource.password=password
+hibernate.dialect=org.hibernate.dialect.PostgreSQL9Dialect
+hibernate.hbm2ddl.auto=create
+hibernate.hbm2ddl.import_files=/import.sql
+
+cloudinary.name=name
+cloudinary.api.key=key
+cloudinary.api.secret=secret

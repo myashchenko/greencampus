@@ -1,0 +1,105 @@
+/*!
+ * Start Bootstrap - Full HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+body {
+    margin-top: 50px; /* Required margin for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+/* Header Image Background - Change the URL below to your image path (example: ../images/background.jpg) */
+
+.full {
+    /*background: url('http://placehold.it/1920x1080') no-repeat center center fixed;*/
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    background-color: #dff0d8;
+
+}
+
+.login-form {
+    margin-top: 20px;
+}
+
+.join-us {
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+}
+.welcome{
+    margin-top: 100px;
+    font-weight: bold;
+    font-size: 75px;
+    text-align: center;
+    color: #03cd41;
+    text-shadow: 1px 0px 4px #1c6000;
+}
+.act-btn{
+    background-color: transparent;
+    border: 2px solid #ccc;
+    color: #278900;
+    line-height: 20px;
+    font-size: 20px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    margin: 20px;
+}
+.btn-border{
+    content: "";
+    height: 100px;
+    display: inline-block;
+}
+#view-courses{
+    margin-left: 100px;
+}
+#all-courses {
+    padding-top: 20px;
+    padding-left: 8.33%;
+}
+.course-in-list {
+    background-color: lightgoldenrodyellow;
+    border: 2px solid #449d44;
+    border-top: none;
+    border-left: none;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px;
+}
+
+#course {
+    display: inline-block;
+    margin: 15px;
+}
+
+#btnSub {
+    margin-top:10px;
+}
+#themeFile {
+    margin-top: 10px;
+}
+#inputThemeTitle {
+    margin-bottom: 20px;
+}
+.aboutName {
+    margin-top: 10px;
+}
+.developer {
+    margin: 10px 0px;
+}
+.devs {
+    margin-left: 80px;
+}
+.aboutContent{
+    padding-top: 40px;
+}
+
+.js .inputfile {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="greenApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Philosopher" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="/resources/css/full.css" rel="stylesheet" type="text/css" />
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="/resources/js/jquery.js"></script>
+    <script src="/resources/js/bootstrap.min.js"></script>
+</head>
+<body>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">GreenCampus</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">About</a>
+                </li>
+                <li>
+                    <a href="#">How it works</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li>
+                    <sec:authorize access="!isAuthenticated()">
+                        <a href="/login"><i class="fa fa-sign-in fa-lg"></i> Login</a>
+                    </sec:authorize>
+                    <sec:authorize access="isAuthenticated()">
+                        <a href="/logout"><i class="fa fa-sign-out fa-lg"></i> Log out</a>
+                    </sec:authorize>
+                </li>
+                <li>
+                    <a href="/registration" class="btn btn-default">Join us</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="/rest/js/app.js"></script>
+    <h1>{{20+15}}</h1>
+    <div ng-controller="CampusController as campus" class="">
+        <div ng-repeat="user in campus.users">
+            <h3>id: {{user.id}}</h3>
+            <h3>email: {{user.email}}</h3>
+        </div>
+    </div>
+</body>
+</html>
