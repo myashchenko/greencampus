@@ -1,5 +1,6 @@
 package ua.greencampus.entity;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ import java.util.Calendar;
 @Table(name = "chat_message")
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 public class ChatMessage {
 
     @Id

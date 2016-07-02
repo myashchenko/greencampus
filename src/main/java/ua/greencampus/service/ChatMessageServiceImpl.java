@@ -21,19 +21,19 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Transactional
     @Override
     public ChatMessage create(ChatMessage chatMessage) {
-        return chatMessageDao.create(chatMessage);
+        return chatMessageDao.save(chatMessage);
     }
 
     @Transactional(readOnly = true)
     @Override
     public ChatMessage read(Long id) {
-        return chatMessageDao.read(id);
+        return chatMessageDao.findOne(id);
     }
 
     @Transactional
     @Override
     public ChatMessage update(ChatMessage chatMessage) {
-        return chatMessageDao.update(chatMessage);
+        return chatMessageDao.save(chatMessage);
     }
 
     @Transactional
@@ -45,6 +45,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
     @Transactional(readOnly = true)
     @Override
     public List<ChatMessage> getByDialogId(Long dialogId) {
-        return chatMessageDao.getByDialogId(dialogId);
+        return chatMessageDao.findByDialogId(dialogId);
     }
 }

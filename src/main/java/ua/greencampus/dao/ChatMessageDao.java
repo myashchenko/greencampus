@@ -1,5 +1,6 @@
 package ua.greencampus.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ua.greencampus.entity.ChatDialog;
 import ua.greencampus.entity.ChatMessage;
 
@@ -8,10 +9,6 @@ import java.util.List;
 /**
  * @author Nikolay Yashchenko
  */
-public interface ChatMessageDao {
-    ChatMessage create(ChatMessage chatMessage);
-    ChatMessage read(Long id);
-    ChatMessage update(ChatMessage chatMessage);
-    void delete(ChatMessage chatMessage);
-    List<ChatMessage> getByDialogId(Long dialogId);
+public interface ChatMessageDao extends JpaRepository<ChatMessage, Long> {
+    List<ChatMessage> findByDialogId(Long dialogId);
 }

@@ -16,12 +16,7 @@ public class FileEntityToFileDtoConverter implements Converter<FileEntity, FileD
         if (file == null) {
             return null;
         }
-
-        FileDto fileDto = new FileDto();
-        fileDto.setName(file.getName());
-        fileDto.setPath(file.getPath());
-
-        return fileDto;
+        return new FileDto(file.getId(), file.getPath(), file.getName());
     }
 
 }

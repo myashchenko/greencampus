@@ -74,7 +74,6 @@ public class JpaConfig {
 
     @Bean(name = "transactionManager")
     public PlatformTransactionManager annotationDrivenTransactionManager() {
-
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
         jpaTransactionManager.setEntityManagerFactory(configureEntityManagerFactory().getObject());
         return jpaTransactionManager;

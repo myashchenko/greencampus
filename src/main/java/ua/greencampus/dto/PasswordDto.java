@@ -12,7 +12,4 @@ public class PasswordDto {
     private Long id;
     private String oldPassword;
     private String newPassword;
-
-    public PasswordDto() {
-    }
 }
