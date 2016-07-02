@@ -15,14 +15,14 @@ $('document').ready(function() {
             }),
             success: function(data){
                 console.log(data);
-                $('#regDone').html('Password is update.');
+                $('#regDone').html('Password updated.');
                 $('#form-id').html('');
                 setTimeout(function () {
                     window.location = '/user/account';
                 }, 1000);
             },
             error: function(data){
-                console.log(data)
+                console.log(data);
                 $('#regDone').html('Old password mismatch.');
             }
         })

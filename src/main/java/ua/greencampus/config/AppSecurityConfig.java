@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import ua.greencampus.restSecurity.RestAuthenticationSuccessHandler;
+import ua.greencampus.common.RestAuthenticationSuccessHandler;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -54,7 +54,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         ).permitAll();
         http.authorizeRequests().antMatchers("/chat/**", "/user/update", "/user/account").authenticated();
         http.authorizeRequests().antMatchers("/course/create").hasRole("TEACHER");
-        http.authorizeRequests().antMatchers("/user/update/**", "/user/delete/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers("/user/update/**", "/api/user/delete/**").hasRole("ADMIN");
 
         http.csrf().disable();
 

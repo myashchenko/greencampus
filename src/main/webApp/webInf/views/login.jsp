@@ -6,7 +6,6 @@
 <head>
     <title>Login</title>
     <%@ include file="fragment/head.jspf" %>
-    <script src="/resources/js/userLOGIN.js"></script>
     <link rel="stylesheet" href="/resources/css/test/styles.css">
     <script>
         $('document').ready(function() {

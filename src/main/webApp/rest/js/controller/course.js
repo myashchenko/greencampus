@@ -39,4 +39,3 @@ App.controller('CreateCourseCtrl', ['$http', '$scope', function ($http, $scope) 
             });
     }
 }]);
-
