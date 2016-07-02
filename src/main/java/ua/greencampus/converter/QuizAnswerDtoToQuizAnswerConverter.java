@@ -31,7 +31,7 @@ public class QuizAnswerDtoToQuizAnswerConverter implements Converter<QuizAnswerD
         }
 
         quizAnswer.setName(quizAnswerDto.getName());
-        quizAnswer.setTrue(quizAnswerDto.getTrue());
+        quizAnswer.setIsTrue(quizAnswerDto.getTrue());
 
         return quizAnswer;
     }

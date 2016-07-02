@@ -1,5 +1,8 @@
 package ua.greencampus.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "quiz_answer")
+@Getter
+@Setter
 public class QuizAnswer {
 
     @Id
@@ -20,27 +25,4 @@ public class QuizAnswer {
     @Column(name = "is_true", nullable = false)
     private Boolean isTrue;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Boolean getTrue() {
-        return isTrue;
-    }
-
-    public void setTrue(Boolean aTrue) {
-        isTrue = aTrue;
-    }
 }

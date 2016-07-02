@@ -1,5 +1,8 @@
 package ua.greencampus.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "user_course")
+@Getter
+@Setter
 public class UserCourse {
 
     @Id
@@ -33,37 +38,5 @@ public class UserCourse {
         this.user = user;
         this.course = course;
         this.userRole = userCourseRole;
-    }
-
-    public UserCourseRole getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(UserCourseRole userRole) {
-        this.userRole = userRole;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
     }
 }

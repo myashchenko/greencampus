@@ -19,7 +19,7 @@ public class QuizAnswerToQuizAnswerDtoConverter implements Converter<QuizAnswer,
 
         quizAnswerDto.setId(quizAnswer.getId());
         quizAnswerDto.setName(quizAnswer.getName());
-        quizAnswerDto.setTrue(quizAnswer.getTrue());
+        quizAnswerDto.setTrue(quizAnswer.getIsTrue());
 
         return quizAnswerDto;
     }

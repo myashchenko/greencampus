@@ -1,5 +1,8 @@
 package ua.greencampus.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,6 +11,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "course_theme")
+@Getter
+@Setter
 public class CourseTheme {
 
     @Id
@@ -22,29 +27,5 @@ public class CourseTheme {
     @JoinTable(name = "lecture_file",
             joinColumns = @JoinColumn(name = "lecture_id"), inverseJoinColumns = @JoinColumn(name = "file_id"))
     private List<FileEntity> files;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<FileEntity> getFiles() {
-        return files;
-    }
-
-    public void setFiles(List<FileEntity> files) {
-        this.files = files;
-    }
 
 }

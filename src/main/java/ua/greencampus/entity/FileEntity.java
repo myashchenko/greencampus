@@ -1,5 +1,8 @@
 package ua.greencampus.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 /**
@@ -7,6 +10,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "file")
+@Getter
+@Setter
 public class FileEntity {
     @Id
     @SequenceGenerator(name = "file_seq_gen", sequenceName = "file_seq", allocationSize = 1)
@@ -19,31 +24,4 @@ public class FileEntity {
     @Column(name = "name")
     private String name;
 
-    public FileEntity(){
-
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
 }

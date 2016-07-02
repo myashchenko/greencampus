@@ -1,5 +1,8 @@
 package ua.greencampus.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,6 +11,8 @@ import java.util.List;
  */
 @Entity
 @Table(name = "quiz_question")
+@Getter
+@Setter
 public class QuizQuestion {
 
     @Id
@@ -22,27 +27,4 @@ public class QuizQuestion {
     @JoinColumn(name = "question_id", nullable = false)
     private List<QuizAnswer> answers;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(String question) {
-        this.question = question;
-    }
-
-    public List<QuizAnswer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<QuizAnswer> answers) {
-        this.answers = answers;
-    }
 }

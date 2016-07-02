@@ -1,5 +1,8 @@
 package ua.greencampus.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -8,6 +11,8 @@ import java.math.BigDecimal;
  */
 @Entity
 @Table(name = "quiz_result")
+@Getter
+@Setter
 public class QuizResult {
 
     @Id
@@ -24,35 +29,4 @@ public class QuizResult {
     @Column(name = "score", nullable = false)
     private BigDecimal score;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
-    }
-
-    public BigDecimal getScore() {
-        return score;
-    }
-
-    public void setScore(BigDecimal score) {
-        this.score = score;
-    }
 }

@@ -1,6 +1,8 @@
 package ua.greencampus.entity;
 
-import org.hibernate.annotations.Formula;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -12,6 +14,9 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "chat_dialog")
+@Getter
+@Setter
+@EqualsAndHashCode(of = { "id" })
 public class ChatDialog {
 
     @Id
@@ -43,46 +48,6 @@ public class ChatDialog {
         updateDate = Calendar.getInstance();
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
-    }
-
-    public String getDialogName() {
-        return dialogName;
-    }
-
-    public void setDialogName(String dialogName) {
-        this.dialogName = dialogName;
-    }
-
-    public Calendar getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Calendar updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public Map<Long, Integer> getUnreadCount() {
-        return unreadCount;
-    }
-
-    public void setUnreadCount(Map<Long, Integer> unreadCount) {
-        this.unreadCount = unreadCount;
-    }
-
     public void incrementUnreadCount(Long userId) {
         Integer count = unreadCount.get(userId);
         unreadCount.put(userId, count == null ? 1 : count + 1);
@@ -90,14 +55,6 @@ public class ChatDialog {
 
     public void decrementUnreadCount(Long userId) {
         unreadCount.remove(userId);
-    }
-
-    public String getAvatarPath() {
-        return avatarPath;
-    }
-
-    public void setAvatarPath(String avatarPath) {
-        this.avatarPath = avatarPath;
     }
 
     public ChatDialog prepareDialogName(Long userId) {
@@ -123,23 +80,6 @@ public class ChatDialog {
                     .orElse(null);
             setAvatarPath(avatarPath);
         }
-
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ChatDialog that = (ChatDialog) o;
-
-        return id != null ? id.equals(that.id) : that.id == null;
-
-    }
-
-    @Override
-    public int hashCode() {
-        return id != null ? id.hashCode() : 0;
     }
 }

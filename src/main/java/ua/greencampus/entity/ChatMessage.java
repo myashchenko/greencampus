@@ -1,5 +1,8 @@
 package ua.greencampus.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Calendar;
 
@@ -8,6 +11,8 @@ import java.util.Calendar;
  */
 @Entity
 @Table(name = "chat_message")
+@Getter
+@Setter
 public class ChatMessage {
 
     @Id
@@ -29,45 +34,5 @@ public class ChatMessage {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "send_date", nullable = false)
     private Calendar sendDate;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUserFrom() {
-        return userFrom;
-    }
-
-    public void setUserFrom(User userFrom) {
-        this.userFrom = userFrom;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public Calendar getSendDate() {
-        return sendDate;
-    }
-
-    public void setSendDate(Calendar sendDate) {
-        this.sendDate = sendDate;
-    }
-
-    public ChatDialog getDialog() {
-        return dialog;
-    }
-
-    public void setDialog(ChatDialog dialog) {
-        this.dialog = dialog;
-    }
 
 }
