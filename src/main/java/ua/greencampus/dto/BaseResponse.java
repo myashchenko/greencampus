@@ -1,5 +1,7 @@
 package ua.greencampus.dto;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.validation.Errors;
 
 import java.util.ArrayList;
@@ -8,6 +10,8 @@ import java.util.List;
 /**
  * @author Nikolay Yashchenko
  */
+@Getter
+@Setter
 public class BaseResponse {
     private List<ErrorDto> errors;
 
@@ -27,13 +31,5 @@ public class BaseResponse {
 
     public void putError(String key, String value) {
         errors.add(new ErrorDto(key, value));
-    }
-
-    public List<ErrorDto> getErrors() {
-        return errors;
-    }
-
-    public void setErrors(List<ErrorDto> errors) {
-        this.errors = errors;
     }
 }

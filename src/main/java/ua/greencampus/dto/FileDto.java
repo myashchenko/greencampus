@@ -1,8 +1,13 @@
 package ua.greencampus.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by Arsenii on 18.04.2016.
  */
+@Getter
+@Setter
 public class FileDto {
     private Long id;
     private String path;
@@ -14,34 +19,6 @@ public class FileDto {
         this.name = name;
     }
 
-    public FileDto(String path) {
-        this.path = path;
-    }
-
     public FileDto() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
     }
 }

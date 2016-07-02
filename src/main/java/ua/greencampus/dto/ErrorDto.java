@@ -1,8 +1,13 @@
 package ua.greencampus.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @author Nikolay Yashchenko
  */
+@Getter
+@Setter
 public class ErrorDto {
     private String key;
     private String value;
@@ -11,22 +16,6 @@ public class ErrorDto {
 
     public ErrorDto(String key, String value) {
         this.key = key;
-        this.value = value;
-    }
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
         this.value = value;
     }
 }
