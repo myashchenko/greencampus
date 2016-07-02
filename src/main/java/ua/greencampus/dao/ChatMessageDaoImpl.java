@@ -44,14 +44,6 @@ public class ChatMessageDaoImpl implements ChatMessageDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<ChatMessage> getByDialog(ChatDialog chatDialog) {
-        return entityManager.unwrap(Session.class).createCriteria(ChatMessage.class)
-                .add(Restrictions.eq("dialog", chatDialog))
-                .list();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
     public List<ChatMessage> getByDialogId(Long dialogId) {
         return entityManager.unwrap(Session.class).createCriteria(ChatMessage.class)
                 .createAlias("dialog", "d")

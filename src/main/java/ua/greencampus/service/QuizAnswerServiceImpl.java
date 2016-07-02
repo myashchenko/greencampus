@@ -18,19 +18,19 @@ public class QuizAnswerServiceImpl implements QuizAnswerService {
     @Transactional
     @Override
     public QuizAnswer create(QuizAnswer quizAnswer) {
-        return quizAnswerDao.create(quizAnswer);
+        return quizAnswerDao.save(quizAnswer);
     }
 
     @Transactional(readOnly = true)
     @Override
     public QuizAnswer read(Long id) {
-        return quizAnswerDao.read(id);
+        return quizAnswerDao.findOne(id);
     }
 
     @Transactional
     @Override
     public QuizAnswer update(QuizAnswer quizAnswer) {
-        return quizAnswerDao.update(quizAnswer);
+        return quizAnswerDao.save(quizAnswer);
     }
 
     @Transactional

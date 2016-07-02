@@ -3,7 +3,7 @@ package ua.greencampus.validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ua.greencampus.dto.CourseThemeDTO;
+import ua.greencampus.dto.CourseThemeDto;
 
 
 /**
@@ -13,12 +13,12 @@ import ua.greencampus.dto.CourseThemeDTO;
 public class ThemeDTOValidator  implements Validator{
     @Override
     public boolean supports(Class<?> aClass) {
-        return CourseThemeDTO.class.equals(aClass);
+        return CourseThemeDto.class.equals(aClass);
     }
 
     @Override
     public void validate(Object o, Errors errors) {
-        CourseThemeDTO themeDTO = (CourseThemeDTO) o;
+        CourseThemeDto themeDTO = (CourseThemeDto) o;
         if (themeDTO.getName() == null || themeDTO.getName().isEmpty()) {
             errors.rejectValue("bad_name", "name mustn't be empty");
         }

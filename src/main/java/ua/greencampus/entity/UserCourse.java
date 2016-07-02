@@ -5,7 +5,6 @@ import javax.persistence.*;
 /**
  * @author Ivan Mikho, created on 18.05.16.
  */
-
 @Entity
 @Table(name = "user_course")
 public class UserCourse {

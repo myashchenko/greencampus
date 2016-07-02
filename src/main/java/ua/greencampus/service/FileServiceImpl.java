@@ -18,19 +18,19 @@ public class FileServiceImpl implements FileService{
     @Transactional
     @Override
     public FileEntity create(FileEntity fileEntity) {
-        return fileDao.create(fileEntity);
+        return fileDao.save(fileEntity);
     }
 
     @Transactional
     @Override
     public FileEntity read(Long id) {
-        return fileDao.read(id);
+        return fileDao.findOne(id);
     }
 
     @Transactional
     @Override
     public FileEntity update(FileEntity fileEntity) {
-        return fileDao.update(fileEntity);
+        return fileDao.save(fileEntity);
     }
 
     @Transactional
@@ -42,7 +42,7 @@ public class FileServiceImpl implements FileService{
     @Transactional
     @Override
     public FileEntity delete(Long id) {
-        FileEntity fileEntity = fileDao.read(id);
+        FileEntity fileEntity = fileDao.findOne(id);
         delete(fileEntity);
         return fileEntity;
     }

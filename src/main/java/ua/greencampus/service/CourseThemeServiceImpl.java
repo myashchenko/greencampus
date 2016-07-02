@@ -18,19 +18,19 @@ public class CourseThemeServiceImpl implements CourseThemeService {
     @Transactional
     @Override
     public CourseTheme create(CourseTheme courseTheme) {
-        return courseThemeDao.create(courseTheme);
+        return courseThemeDao.save(courseTheme);
     }
 
     @Transactional(readOnly = true)
     @Override
     public CourseTheme read(Long id) {
-        return courseThemeDao.read(id);
+        return courseThemeDao.findOne(id);
     }
 
     @Transactional
     @Override
     public CourseTheme update(CourseTheme courseTheme) {
-        return courseThemeDao.update(courseTheme);
+        return courseThemeDao.save(courseTheme);
     }
 
     @Transactional

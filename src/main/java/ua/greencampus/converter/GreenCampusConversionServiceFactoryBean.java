@@ -64,11 +64,11 @@ public class GreenCampusConversionServiceFactoryBean extends ConversionServiceFa
 
     public GreenCampusConversionServiceFactoryBean() {
         Set<Converter> converters = new HashSet<>();
-        converters.add(new ChatMessageToDTOConverter());
-        converters.add(new FileEntityToFileDTOConverter());
-        converters.add(new ChatDialogToDTOConverter());
-        converters.add(new QuizAnswerToQuizAnswerDTOConverter());
-        converters.add(new CourseThemeToCourseThemeDTOConverter());
+        converters.add(new ChatMessageToDtoConverter());
+        converters.add(new FileEntityToFileDtoConverter());
+        converters.add(new ChatDialogToDtoConverter());
+        converters.add(new QuizAnswerToQuizAnswerDtoConverter());
+        converters.add(new CourseThemeToCourseThemeDtoConverter());
         setConverters(converters);
     }
 
@@ -77,21 +77,21 @@ public class GreenCampusConversionServiceFactoryBean extends ConversionServiceFa
         super.afterPropertiesSet();
         ConversionService conversionService = getObject();
         ConverterRegistry registry = (ConverterRegistry) conversionService;
-        registry.addConverter(new UserDTOtoUserConverter(userService, conversionService));
-        registry.addConverter(new CourseDTOToCourseConverter(courseService, conversionService));
-        registry.addConverter(new FileDTOtoFileEntityConverter(fileService));
-        registry.addConverter(new ChatMessageDTOtoEntityConverter(chatMessageService, chatDialogService, userService));
-        registry.addConverter(new QuizAnswerDTOToQuizAnswerConverter(quizAnswerService));
-        registry.addConverter(new QuizQuestionDTOToQuizQuestionConverter(quizQuestionService, conversionService));
-        registry.addConverter(new QuizDTOToQuizConverter(quizService, conversionService));
-        registry.addConverter(new QuizResultDTOToQuizResultConverter(quizResultService, conversionService));
-        registry.addConverter(new ChatDialogDTOToEntityConverter(userService));
-        registry.addConverter(new UserToUserDTOConverter(conversionService));
-        registry.addConverter(new QuizQuestionToQuizQuestionDTOConverter(conversionService));
-        registry.addConverter(new QuizToQuizDTOConverter(conversionService));
-        registry.addConverter(new QuizResultToQuizResultDTOConverter(conversionService));
-        registry.addConverter(new CourseThemeDTOToCourseThemeConverter(courseThemeService));
-        registry.addConverter(new CourseToCourseDTOConverter(userCourseService));
-        registry.addConverter(new CourseToCourseWithThemesDTOConverter(userCourseService, conversionService));
+        registry.addConverter(new UserDtoToUserConverter(userService, conversionService));
+        registry.addConverter(new CourseDtoToCourseConverter(courseService, conversionService));
+        registry.addConverter(new FileDtotoFileEntityConverter(fileService));
+        registry.addConverter(new ChatMessageDtoToEntityConverter(chatMessageService, chatDialogService, userService));
+        registry.addConverter(new QuizAnswerDtoToQuizAnswerConverter(quizAnswerService));
+        registry.addConverter(new QuizQuestionDtoToQuizQuestionConverter(quizQuestionService, conversionService));
+        registry.addConverter(new QuizDtoToQuizConverter(quizService, conversionService));
+        registry.addConverter(new QuizResultDtoToQuizResultConverter(quizResultService, conversionService));
+        registry.addConverter(new ChatDialogDtoToEntityConverter(userService));
+        registry.addConverter(new UserToUserDtoConverter(conversionService));
+        registry.addConverter(new QuizQuestionToQuizQuestionDtoConverter(conversionService));
+        registry.addConverter(new QuizToQuizDtoConverter(conversionService));
+        registry.addConverter(new QuizResultToQuizResultDtoConverter(conversionService));
+        registry.addConverter(new CourseThemeDtoToCourseThemeConverter(courseThemeService));
+        registry.addConverter(new CourseToCourseDtoConverter(userCourseService));
+        registry.addConverter(new CourseToCourseWithThemesDtoConverter(userCourseService, conversionService));
     }
 }

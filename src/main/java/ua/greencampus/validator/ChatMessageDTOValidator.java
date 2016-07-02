@@ -3,7 +3,7 @@ package ua.greencampus.validator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
-import ua.greencampus.dto.ChatMessageDTO;
+import ua.greencampus.dto.ChatMessageDto;
 
 /**
  * @author Nikolay Yashchenko
@@ -13,13 +13,13 @@ public class ChatMessageDTOValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return ChatMessageDTO.class.equals(clazz);
+        return ChatMessageDto.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
 
-        ChatMessageDTO chatMessageDTO = (ChatMessageDTO) target;
+        ChatMessageDto chatMessageDTO = (ChatMessageDto) target;
         if (chatMessageDTO.getText() == null) {
             errors.reject("bad_text", "text mustn't be empty");
         }

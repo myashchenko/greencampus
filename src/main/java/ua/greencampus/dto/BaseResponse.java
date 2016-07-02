@@ -9,7 +9,7 @@ import java.util.List;
  * @author Nikolay Yashchenko
  */
 public class BaseResponse {
-    private List<ErrorDTO> errors;
+    private List<ErrorDto> errors;
 
     public BaseResponse() {
         this.errors = new ArrayList<>();
@@ -26,14 +26,14 @@ public class BaseResponse {
     }
 
     public void putError(String key, String value) {
-        errors.add(new ErrorDTO(key, value));
+        errors.add(new ErrorDto(key, value));
     }
 
-    public List<ErrorDTO> getErrors() {
+    public List<ErrorDto> getErrors() {
         return errors;
     }
 
-    public void setErrors(List<ErrorDTO> errors) {
+    public void setErrors(List<ErrorDto> errors) {
         this.errors = errors;
     }
 }

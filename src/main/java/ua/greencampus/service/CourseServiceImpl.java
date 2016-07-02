@@ -2,6 +2,7 @@ package ua.greencampus.service;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.greencampus.dao.CourseDao;
@@ -33,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
     @Transactional
     @Override
     public Course create(Course lecture) {
-        lecture = lectureDao.create(lecture);
+        lecture = lectureDao.save(lecture);
         userCourseService.create(new UserCourse(
                 userService.read(authenticationService.getLoggedInUserId()), lecture, UserCourseRole.CREATOR)
         );
@@ -43,28 +44,28 @@ public class CourseServiceImpl implements CourseService {
     @Transactional(readOnly = true)
     @Override
     public Course read(Long id) {
-        return lectureDao.read(id);
+        return lectureDao.findOne(id);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Course readWithThemes(Long id) {
-        Course course = lectureDao.read(id);
+        Course course = lectureDao.findOne(id);
         Hibernate.initialize(course.getThemes());
         return course;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Course> getByParams(int offset, int size, String sort) {
+    public List<Course> getByParams(int page, int size, String sort) {
         // todo sorting
-        return lectureDao.getByParams(offset, size, sort);
+        return lectureDao.findAll(new PageRequest(page, size)).getContent();
     }
 
     @Transactional
     @Override
     public Course update(Course lecture) {
-        return lectureDao.update(lecture);
+        return lectureDao.save(lecture);
     }
 
     @Transactional

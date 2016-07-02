@@ -9,8 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.greencampus.dto.BaseResponse;
-import ua.greencampus.dto.CourseDTO;
-import ua.greencampus.dto.CourseThemeDTO;
+import ua.greencampus.dto.CourseThemeDto;
 import ua.greencampus.dto.EntityResponse;
 import ua.greencampus.entity.Course;
 import ua.greencampus.entity.CourseTheme;
@@ -59,12 +58,12 @@ public class ThemeEndpoint {
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
 
-        CourseThemeDTO themeDTO = conversionService.convert(themeService.read(id), CourseThemeDTO.class);
+        CourseThemeDto themeDTO = conversionService.convert(themeService.read(id), CourseThemeDto.class);
         return ResponseEntity.ok(new EntityResponse<>(themeDTO));
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> create(@RequestBody CourseThemeDTO themeDTO,
+    public ResponseEntity<BaseResponse> create(@RequestBody CourseThemeDto themeDTO,
                                                @RequestParam(name = "courseId", required = true) Long courseId,
                                                BindingResult bindingResult){
         themeDTOValidator.validate(themeDTO, bindingResult);
@@ -76,13 +75,13 @@ public class ThemeEndpoint {
         List<CourseTheme> themes = course.getThemes();
         themes.add(theme);
         course = courseService.update(course);
-        themeDTO = conversionService.convert(theme, CourseThemeDTO.class);
+        themeDTO = conversionService.convert(theme, CourseThemeDto.class);
         return ResponseEntity.ok(new EntityResponse<>(themeDTO));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseThemeDTO themeDTO,
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseThemeDto themeDTO,
                                                BindingResult bindingResult){
         themeDTO.setId(id);
         themeDTOValidator.validate(themeDTO, bindingResult);
@@ -92,7 +91,7 @@ public class ThemeEndpoint {
         }
         CourseTheme theme = conversionService.convert(themeDTO, CourseTheme.class);
         theme = themeService.update(theme);
-        themeDTO = conversionService.convert(theme, CourseThemeDTO.class);
+        themeDTO = conversionService.convert(theme, CourseThemeDto.class);
         return ResponseEntity.ok(new EntityResponse<>(themeDTO));
     }
 
@@ -106,7 +105,7 @@ public class ThemeEndpoint {
         if (theme == null){
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
-        CourseThemeDTO themeDTO = conversionService.convert(theme, CourseThemeDTO.class);
+        CourseThemeDto themeDTO = conversionService.convert(theme, CourseThemeDto.class);
         themeService.delete(theme);
         return ResponseEntity.ok(new EntityResponse<>(themeDTO));
     }

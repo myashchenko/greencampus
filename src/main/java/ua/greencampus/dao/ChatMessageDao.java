@@ -13,6 +13,5 @@ public interface ChatMessageDao {
     ChatMessage read(Long id);
     ChatMessage update(ChatMessage chatMessage);
     void delete(ChatMessage chatMessage);
-    List<ChatMessage> getByDialog(ChatDialog chatDialog);
     List<ChatMessage> getByDialogId(Long dialogId);
 }

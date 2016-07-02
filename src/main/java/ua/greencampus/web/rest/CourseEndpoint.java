@@ -39,18 +39,18 @@ public class CourseEndpoint {
     private CourseService courseService;
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getByParams(@RequestParam(value = "offset", defaultValue = "0", required = false) int offset,
+    public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                       @RequestParam(value = "size", defaultValue = "20", required = false) int size,
                                       @RequestParam(value = "sort", defaultValue = "", required = false) String sort) {
-        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "offset");
-        if (offset < 0 || size < 0) {
-            bindingResult.rejectValue("bad_param", offset < 0 ? "offset" : "size" + " must be > 0");
+        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "page");
+        if (page < 0 || size < 0) {
+            bindingResult.rejectValue("bad_param", page < 0 ? "page" : "size" + " must be > 0");
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
-        List<Course> courseList = courseService.getByParams(offset, size, sort);
+        List<Course> courseList = courseService.getByParams(page, size, sort);
 
-        List<CourseDTO> courseDTOs = courseList.stream()
-                .map(c -> conversionService.convert(c, CourseDTO.class))
+        List<CourseDto> courseDTOs = courseList.stream()
+                .map(c -> conversionService.convert(c, CourseDto.class))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new EntityListResponse<>(courseDTOs));
@@ -64,13 +64,13 @@ public class CourseEndpoint {
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
 
-        CourseWithThemesDTO courseDTO = conversionService.convert(courseService.readWithThemes(id), CourseWithThemesDTO.class);
+        CourseWithThemesDto courseDTO = conversionService.convert(courseService.readWithThemes(id), CourseWithThemesDto.class);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDTO));
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> create(@RequestBody CourseDTO courseDTO, BindingResult bindingResult) {
+    public ResponseEntity<BaseResponse> create(@RequestBody CourseDto courseDTO, BindingResult bindingResult) {
         courseDTOValidator.validate(courseDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
@@ -79,14 +79,14 @@ public class CourseEndpoint {
         Course course = conversionService.convert(courseDTO, Course.class);
         course = courseService.create(course);
 
-        courseDTO = conversionService.convert(course, CourseDTO.class);
+        courseDTO = conversionService.convert(course, CourseDto.class);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDTO));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseDTO courseDTO,
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseDto courseDTO,
                                                BindingResult bindingResult) {
         courseDTO.setId(id);
         courseDTOValidator.validate(courseDTO, bindingResult);
@@ -98,7 +98,7 @@ public class CourseEndpoint {
         Course course = conversionService.convert(courseDTO, Course.class);
         course = courseService.update(course);
 
-        courseDTO = conversionService.convert(course, CourseDTO.class);
+        courseDTO = conversionService.convert(course, CourseDto.class);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDTO));
     }
@@ -115,7 +115,7 @@ public class CourseEndpoint {
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
 
-        CourseDTO courseDTO = conversionService.convert(course, CourseDTO.class);
+        CourseDto courseDTO = conversionService.convert(course, CourseDto.class);
         courseService.delete(course);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDTO));

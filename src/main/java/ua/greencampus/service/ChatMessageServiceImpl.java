@@ -44,12 +44,6 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ChatMessage> getByDialog(ChatDialog chatDialog) {
-        return chatMessageDao.getByDialog(chatDialog);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
     public List<ChatMessage> getByDialogId(Long dialogId) {
         return chatMessageDao.getByDialogId(dialogId);
     }

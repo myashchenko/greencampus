@@ -1,13 +1,10 @@
 package ua.greencampus.dao;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ua.greencampus.entity.QuizQuestion;
 
 /**
  * @author Nikolay Yashchenko
  */
-public interface QuizQuestionDao {
-    QuizQuestion create(QuizQuestion quizQuestion);
-    QuizQuestion read(Long id);
-    QuizQuestion update(QuizQuestion quizQuestion);
-    void delete(QuizQuestion quizQuestion);
+public interface QuizQuestionDao extends JpaRepository<QuizQuestion, Long> {
 }

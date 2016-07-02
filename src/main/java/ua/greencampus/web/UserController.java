@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import ua.greencampus.dto.UserDTO;
+import ua.greencampus.dto.UserDto;
 import ua.greencampus.service.AuthenticationService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -78,7 +78,7 @@ public class UserController {
     public String loginPage(@RequestParam(name = "redirect", required = false) String redirect,
                             HttpServletRequest request, Model model) {
         request.getSession().setAttribute("url_redirect_login", redirect);
-        model.addAttribute("userDTO", new UserDTO());
+        model.addAttribute("userDTO", new UserDto());
         return "login";
     }
 }

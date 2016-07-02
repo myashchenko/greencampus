@@ -18,19 +18,19 @@ public class QuizServiceImpl implements QuizService {
     @Transactional
     @Override
     public Quiz create(Quiz quiz) {
-        return quizDao.create(quiz);
+        return quizDao.save(quiz);
     }
 
     @Transactional(readOnly = true)
     @Override
     public Quiz read(Long id) {
-        return quizDao.read(id);
+        return quizDao.findOne(id);
     }
 
     @Transactional
     @Override
     public Quiz update(Quiz quiz) {
-        return quizDao.update(quiz);
+        return quizDao.save(quiz);
     }
 
     @Transactional

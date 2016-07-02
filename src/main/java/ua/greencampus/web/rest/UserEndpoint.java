@@ -51,17 +51,17 @@ public class UserEndpoint {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int offset,
+    public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                       @RequestParam(value = "size", defaultValue = "20", required = false) int size,
                                       @RequestParam(value = "sort", defaultValue = "", required = false) String sort) {
-        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "offset");
-        if (offset < 0 || size < 0) {
-            bindingResult.rejectValue("bad_params", offset < 0 ? "offset" : "size" + "should be > 0");
+        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "page");
+        if (page < 0 || size < 0) {
+            bindingResult.rejectValue("bad_params", page < 0 ? "page" : "size" + "should be > 0");
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
-        List<User> userList = userService.getByParams(offset, size, sort);
-        List<UserDTO> userDTOs = userList.stream()
-                .map(c -> conversionService.convert(c, UserDTO.class))
+        List<User> userList = userService.getByParams(page, size, sort);
+        List<UserDto> userDTOs = userList.stream()
+                .map(c -> conversionService.convert(c, UserDto.class))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new EntityListResponse<>(userDTOs));
@@ -75,12 +75,12 @@ public class UserEndpoint {
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
 
-        UserDTO userDTO = conversionService.convert(userService.read(id), UserDTO.class);
+        UserDto userDTO = conversionService.convert(userService.read(id), UserDto.class);
         return ResponseEntity.ok(new EntityResponse<>(userDTO));
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> create(@RequestBody UserDTO userDTO, BindingResult bindingResult) {
+    public ResponseEntity<BaseResponse> create(@RequestBody UserDto userDTO, BindingResult bindingResult) {
         userDTOValidator.validate(userDTO, bindingResult);
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
@@ -92,13 +92,13 @@ public class UserEndpoint {
         }
         user.setPassword(userDTO.getPassword());
         user = userService.create(user);
-        userDTO = conversionService.convert(user, UserDTO.class);
+        userDTO = conversionService.convert(user, UserDto.class);
         return ResponseEntity.ok(new EntityResponse<>(userDTO));
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody UserDTO userDTO,
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody UserDto userDTO,
                                                BindingResult bindingResult) {
         userDTO.setId(id);
         emailDTOValidator.validate(userDTO, bindingResult);
@@ -109,7 +109,7 @@ public class UserEndpoint {
 
         User user = conversionService.convert(userDTO, User.class);
         user = userService.update(user);
-        userDTO = conversionService.convert(user, UserDTO.class);
+        userDTO = conversionService.convert(user, UserDto.class);
         return ResponseEntity.ok(new EntityResponse<>(userDTO));
     }
 
@@ -117,7 +117,7 @@ public class UserEndpoint {
     @PutMapping(value = "/pass/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> updatePassword(@PathVariable("id") Long id,
-                                                       @RequestBody PasswordDTO passwordDTO,
+                                                       @RequestBody PasswordDto passwordDTO,
                                                        BindingResult bindingResult) {
         passwordDTO.setId(id);
         passwordDTOValidator.validate(passwordDTO, bindingResult);
@@ -131,7 +131,7 @@ public class UserEndpoint {
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
         user = userService.update(user);
-        UserDTO userDTO = conversionService.convert(user, UserDTO.class);
+        UserDto userDTO = conversionService.convert(user, UserDto.class);
         return ResponseEntity.ok(new EntityResponse<>(userDTO));
     }
 
@@ -143,7 +143,7 @@ public class UserEndpoint {
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
         User user = userService.delete(id);
-        UserDTO userDTO = conversionService.convert(user, UserDTO.class);
+        UserDto userDTO = conversionService.convert(user, UserDto.class);
 
         return ResponseEntity.ok(new EntityResponse<>(userDTO));
     }
