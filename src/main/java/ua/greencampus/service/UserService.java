@@ -5,7 +5,6 @@ import ua.greencampus.entity.User;
 
 import java.util.List;
 
-
 /**
  * Created by Arsenii on 25.03.2016.
  */

@@ -56,7 +56,7 @@ public class JpaConfig {
         return new HikariDataSource(config);
     }
 
-    @Bean
+    @Bean(name = "entityManagerFactory")
     public LocalContainerEntityManagerFactoryBean configureEntityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(configureDataSource());
@@ -72,7 +72,7 @@ public class JpaConfig {
         return entityManagerFactoryBean;
     }
 
-    @Bean
+    @Bean(name = "transactionManager")
     public PlatformTransactionManager annotationDrivenTransactionManager() {
 
         JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();

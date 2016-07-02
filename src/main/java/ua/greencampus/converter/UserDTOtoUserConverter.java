@@ -35,7 +35,7 @@ public class UserDTOtoUserConverter implements Converter<UserDTO, User> {
             user = new User();
             user.setRole(Role.ROLE_UNACTIVE);
         } else if (userDTO.getRole() != null) {
-            user.setRole(Role.stringToEnum(userDTO.getRole()));
+            user.setRole(Role.valueOf(userDTO.getRole()));
         }
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());

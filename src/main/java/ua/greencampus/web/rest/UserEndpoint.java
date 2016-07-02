@@ -51,7 +51,7 @@ public class UserEndpoint {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getByParams(@RequestParam(value = "offset", defaultValue = "0", required = false) int offset,
+    public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int offset,
                                       @RequestParam(value = "size", defaultValue = "20", required = false) int size,
                                       @RequestParam(value = "sort", defaultValue = "", required = false) String sort) {
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "offset");

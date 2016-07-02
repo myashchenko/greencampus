@@ -69,7 +69,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(
                 "/resources/**", "/favicon.ico", "/api/**", "/auth", "/auth/**", "/ws/**", "/access-denied"
         ).permitAll();
-        http.authorizeRequests().antMatchers("/chat/**", "/user/update").authenticated();
+        http.authorizeRequests().antMatchers("/chat/**", "/user/update", "/user/account").authenticated();
         http.authorizeRequests().antMatchers("/course/create").hasRole("TEACHER");
         http.authorizeRequests().antMatchers("/user/update/**", "/user/delete/**").hasRole("ADMIN");
         http.csrf().disable();

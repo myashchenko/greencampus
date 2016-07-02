@@ -5,14 +5,4 @@ package ua.greencampus.entity;
  */
 public enum Role {
     ROLE_USER, ROLE_UNACTIVE, ROLE_STUDENT, ROLE_TEACHER, ROLE_ADMIN;
-
-    public static Role stringToEnum(String role) {
-        for (Role r : Role.values()) {
-            if (role.equals(r.name())) {
-                return r;
-            }
-        }
-        return null;
-    }
-
 }
