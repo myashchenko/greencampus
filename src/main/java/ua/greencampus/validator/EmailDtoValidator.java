@@ -6,11 +6,10 @@ import org.springframework.validation.Validator;
 import ua.greencampus.dto.UserDto;
 
 /**
- * @author Nikolay Yashchenko
+ * Created by Arsenii on 21.05.2016.
  */
-@Component("userDTOValidator")
-public class UserDTOValidator implements Validator {
-
+@Component("emailDtoValidator")
+public class EmailDtoValidator implements Validator{
     @Override
     public boolean supports(Class<?> aClass) {
         return UserDto.class.equals(aClass);
@@ -18,13 +17,9 @@ public class UserDTOValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        UserDto userDTO = (UserDto) o;
-        if (userDTO.getEmail() == null || userDTO.getEmail().isEmpty()) {
+        UserDto userDto = (UserDto) o;
+        if (userDto.getEmail() == null || userDto.getEmail().isEmpty()) {
             errors.rejectValue("bad_email", "email mustn't be empty");
-        }
-
-        if (userDTO.getPassword() == null || userDTO.getPassword().length() < 5) {
-            errors.rejectValue("bad_password", "password size must be > 5");
         }
     }
 }

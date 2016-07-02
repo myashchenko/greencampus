@@ -1,4 +1,4 @@
-$("#userDTO").on('submit', function(event) {
+$("#userDto").on('submit', function(event) {
     event.preventDefault();
 
     console.log("uhuhurerere");

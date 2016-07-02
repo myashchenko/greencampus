@@ -9,8 +9,9 @@ import ua.greencampus.dto.CourseThemeDto;
 /**
  * Created by Ivan Mikho on 10.04.16.
  */
-@Component("themeDTOValidator")
-public class ThemeDTOValidator  implements Validator{
+@Component("themeDtoValidator")
+public class ThemeDtoValidator implements Validator {
+
     @Override
     public boolean supports(Class<?> aClass) {
         return CourseThemeDto.class.equals(aClass);
@@ -18,8 +19,8 @@ public class ThemeDTOValidator  implements Validator{
 
     @Override
     public void validate(Object o, Errors errors) {
-        CourseThemeDto themeDTO = (CourseThemeDto) o;
-        if (themeDTO.getName() == null || themeDTO.getName().isEmpty()) {
+        CourseThemeDto themeDto = (CourseThemeDto) o;
+        if (themeDto.getName() == null || themeDto.getName().isEmpty()) {
             errors.rejectValue("bad_name", "name mustn't be empty");
         }
     }

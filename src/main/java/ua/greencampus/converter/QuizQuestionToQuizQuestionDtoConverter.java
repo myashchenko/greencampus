@@ -30,11 +30,11 @@ public class QuizQuestionToQuizQuestionDtoConverter implements Converter<QuizQue
         quizQuestionDto.setId(quizQuestion.getId());
         quizQuestionDto.setQuestion(quizQuestion.getQuestion());
         if (quizQuestion.getAnswers().size() > 0) {
-            List<QuizAnswerDto> quizAnswerDTOList = new ArrayList<>();
+            List<QuizAnswerDto> quizAnswerDtoList = new ArrayList<>();
             for (QuizAnswer quizAnswer:quizQuestion.getAnswers()){
-                quizAnswerDTOList.add(conversionService.convert(quizAnswer,QuizAnswerDto.class));
+                quizAnswerDtoList.add(conversionService.convert(quizAnswer,QuizAnswerDto.class));
             }
-            quizQuestionDto.setQuizAnswers(quizAnswerDTOList);
+            quizQuestionDto.setQuizAnswers(quizAnswerDtoList);
         }
         return quizQuestionDto;
     }

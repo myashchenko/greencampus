@@ -17,7 +17,7 @@
     <h2 class="col-lg-6 col-lg-offset-3">Registration Form</h2>
 
     <div class="login-form col-lg-6 col-lg-offset-3">
-        <form:form method="POST" modelAttribute="userDTO" action="registration">
+        <form:form method="POST" modelAttribute="userDto" action="registration">
             <spring:bind path="email">
                 <div class="form-group">
                     <div class="input-group">

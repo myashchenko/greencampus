@@ -31,11 +31,11 @@ public class QuizToQuizDtoConverter implements Converter<Quiz, QuizDto> {
 
         quizDto.setId(quiz.getId());
         if (quiz.getQuestions().size() > 0) {
-            List<QuizQuestionDto> quizQuestionDTOList = new ArrayList<>();
+            List<QuizQuestionDto> quizQuestionDtoList = new ArrayList<>();
             for (QuizQuestion quizQuestion:quiz.getQuestions()) {
-                quizQuestionDTOList.add(conversionService.convert(quizQuestion, QuizQuestionDto.class));
+                quizQuestionDtoList.add(conversionService.convert(quizQuestion, QuizQuestionDto.class));
             }
-            quizDto.setQuizQuestions(quizQuestionDTOList);
+            quizDto.setQuizQuestions(quizQuestionDtoList);
         }
 
         if (quiz.getCourseTheme() != null) {

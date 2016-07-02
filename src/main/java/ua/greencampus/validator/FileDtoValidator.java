@@ -8,8 +8,9 @@ import ua.greencampus.dto.FileDto;
 /**
  * Created by Arsenii on 18.04.2016.
  */
-@Component("fileDTOValidator")
-public class FileDTOValidator implements Validator {
+@Component("fileDtoValidator")
+public class FileDtoValidator implements Validator {
+
     @Override
     public boolean supports(Class<?> aClass) {
         return FileDto.class.equals(aClass);
@@ -17,8 +18,8 @@ public class FileDTOValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        FileDto fileDTO = (FileDto) o;
-        if (fileDTO.getPath() == null || fileDTO.getPath().isEmpty()) {
+        FileDto fileDto = (FileDto) o;
+        if (fileDto.getPath() == null || fileDto.getPath().isEmpty()) {
             errors.rejectValue("bad_path", "path mustn't be empty");
         }
     }

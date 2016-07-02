@@ -8,8 +8,8 @@ import ua.greencampus.dto.CourseDto;
 /**
  * @author Nikolay Yashchenko
  */
-@Component("courseDTOValidator")
-public class CourseDTOValidator implements Validator {
+@Component("courseDtoValidator")
+public class CourseDtoValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -18,9 +18,9 @@ public class CourseDTOValidator implements Validator {
 
     @Override
     public void validate(Object o, Errors errors) {
-        CourseDto courseDTO = (CourseDto) o;
+        CourseDto courseDto = (CourseDto) o;
 
-        if (courseDTO.getTitle() == null || courseDTO.getTitle().isEmpty()) {
+        if (courseDto.getTitle() == null || courseDto.getTitle().isEmpty()) {
             errors.rejectValue("bad_title", "title mustn't be empty");
         }
     }

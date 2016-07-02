@@ -41,10 +41,10 @@ public class CourseToCourseWithThemesDtoConverter implements Converter<Course, C
                         .orElse(null)
         );
 
-        List<CourseThemeDto> courseThemeDTOList = course.getThemes().stream()
+        List<CourseThemeDto> courseThemeDtoList = course.getThemes().stream()
                 .map(t -> conversionService.convert(t, CourseThemeDto.class))
                 .collect(Collectors.toList());
-        courseDto.setCourseThemes(courseThemeDTOList);
+        courseDto.setCourseThemes(courseThemeDtoList);
 
         return courseDto;
     }

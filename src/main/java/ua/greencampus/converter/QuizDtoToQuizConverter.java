@@ -47,8 +47,8 @@ public class QuizDtoToQuizConverter implements Converter<QuizDto, Quiz> {
 
         if (quizDto.getQuizQuestions().size() > 0) {
             List<QuizQuestion> quizQuestionList = new ArrayList<>();
-            for (QuizQuestionDto quizQuestionDTO : quizDto.getQuizQuestions()) {
-                quizQuestionList.add(conversionService.convert(quizQuestionDTO, QuizQuestion.class));
+            for (QuizQuestionDto quizQuestionDto : quizDto.getQuizQuestions()) {
+                quizQuestionList.add(conversionService.convert(quizQuestionDto, QuizQuestion.class));
             }
             quiz.setQuestions(quizQuestionList);
         }

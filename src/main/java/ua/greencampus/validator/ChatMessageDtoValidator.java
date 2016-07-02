@@ -8,8 +8,8 @@ import ua.greencampus.dto.ChatMessageDto;
 /**
  * @author Nikolay Yashchenko
  */
-@Component("chatMessageDTOValidator")
-public class ChatMessageDTOValidator implements Validator {
+@Component("chatMessageDtoValidator")
+public class ChatMessageDtoValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -19,12 +19,12 @@ public class ChatMessageDTOValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
 
-        ChatMessageDto chatMessageDTO = (ChatMessageDto) target;
-        if (chatMessageDTO.getText() == null) {
+        ChatMessageDto chatMessageDto = (ChatMessageDto) target;
+        if (chatMessageDto.getText() == null) {
             errors.reject("bad_text", "text mustn't be empty");
         }
 
-        if (chatMessageDTO.getDialogId() == null || chatMessageDTO.getDialogId() <= 0L) {
+        if (chatMessageDto.getDialogId() == null || chatMessageDto.getDialogId() <= 0L) {
             errors.reject("bad_dialog_id", "dialog id must be > 0");
         }
     }

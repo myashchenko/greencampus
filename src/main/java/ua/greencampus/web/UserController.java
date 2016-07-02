@@ -78,7 +78,7 @@ public class UserController {
     public String loginPage(@RequestParam(name = "redirect", required = false) String redirect,
                             HttpServletRequest request, Model model) {
         request.getSession().setAttribute("url_redirect_login", redirect);
-        model.addAttribute("userDTO", new UserDto());
+        model.addAttribute("userDto", new UserDto());
         return "login";
     }
 }

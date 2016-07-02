@@ -8,8 +8,8 @@ import ua.greencampus.dto.ChatDialogDto;
 /**
  * @author Nikolay Yashchenko
  */
-@Component("chatDialogDTOValidator")
-public class ChatDialogDTOValidator implements Validator {
+@Component("chatDialogDtoValidator")
+public class ChatDialogDtoValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -18,8 +18,8 @@ public class ChatDialogDTOValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        ChatDialogDto chatDialogDTO = (ChatDialogDto) target;
-        if (chatDialogDTO.getUsersIds() == null || chatDialogDTO.getUsersIds().size() < 2) {
+        ChatDialogDto chatDialogDto = (ChatDialogDto) target;
+        if (chatDialogDto.getUsersIds() == null || chatDialogDto.getUsersIds().size() < 2) {
             errors.reject("bad_users_ids", "count of user must be equal or greater than 2");
         }
     }

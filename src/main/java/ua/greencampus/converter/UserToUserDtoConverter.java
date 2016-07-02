@@ -27,8 +27,8 @@ public class UserToUserDtoConverter implements Converter<User, UserDto> {
         userDto.setName(user.getName());
         userDto.setRole(user.getRole().name());
         if (user.getAvatar() != null) {
-            FileDto avatarDTO = conversionService.convert(user.getAvatar(), FileDto.class);
-            userDto.setAvatar(avatarDTO);
+            FileDto avatarDto = conversionService.convert(user.getAvatar(), FileDto.class);
+            userDto.setAvatar(avatarDto);
         }
         return userDto;
     }

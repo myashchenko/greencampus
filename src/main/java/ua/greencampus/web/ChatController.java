@@ -49,23 +49,23 @@ public class ChatController {
     private SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
-    @Qualifier("chatMessageDTOValidator")
-    private Validator chatMessageDTOValidator;
+    @Qualifier("chatMessageDtoValidator")
+    private Validator chatMessageDtoValidator;
 
     @Autowired
     @Qualifier("idValidator")
     private Validator idValidator;
 
     @Autowired
-    @Qualifier("chatDialogDTOValidator")
-    private Validator chatDialogDTOValidator;
+    @Qualifier("chatDialogDtoValidator")
+    private Validator chatDialogDtoValidator;
 
     private static final int THREAD_COUNT = 10;
     private ExecutorService executorService = Executors.newFixedThreadPool(THREAD_COUNT);
 
-    @InitBinder("chatMessageDTO")
-    public void initChatMessageDTOValidator(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(chatMessageDTOValidator);
+    @InitBinder("chatMessageDto")
+    public void initChatMessageDtoValidator(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(chatMessageDtoValidator);
     }
 
     @InitBinder("dialogId")
@@ -73,9 +73,9 @@ public class ChatController {
         webDataBinder.addValidators(idValidator);
     }
 
-    @InitBinder("chatDialogDTO")
-    public void initChatDialogDTOValidator(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(chatDialogDTOValidator);
+    @InitBinder("chatDialogDto")
+    public void initChatDialogDtoValidator(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(chatDialogDtoValidator);
     }
 
     @GetMapping(value = "/chat")
@@ -87,15 +87,15 @@ public class ChatController {
     public String createChat(@PathVariable(value = "userId") Long userToId) {
         ChatDialog chatDialog;
         if ((chatDialog = chatDialogService.getByUserIds(userToId, authenticationService.getLoggedInUserId())) == null) {
-            ChatDialogDto chatDialogDTO = new ChatDialogDto();
-            chatDialogDTO.setUsersIds(Arrays.asList(userToId, authenticationService.getLoggedInUserId()));
-            chatDialog = conversionService.convert(chatDialogDTO, ChatDialog.class);
+            ChatDialogDto chatDialogDto = new ChatDialogDto();
+            chatDialogDto.setUsersIds(Arrays.asList(userToId, authenticationService.getLoggedInUserId()));
+            chatDialog = conversionService.convert(chatDialogDto, ChatDialog.class);
             chatDialog = chatDialogService.create(chatDialog);
             chatDialog.prepareDialogName(userToId);
             chatDialog.prepareAvatarPath(userToId);
-            chatDialogDTO = conversionService.convert(chatDialog, ChatDialogDto.class);
+            chatDialogDto = conversionService.convert(chatDialog, ChatDialogDto.class);
 
-            simpMessagingTemplate.convertAndSend("/dialog/" + userToId + "/new", chatDialogDTO);
+            simpMessagingTemplate.convertAndSend("/dialog/" + userToId + "/new", chatDialogDto);
 
         }
         return "redirect:/chat#" + chatDialog.getId();
@@ -126,8 +126,8 @@ public class ChatController {
     }
 
     @MessageMapping("/ws/chat/dialog/new")
-    public void createDialog(@Validated ChatDialogDto chatDialogDTO) {
-        ChatDialog chatDialog = conversionService.convert(chatDialogDTO, ChatDialog.class);
+    public void createDialog(@Validated ChatDialogDto chatDialogDto) {
+        ChatDialog chatDialog = conversionService.convert(chatDialogDto, ChatDialog.class);
         chatDialog = chatDialogService.create(chatDialog);
 
         for (User user : chatDialog.getUsers()) {
@@ -135,9 +135,9 @@ public class ChatController {
             executorService.execute(() -> {
                 finalChatDialog.prepareDialogName(user.getId());
                 finalChatDialog.prepareAvatarPath(user.getId());
-                ChatDialogDto chatDialogDTOTemp = conversionService.convert(finalChatDialog, ChatDialogDto.class);
+                ChatDialogDto chatDialogDtoTemp = conversionService.convert(finalChatDialog, ChatDialogDto.class);
 
-                simpMessagingTemplate.convertAndSend("/dialogs/" + user.getId() + "/new", chatDialogDTOTemp);
+                simpMessagingTemplate.convertAndSend("/dialogs/" + user.getId() + "/new", chatDialogDtoTemp);
             });
         }
     }
@@ -145,9 +145,9 @@ public class ChatController {
     @MessageMapping("/ws/chat/dialog/{dialogId}/new/{userId}")
     public void handleNewMessage(@Validated @DestinationVariable(value = "dialogId") Long dialogId,
                                  @Validated @DestinationVariable(value = "userId") Long userId,
-                                 ChatMessageDto chatMessageDTO) {
-        chatMessageDTO.setUserFromId(userId);
-        ChatMessage chatMessage = conversionService.convert(chatMessageDTO, ChatMessage.class);
+                                 ChatMessageDto chatMessageDto) {
+        chatMessageDto.setUserFromId(userId);
+        ChatMessage chatMessage = conversionService.convert(chatMessageDto, ChatMessage.class);
         chatMessage = chatMessageService.create(chatMessage);
         ChatDialog dialog = chatMessage.getDialog();
         dialog.getUsers().stream()
@@ -157,13 +157,13 @@ public class ChatController {
         dialog.setUpdateDate(Calendar.getInstance());
         dialog = chatDialogService.update(dialog);
 
-        chatMessageDTO = conversionService.convert(chatMessage, ChatMessageDto.class);
+        chatMessageDto = conversionService.convert(chatMessage, ChatMessageDto.class);
 
         for (User user : dialog.getUsers()) {
-            final ChatMessageDto finalChatMessageDTO = chatMessageDTO;
+            final ChatMessageDto finalChatMessageDto = chatMessageDto;
             executorService.execute(() -> {
                 String url = String.format("/dialog/%s/new/%s", dialogId, user.getId());
-                simpMessagingTemplate.convertAndSend(url, finalChatMessageDTO);
+                simpMessagingTemplate.convertAndSend(url, finalChatMessageDto);
 
                 // send to header
                 String headerUrl = String.format("/dialog/unreadCount/%s/new", user.getId());

@@ -22,7 +22,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <h3>Enter your credentials</h3>
-                    <form:form cssClass="signup-form" method="POST" modelAttribute="userDTO" action="/auth">
+                    <form:form cssClass="signup-form" method="POST" modelAttribute="userDto" action="/auth">
                         <spring:bind path="email">
                             <div class="form-input-group">
                                 <i class="fa fa-envelope"></i><form:input id="email" type="email" required="required" placeholder="Enter your email" path="email" />

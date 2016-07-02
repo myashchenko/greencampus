@@ -43,8 +43,8 @@ public class CourseDtoToCourseConverter implements Converter<CourseWithThemesDto
 
         if (course.getThemes() != null) {
             List<CourseTheme> courseThemeList = new ArrayList<>();
-            for (CourseThemeDto courseThemeDTO : courseDto.getCourseThemes()) {
-                courseThemeList.add(conversionService.convert(courseThemeDTO, CourseTheme.class));
+            for (CourseThemeDto courseThemeDto : courseDto.getCourseThemes()) {
+                courseThemeList.add(conversionService.convert(courseThemeDto, CourseTheme.class));
             }
             course.setThemes(courseThemeList);
         }
