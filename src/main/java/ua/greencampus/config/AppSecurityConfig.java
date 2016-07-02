@@ -71,7 +71,7 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
         ).permitAll();
         http.authorizeRequests().antMatchers("/chat/**", "/user/update").authenticated();
         http.authorizeRequests().antMatchers("/course/create").hasRole("TEACHER");
-        http.authorizeRequests().antMatchers("/user/update/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers("/user/update/**", "/user/delete/**").hasRole("ADMIN");
         http.csrf().disable();
         http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedPage("/access-denied")

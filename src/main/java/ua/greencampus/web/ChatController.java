@@ -11,10 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import ua.greencampus.dto.ChatDialogDTO;
 import ua.greencampus.dto.ChatMessageDTO;
 import ua.greencampus.entity.ChatDialog;
@@ -82,13 +79,13 @@ public class ChatController {
         webDataBinder.addValidators(chatDialogDTOValidator);
     }
 
-    @RequestMapping(value = "/chat", method = RequestMethod.GET)
+    @GetMapping(value = "/chat")
     public String getChat() {
         return "chat";
     }
 
-    @RequestMapping(value = "/chat/new/{userId}", method = RequestMethod.POST)
-    public String createChat(@PathVariable(value = "userId") Long userToId, Model model) {
+    @PostMapping(value = "/chat/new/{userId}")
+    public String createChat(@PathVariable(value = "userId") Long userToId) {
         ChatDialog chatDialog;
         if ((chatDialog = chatDialogService.getByUserIds(userToId, authenticationService.getLoggedInUserId())) == null) {
             ChatDialogDTO chatDialogDTO = new ChatDialogDTO();

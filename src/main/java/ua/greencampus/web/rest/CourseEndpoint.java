@@ -38,7 +38,7 @@ public class CourseEndpoint {
     @Autowired
     private CourseService courseService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getByParams(@RequestParam(value = "offset", defaultValue = "0", required = false) int offset,
                                       @RequestParam(value = "size", defaultValue = "20", required = false) int size,
                                       @RequestParam(value = "sort", defaultValue = "", required = false) String sort) {
@@ -56,7 +56,7 @@ public class CourseEndpoint {
         return ResponseEntity.ok(new EntityListResponse<>(courseDTOs));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
         courseIdValidator.validate(id, bindingResult);
@@ -69,8 +69,7 @@ public class CourseEndpoint {
         return ResponseEntity.ok(new EntityResponse<>(courseDTO));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> create(@RequestBody CourseDTO courseDTO, BindingResult bindingResult) {
         courseDTOValidator.validate(courseDTO, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -85,10 +84,10 @@ public class CourseEndpoint {
         return ResponseEntity.ok(new EntityResponse<>(courseDTO));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE,
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id,
-                                               @RequestBody CourseDTO courseDTO, BindingResult bindingResult) {
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseDTO courseDTO,
+                                               BindingResult bindingResult) {
         courseDTO.setId(id);
         courseDTOValidator.validate(courseDTO, bindingResult);
         courseIdValidator.validate(id, bindingResult);
@@ -104,7 +103,7 @@ public class CourseEndpoint {
         return ResponseEntity.ok(new EntityResponse<>(courseDTO));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id) {
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
         courseIdValidator.validate(id, bindingResult);

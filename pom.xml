@@ -10,9 +10,9 @@
     <packaging>war</packaging>
 
     <properties>
-        <spring.version>4.2.5.RELEASE</spring.version>
+        <spring.version>4.3.0.RELEASE</spring.version>
         <hibernate.version>4.3.5.Final</hibernate.version>
-        <spring.security>4.0.4.RELEASE</spring.security>
+        <spring.security>4.1.0.RELEASE</spring.security>
     </properties>
 
     <dependencies>
@@ -164,12 +164,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
-            <version>4.2.1.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-messaging</artifactId>
-            <version>4.2.1.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>

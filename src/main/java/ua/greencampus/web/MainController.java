@@ -1,6 +1,7 @@
 package ua.greencampus.web;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -10,15 +11,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class MainController {
 
-    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/", "/home"})
     public String homePage() {
         return "home";
     }
 
-    @RequestMapping(value = "/about", method = RequestMethod.GET)
-    public String aboutPage() { return "about"; }
+    @GetMapping(value = "/about")
+    public String aboutPage() {
+        return "about";
+    }
 
-    @RequestMapping(value = "/access-denied", method = RequestMethod.GET)
+    @GetMapping(value = "/access-denied")
     public String accessDenied() {
         return "accessDenied";
     }

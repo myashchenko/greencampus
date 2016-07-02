@@ -17,12 +17,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/file")
-public class FileEndPoint {
+public class FileEndpoint {
 
     @Autowired
     private Cloudinary cloudinary;
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @PostMapping(value = "/upload")
     public ResponseEntity FileUpload(@RequestParam("file") MultipartFile file) {
         String urlToFile = null;
         try {
@@ -39,7 +39,7 @@ public class FileEndPoint {
     }
 
 
-    @RequestMapping(value = "/theme/{id}", method = RequestMethod.POST)
+    @PostMapping(value = "/theme/{id}")
     public ResponseEntity ThemeFileUpload(@PathVariable("id") Long themeId, @RequestParam("file") MultipartFile file) {
         String urlToFile = file.getOriginalFilename();
 

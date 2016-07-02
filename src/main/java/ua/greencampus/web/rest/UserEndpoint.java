@@ -23,7 +23,8 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping(value = "/api/user")
-public class UserEndPoint {
+public class UserEndpoint {
+
     @Autowired
     @Qualifier("userIdValidator")
     private Validator userIdValidator;
@@ -49,7 +50,7 @@ public class UserEndPoint {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getByParams(@RequestParam(value = "offset", defaultValue = "0", required = false) int offset,
                                       @RequestParam(value = "size", defaultValue = "20", required = false) int size,
                                       @RequestParam(value = "sort", defaultValue = "", required = false) String sort) {
@@ -66,7 +67,7 @@ public class UserEndPoint {
         return ResponseEntity.ok(new EntityListResponse<>(userDTOs));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
         userIdValidator.validate(id, bindingResult);
@@ -78,7 +79,7 @@ public class UserEndPoint {
         return ResponseEntity.ok(new EntityResponse<>(userDTO));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> create(@RequestBody UserDTO userDTO, BindingResult bindingResult) {
         userDTOValidator.validate(userDTO, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -95,9 +96,10 @@ public class UserEndPoint {
         return ResponseEntity.ok(new EntityResponse<>(userDTO));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody UserDTO
-            userDTO, BindingResult bindingResult) {
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody UserDTO userDTO,
+                                               BindingResult bindingResult) {
         userDTO.setId(id);
         emailDTOValidator.validate(userDTO, bindingResult);
         userIdValidator.validate(id, bindingResult);
@@ -112,8 +114,11 @@ public class UserEndPoint {
     }
 
 
-    @RequestMapping(value = "/pass/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> updatePassword(@PathVariable("id") Long id, @RequestBody PasswordDTO passwordDTO, BindingResult bindingResult) {
+    @PutMapping(value = "/pass/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> updatePassword(@PathVariable("id") Long id,
+                                                       @RequestBody PasswordDTO passwordDTO,
+                                                       BindingResult bindingResult) {
         passwordDTO.setId(id);
         passwordDTOValidator.validate(passwordDTO, bindingResult);
         if (bindingResult.hasErrors()) {
@@ -130,7 +135,7 @@ public class UserEndPoint {
         return ResponseEntity.ok(new EntityResponse<>(userDTO));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id) {
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
         userIdValidator.validate(id, bindingResult);

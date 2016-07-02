@@ -28,7 +28,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/api/theme")
-public class ThemeEndPoint {
+public class ThemeEndpoint {
 
     @Autowired
     @Qualifier("themeIdValidator")
@@ -51,7 +51,7 @@ public class ThemeEndPoint {
     @Autowired
     CourseService courseService;
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
         themeIdValidator.validate(id, bindingResult);
@@ -63,8 +63,10 @@ public class ThemeEndPoint {
         return ResponseEntity.ok(new EntityResponse<>(themeDTO));
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> create(@RequestBody CourseThemeDTO themeDTO, @RequestParam(name = "courseId", required = true) Long courseId, BindingResult bindingResult){
+    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> create(@RequestBody CourseThemeDTO themeDTO,
+                                               @RequestParam(name = "courseId", required = true) Long courseId,
+                                               BindingResult bindingResult){
         themeDTOValidator.validate(themeDTO, bindingResult);
         if (bindingResult.hasErrors()){
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
@@ -78,8 +80,10 @@ public class ThemeEndPoint {
         return ResponseEntity.ok(new EntityResponse<>(themeDTO));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseThemeDTO themeDTO, BindingResult bindingResult){
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseThemeDTO themeDTO,
+                                               BindingResult bindingResult){
         themeDTO.setId(id);
         themeDTOValidator.validate(themeDTO, bindingResult);
         themeIdValidator.validate(id, bindingResult);
@@ -92,7 +96,7 @@ public class ThemeEndPoint {
         return ResponseEntity.ok(new EntityResponse<>(themeDTO));
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id, BindingResult bindingResult) {
         themeIdValidator.validate(id, bindingResult);
         if (bindingResult.hasErrors()){
