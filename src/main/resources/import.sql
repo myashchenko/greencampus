@@ -1,3 +1,8 @@
+ALTER TABLE course ADD COLUMN course_text tsvector;
+CREATE INDEX course_text_gin ON course USING gin(course_text);
+DROP TRIGGER IF EXISTS ts_course_text ON course;
+CREATE TRIGGER ts_course_text BEFORE INSERT OR UPDATE ON course FOR EACH ROW EXECUTE PROCEDURE tsvector_update_trigger(course_text, 'pg_catalog.english', title, description);
+
 INSERT INTO PUBLIC.users (id,email,password,role, name) VALUES (1, 'email1@email.com', '$2a$10$0b2AErbUuyqDQ/Fw.P7Mz..dRa/cZlnWfzwCCsko8SSIs/qgMXGCa', 'ROLE_TEACHER', 'Name Name1');
 INSERT INTO PUBLIC.users (id,email,password,role, name) VALUES (2, 'email2@email.com', '$2a$10$0b2AErbUuyqDQ/Fw.P7Mz..dRa/cZlnWfzwCCsko8SSIs/qgMXGCa', 'ROLE_UNACTIVE', 'Name Name2');
 INSERT INTO PUBLIC.users (id,email,password,role, name) VALUES (3, 'email3@email.com', 'pass123', 'ROLE_UNACTIVE', 'Name Name3');

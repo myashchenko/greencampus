@@ -73,4 +73,10 @@ public class CourseServiceImpl implements CourseService {
     public void delete(Course lecture) {
         lectureDao.delete(lecture);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Course> search(String keywords) {
+        return lectureDao.findByKeywords(keywords);
+    }
 }

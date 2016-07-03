@@ -27,6 +27,11 @@
                 <li>
                     <a href="/users">Users</a>
                 </li>
+                <li>
+                    <input type="text" name="search_text" id="search_text" placeholder="Search"/>
+                    <!-- todo maybe button -->
+                    <%--<input type="button" name="search_button" id="search_button"></a>--%>
+                </li>
             </ul>
             <ul class="nav navbar-nav pull-right">
                 <li>

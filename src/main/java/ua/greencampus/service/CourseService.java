@@ -14,4 +14,5 @@ public interface CourseService {
     List<Course> getByParams(int offset, int size, String sort);
     Course update(Course lecture);
     void delete(Course lecture);
+    List<Course> search(String keywords);
 }

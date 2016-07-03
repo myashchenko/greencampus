@@ -41,13 +41,16 @@ public class CourseEndpoint {
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
                                       @RequestParam(value = "size", defaultValue = "20", required = false) int size,
-                                      @RequestParam(value = "sort", defaultValue = "", required = false) String sort) {
+                                      @RequestParam(value = "sort", defaultValue = "", required = false) String sort,
+                                      @RequestParam(value = "keywords", required = false) String keywords) {
         BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "page");
         if (page < 0 || size < 0) {
             bindingResult.rejectValue("bad_param", page < 0 ? "page" : "size" + " must be > 0");
             return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
         }
-        List<Course> courseList = courseService.getByParams(page, size, sort);
+
+        List<Course> courseList = keywords == null ?
+                courseService.getByParams(page, size, sort) : courseService.search(keywords);
 
         List<CourseDto> courseDtos = courseList.stream()
                 .map(c -> conversionService.convert(c, CourseDto.class))

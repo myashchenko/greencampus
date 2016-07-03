@@ -1,0 +1,51 @@
+#search {
+    width: 357px;
+    margin: 4px;
+}
+
+#search_text {
+    width: 297px;
+    padding: 15px 0 15px 20px;
+    font-size: 16px;
+    font-family: Montserrat, sans-serif;
+    border: 10px;
+    height: 50px;
+    margin: 1px;
+    color: white;
+    outline: none;
+    background: #1f7f5c;
+    float: left;
+    box-sizing: border-box;
+    transition: all 0.15s;
+}
+
+::-webkit-input-placeholder { /* WebKit browsers */
+    color: white;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: white;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: white;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: white;
+}
+
+#search_text:focus {
+    background: rgb(64, 151, 119);
+}
+
+#search_button {
+    border: 0 none;
+    background: #1f7f5c url('/resources/images/search.png') center no-repeat;
+    width: 60px;
+    float: left;
+    padding: 0;
+    text-align: center;
+    height: 52px;
+    cursor: pointer;
+}
