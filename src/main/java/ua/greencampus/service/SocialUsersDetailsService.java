@@ -11,6 +11,7 @@ import org.springframework.social.security.SocialUserDetailsService;
 import org.springframework.stereotype.Service;
 
 /**
+ * todo think about it
  * @author Nikolay Yashchenko
  */
 @Service

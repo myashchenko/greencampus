@@ -85,7 +85,8 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     @Override
     @Transactional(readOnly = true)
     public Connection<?> getConnection(ConnectionKey connectionKey) {
-        SocialUser socialUser = socialUserService.get(user.getId(), connectionKey.getProviderId(), connectionKey.getProviderUserId());
+        SocialUser socialUser = socialUserService.get(user.getId(), connectionKey.getProviderId(),
+                connectionKey.getProviderUserId());
         if (socialUser == null) {
             throw new NoSuchConnectionException(connectionKey);
         }
@@ -135,32 +136,28 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     public void addConnection(Connection<?> connection) {
         ConnectionData connectionData = connection.createData();
 
-        // check if this social account is already connected to a local account
-        List<Long> userIds = socialUserService.findUserIdsByProviderIdAndProviderUserId(
-                connectionData.getProviderId(), connectionData.getProviderUserId()
-        );
+        List<Long> userIds = socialUserService.findUserIdsByProviderIdAndProviderUserId(connectionData.getProviderId(),
+                connectionData.getProviderUserId());
         if (!userIds.isEmpty()) {
-            throw new DuplicateConnectionException(new ConnectionKey(connectionData.getProviderId(), connectionData.getProviderUserId()));
-        }
-        //check if this user already has a connected account for this provider
-        SocialUser socialUser = socialUserService.findByUserIdAndProviderId(user.getId(), connectionData.getProviderId());
-        if (socialUser != null) {
-            throw new DuplicateConnectionException(new ConnectionKey(connectionData.getProviderId(), connectionData.getProviderUserId()));
+            throw new DuplicateConnectionException(new ConnectionKey(connectionData.getProviderId(),
+                    connectionData.getProviderUserId()));
         }
 
-        Integer maxRank = socialUserService.selectMaxRankByUserIdAndProviderId(user.getId(), connectionData.getProviderId());
-        int nextRank = (maxRank == null ? 1 : maxRank + 1);
+        SocialUser socialUser = socialUserService.findByUserIdAndProviderId(user.getId(),
+                connectionData.getProviderId());
+        if (socialUser != null) {
+            throw new DuplicateConnectionException(new ConnectionKey(connectionData.getProviderId(),
+                    connectionData.getProviderUserId()));
+        }
 
         SocialUser newSocialUser = new SocialUser();
         newSocialUser.setUser(user);
         newSocialUser.setProviderId(connectionData.getProviderId());
         newSocialUser.setProviderUserId(connectionData.getProviderUserId());
-        newSocialUser.setRank(nextRank);
         newSocialUser.setDisplayName(connectionData.getDisplayName());
         newSocialUser.setProfileUrl(connectionData.getProfileUrl());
         newSocialUser.setImageUrl(connectionData.getImageUrl());
 
-        // encrypt these values
         newSocialUser.setAccessToken(encrypt(connectionData.getAccessToken()));
         newSocialUser.setSecret(encrypt(connectionData.getSecret()));
         newSocialUser.setRefreshToken(encrypt(connectionData.getRefreshToken()));
@@ -170,7 +167,8 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
         try {
             socialUserService.create(newSocialUser);
         } catch (DataIntegrityViolationException e) {
-            throw new DuplicateConnectionException(new ConnectionKey(connectionData.getProviderId(), connectionData.getProviderUserId()));
+            throw new DuplicateConnectionException(new ConnectionKey(connectionData.getProviderId(),
+                    connectionData.getProviderUserId()));
         }
     }
 
@@ -178,7 +176,8 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     @Override
     public void updateConnection(Connection<?> connection) {
         ConnectionData connectionData = connection.createData();
-        SocialUser socialUser = socialUserService.get(user.getId(), connectionData.getProviderId(), connectionData.getProviderUserId());
+        SocialUser socialUser = socialUserService.get(user.getId(), connectionData.getProviderId(),
+                connectionData.getProviderUserId());
         if (socialUser != null) {
             socialUser.setDisplayName(connectionData.getDisplayName());
             socialUser.setProfileUrl(connectionData.getProfileUrl());
@@ -203,7 +202,8 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     @Transactional
     @Override
     public void removeConnection(ConnectionKey connectionKey) {
-        SocialUser socialUser = socialUserService.get(user.getId(), connectionKey.getProviderId(), connectionKey.getProviderUserId());
+        SocialUser socialUser = socialUserService.get(user.getId(), connectionKey.getProviderId(),
+                connectionKey.getProviderUserId());
         if (socialUser != null) {
             socialUserService.delete(socialUser);
         }
@@ -224,7 +224,8 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     }
 
     private Connection<?> createConnection(ConnectionData connectionData) {
-        ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(connectionData.getProviderId());
+        ConnectionFactory<?> connectionFactory = connectionFactoryLocator.getConnectionFactory(
+                connectionData.getProviderId());
         return connectionFactory.createConnection(connectionData);
     }
 

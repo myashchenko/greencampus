@@ -48,30 +48,6 @@ public class SocialUserDaoImpl implements SocialUserDao {
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)
-    public List<SocialUser> findByProviderId(String providerId) {
-        return (List<SocialUser>) entityManager.unwrap(Session.class)
-                .createCriteria(SocialUser.class)
-                .add(Restrictions.eq(PROVIDER_ID, providerId))
-                .list();
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public User findUserByProviderUserIdAndProviderId(String userId, String providerId) {
-        return (User) entityManager.unwrap(Session.class).createCriteria(SocialUser.class)
-                .setProjection(Projections.property("user"))
-                .add(
-                        Restrictions.and(
-                                Restrictions.eq("providerUserId", userId),
-                                Restrictions.eq("providerId", providerId)
-                        )
-                )
-                .uniqueResult();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    @Transactional(readOnly = true)
     public List<SocialUser> findByUserId(Long userId) {
         return (List<SocialUser>) entityManager.unwrap(Session.class)
                 .createCriteria(SocialUser.class)
@@ -125,16 +101,6 @@ public class SocialUserDaoImpl implements SocialUserDao {
                 .add(Restrictions.eq(USER_ID, userId))
                 .add(Restrictions.eq(PROVIDER_ID, providerId))
                 .addOrder(Order.asc(RANK))
-                .uniqueResult();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Integer selectMaxRankByUserIdAndProviderId(Long userId, String providerId) {
-        return (Integer) entityManager.unwrap(Session.class).createCriteria(SocialUser.class)
-                .add(Restrictions.eq(USER_ID, userId))
-                .add(Restrictions.eq(PROVIDER_ID, providerId))
-                .setProjection(Projections.max(RANK))
                 .uniqueResult();
     }
 

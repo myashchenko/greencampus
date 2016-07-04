@@ -15,7 +15,6 @@ import java.util.Date;
 @Table(name = "social_user",
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = {"user_id", "provider_id", "provider_user_id"}),
-                @UniqueConstraint(columnNames = {"user_id", "provider_id", "rank"}),
                 @UniqueConstraint(columnNames = {"user_id", "provider_id"}),
                 @UniqueConstraint(columnNames = {"provider_id", "access_token"})
         })
@@ -39,9 +38,6 @@ public class SocialUser {
 
     @Column(name = "provider_user_id")
     private String providerUserId;
-
-    @Column(nullable = false)
-    private int rank;
 
     @Column(name = "display_name")
     private String displayName;

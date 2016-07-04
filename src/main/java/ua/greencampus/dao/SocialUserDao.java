@@ -15,10 +15,6 @@ public interface SocialUserDao {
 
     SocialUser update(SocialUser socialUser);
 
-    List<SocialUser> findByProviderId(String providerId);
-
-    User findUserByProviderUserIdAndProviderId(String userId, String providerId);
-
     List<SocialUser> findByUserId(Long userId);
 
     SocialUser findByUserIdAndProviderId(Long userId, String providerId);
@@ -28,8 +24,6 @@ public interface SocialUserDao {
     SocialUser get(Long userId, String providerId, String providerUserId);
 
     SocialUser findPrimaryByUserIdAndProviderId(Long userId, String providerId);
-
-    Integer selectMaxRankByUserIdAndProviderId(Long userId, String providerId);
 
     List<Long> findUserIdsByProviderIdAndProviderUserId(String providerId, String providerUserId);
 
