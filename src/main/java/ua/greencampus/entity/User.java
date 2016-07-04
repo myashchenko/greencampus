@@ -23,7 +23,7 @@ public class User {
     @GeneratedValue(generator = "user_seq_gen", strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @Column(name = "password", nullable = false)

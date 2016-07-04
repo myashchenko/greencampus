@@ -50,8 +50,8 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests().antMatchers(
-                "/resources/**", "/favicon.ico", "/api/**", "/auth", "/auth/**", "/ws/**", "/access-denied"
-        ).permitAll();
+                "/resources/**", "/favicon.ico", "/api/**", "/auth", "/auth/**", "/ws/**", "/access-denied",
+                "/signin/**").permitAll();
         http.authorizeRequests().antMatchers("/chat/**", "/user/update", "/user/account").authenticated();
         http.authorizeRequests().antMatchers("/course/create").hasRole("TEACHER");
         http.authorizeRequests().antMatchers("/user/update/**", "/api/user/delete/**").hasRole("ADMIN");

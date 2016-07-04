@@ -7,12 +7,13 @@
     <%@ include file="fragment/head.jspf" %>
     <script src="/resources/js/userCREATE.js"></script>
     <link rel="stylesheet" href="/resources/css/test/styles.css">
+    <script src="/resources/js/social.js"></script>
 </head>
 
 <body>
 <%@ include file="fragment/header.jspf" %>
 <div id="container">
-    <section id="form-id" class="sign-up section-padding text-center">
+    <section id="form-id" class="sign-up text-center">
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
@@ -29,6 +30,19 @@
                         </div>
                         <button id="btnSub" type="button" class="btn-fill sign-up-btn">Sign up</button>
                         <button type="submit" hidden></button>
+                    </form>
+                    <h3>or use social authorization</h3>
+                    <form class="signup-form" action="/signin/vkontakte" method="post">
+                        <input type="hidden" name="scope" value="photos,pages,offline,email" />
+                        <button type="submit" class="btn-fill sign-up-btn connectButton">Vkontakte</button>
+                    </form>
+                    <form class="signup-form" action="/signin/facebook" method="post">
+                        <input type="hidden" name="scope" value="public_profile,email"/>
+                        <button type="submit" class="btn-fill sign-up-btn connectButton">Facebook</button>
+                    </form>
+                    <form class="signup-form" action="/signin/google" method="post">
+                        <input type="hidden" name="scope" value="profile email"/>
+                        <button type="submit" class="btn-fill sign-up-btn connectButton">Google</button>
                     </form>
                 </div>
             </div>

@@ -1,13 +1,16 @@
 package ua.greencampus.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.social.connect.Connection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.context.request.WebRequest;
+import ua.greencampus.common.ProviderSignInUtils;
 import ua.greencampus.dto.UserDto;
 import ua.greencampus.service.AuthenticationService;
+import ua.greencampus.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,6 +22,9 @@ public class UserController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private UserService userService;
 
     @GetMapping(value = "/user/{id}")
     public String getById(@PathVariable(value = "id") Long id, Model model) {
@@ -80,5 +86,37 @@ public class UserController {
         request.getSession().setAttribute("url_redirect_login", redirect);
         model.addAttribute("userDto", new UserDto());
         return "login";
+    }
+
+    @Autowired
+    private ProviderSignInUtils providerSignInUtils;
+
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signup(Model model, ServletWebRequest request) {
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
+        if (connection == null) return "redirect:/login";
+
+        String email;
+        if ((email = connection.fetchUserProfile().getEmail()) == null) {
+            model.addAttribute("userDto", new UserDto());
+            return "email";
+        }
+        // todo better
+//        else if (userService.readByEmail(email) != null) {
+//            model.addAttribute("userDto", new UserDto());
+//            return "email";
+//        }
+        providerSignInUtils.doPostSignUp(email, request);
+        return "/helper/closeWindow";
+    }
+
+    @RequestMapping(value = "/signup/email", method = RequestMethod.POST)
+    public String continueSignup(@ModelAttribute UserDto userDto, ServletWebRequest request) {
+        Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
+        if (connection == null || userService.readByEmail(userDto.getEmail()) != null) {
+            return "/helper/closeWindow";
+        }
+        providerSignInUtils.doPostSignUp(userDto.getEmail(), request);
+        return "/helper/closeWindow";
     }
 }
