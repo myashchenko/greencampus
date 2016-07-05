@@ -1,7 +1,6 @@
 /**
  * Created by kolyan on 27.04.16.
  */
-
 var stompClient = Stomp.over(new SockJS('/ws/chat/dialogs'));
 
 $('document').ready(function() {
@@ -27,7 +26,7 @@ $('document').ready(function() {
                                 '<img class="media-object img-circle" style="max-height:40px;max-width:40px; margin-top: 5px; margin-left: 5px" src="' + avatarPath + '" />' +
                             '</a>' +
                             '<div class="media-body" >' +
-                                '<h5 id="dialog-id" data-dialog-id="' + entry.id + '" onclick="showDialog(event)" style="cursor: hand">'+ entry.dialogName +'</h5>' +
+                                '<h5 id="dialog-id" data-dialog-id="' + entry.id + '" onclick="showDialog(event)" style="cursor: pointer">'+ entry.dialogName +'</h5>' +
                                 '<small class="text-muted"><span id="message-count">' + unreadCount + '</span> unread messages</small>' +
                             '</div>' +
                         '</div>' +
@@ -104,7 +103,7 @@ $('document').ready(function() {
                                 '<img class="media-object img-circle" style="max-height:40px;max-width:40px; margin-top: 5px; margin-left: 5px" src="' + avatarPath + '" />' +
                             '</a>' +
                             '<div class="media-body" >' +
-                                '<h5 id="dialog-id" data-dialog-id="' + entry.id + '" onclick="showDialog(event)" style="cursor: hand">'+ entry.dialogName +'</h5>' +
+                                '<h5 id="dialog-id" data-dialog-id="' + entry.id + '" onclick="showDialog(event)" style="cursor: pointer">'+ entry.dialogName +'</h5>' +
                                 '<small class="text-muted"><span id="message-count">' + unreadCount + '</span> unread messages</small>' +
                             '</div>' +
                         '</div>' +

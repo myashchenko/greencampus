@@ -1,0 +1,19 @@
+<html class="full" lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<body>
+<th:block layout:fragment="addon">
+    <script src="/resources/js/userDELETE.js"></script>
+</th:block>
+<th:block layout:fragment="content">
+    <input type="hidden" id="userid" value="${userid}">
+    <div class="container">
+        <div id="user">
+
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" id="btnSub" type="button">Delete</button>
+    </div>
+</th:block>
+</body>
+
+</html>
+

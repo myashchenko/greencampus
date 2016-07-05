@@ -1,6 +1,0 @@
-<html>
-    <script>
-        opener.location = '/';
-        window.close();
-    </script>
-</html>

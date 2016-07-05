@@ -10,16 +10,6 @@ body {
 
 /* Header Image Background - Change the URL below to your image path (example: ../images/background.jpg) */
 
-.full {
-    /*background: url('http://placehold.it/1920x1080') no-repeat center center fixed;*/
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-    background-color: #dff0d8;
-
-}
-
 .login-form {
     margin-top: 20px;
 }
@@ -28,7 +18,8 @@ body {
     border: 2px solid #ccc;
     box-sizing: border-box;
 }
-.welcome{
+
+.welcome {
     margin-top: 100px;
     font-weight: bold;
     font-size: 75px;
@@ -36,7 +27,8 @@ body {
     color: #03cd41;
     text-shadow: 1px 0px 4px #1c6000;
 }
-.act-btn{
+
+.act-btn {
     background-color: transparent;
     border: 2px solid #ccc;
     color: #278900;
@@ -46,18 +38,22 @@ body {
     border-radius: 10px;
     margin: 20px;
 }
-.btn-border{
+
+.btn-border {
     content: "";
     height: 100px;
     display: inline-block;
 }
-#view-courses{
+
+#view-courses {
     margin-left: 100px;
 }
+
 #all-courses {
     padding-top: 20px;
     padding-left: 8.33%;
 }
+
 .course-in-list {
     background-color: lightgoldenrodyellow;
     border: 2px solid #449d44;
@@ -74,24 +70,30 @@ body {
 }
 
 #btnSub {
-    margin-top:10px;
+    margin-top: 10px;
 }
+
 #themeFile {
     margin-top: 10px;
 }
+
 #inputThemeTitle {
     margin-bottom: 20px;
 }
+
 .aboutName {
     margin-top: 10px;
 }
+
 .developer {
     margin: 10px 0px;
 }
+
 .devs {
     margin-left: 80px;
 }
-.aboutContent{
+
+.aboutContent {
     padding-top: 40px;
 }
 

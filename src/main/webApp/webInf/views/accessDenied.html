@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<body style="background-color: #dff0d8;">
+<th:block layout:fragment="addon">
+    <link rel="stylesheet" href="/resources/css/test/styles.css">
+</th:block>
+<th:block layout:fragment="content">
+    <section class="hero-access-denied">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <div class="hero-content text-center">
+                        <h1>You do not have sufficient permissions to access this page</h1>
+                        <p class="intro">Only authorized person have permissions to view this page</p>
+
+                        <a href="/login" class="btn-new btn-accent btn-large-new btn-fill">Sign in</a>
+                        <a href="/user/create" id="create-course" class="btn-new btn-accent btn-large-new btn-fill">Join
+                            us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</th:block>
+</body>
+
+</html>

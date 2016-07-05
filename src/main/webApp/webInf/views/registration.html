@@ -1,0 +1,31 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<body>
+<th:block layout:fragment="content">
+    <h2 class="col-lg-6 col-lg-offset-3">Registration Form</h2>
+
+    <div class="login-form col-lg-6 col-lg-offset-3">
+        <form method="POST" th:object="${userDto}" action="registration">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-user"></i></div>
+                    <input type="text" class="form-control" placeholder="Email" th:field="*{email}"/>
+                </div>
+                <span class="help-block has-error" id="email-error"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="fa fa-lock"></i></div>
+                    <input type="password" class="form-control" id="password" placeholder="Password"
+                           th:field="*{password}"/>
+                </div>
+                <span class="help-block has-error" id="password-error"></span>
+            </div>
+            <button type="submit" class="btn btn-group btn-success">Sign Up</button>
+        </form>
+    </div>
+    <br/>
+</th:block>
+</body>
+</html>

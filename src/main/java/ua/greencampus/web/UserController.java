@@ -36,13 +36,13 @@ public class UserController {
     public String getUser(Model model) {
         Long id = authenticationService.getLoggedInUserId();
         model.addAttribute("userid", id);
-        return "userREAD";
+        return "userRead";
     }
 
     @GetMapping(value = "/user/create")
     public String createUser(Model model) {
         model.addAttribute("message", "create");
-        return "userCREATE";
+        return "userCreate";
     }
 
 
@@ -58,7 +58,7 @@ public class UserController {
         Long id = authenticationService.getLoggedInUserId();
         model.addAttribute("userid", id);
         model.addAttribute("message", "update");
-        return "userUPDATE";
+        return "userUpdate";
     }
 
     @GetMapping(value = "/user/update/pass")
@@ -77,7 +77,7 @@ public class UserController {
     @GetMapping(value = "/user/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id, Model model) {
         model.addAttribute("userid", id);
-        return "userDELETE";
+        return "userDelete";
     }
 
     @GetMapping(value = "/login")

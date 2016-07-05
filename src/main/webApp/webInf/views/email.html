@@ -1,0 +1,38 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="/resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="/resources/css/full.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/css/search.css" rel="stylesheet" type="text/css"/>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="/resources/js/jquery.js"></script>
+    <script src="/resources/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/resources/css/test/styles.css">
+</head>
+<body>
+<section id="form-id" class="sign-up text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <h3>Enter your email</h3>
+                <form class="signup-form" method="POST" th:object="${userDto}" action="/signup/email">
+                    <div class="form-input-group">
+                        <i class="fa fa-envelope"></i>
+                        <input id="email" type="email" required="required" placeholder="Enter your email"
+                               th:field="*{email}"/>
+                    </div>
+                    <button id="btnSub" type="submit" class="btn-fill sign-up-btn">Continue</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

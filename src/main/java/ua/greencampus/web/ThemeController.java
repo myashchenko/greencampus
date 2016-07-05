@@ -27,6 +27,6 @@ public class ThemeController {
     public String createUser(@PathVariable Long courseId, Model model) {
         model.addAttribute("courseId", courseId);
         model.addAttribute("message", "create");
-        return "themeCREATE";
+        return "themeCreate";
     }
 }

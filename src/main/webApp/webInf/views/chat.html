@@ -1,0 +1,49 @@
+<html style="height: 100%" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<body>
+<th:block layout:fragment="content">
+    <link rel="stylesheet" href="/resources/css/test/normalize.min.css">
+
+    <script src="/resources/js/chat.js"></script>
+    <div class="container" style="min-height: 100%">
+        <div class="row" style="padding-top:20px;">
+            <h4 class="text-center">CHAT</h4>
+            <br/>
+            <div id="message-history" style="visibility: hidden" class="col-md-8">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        RECENT CHAT HISTORY
+                    </div>
+                    <div id="scroll-chat-panel" class="panel-body pre-scrollable" style="height: 1000px">
+                        <ul id="chat-messages-panel" class="media-list">
+
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="new-message-text" type="text" class="form-control" placeholder="Enter Message"/>
+                        <span class="input-group-btn">
+                            <button id="send-message-button" class="btn btn-info" type="button">SEND</button>
+                        </span>
+                            <input type="hidden" id="current-dialog-id"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">USERS</div>
+                    <div class="panel-body">
+                        <ul id="user_panel_id" class="media-list">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+
+</html>
+

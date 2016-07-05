@@ -1,0 +1,42 @@
+<html class="full" lang="en" ng-app="greenApp.users"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+
+<body>
+<th:block layout:fragment="addon">
+    <link rel="stylesheet" href="/resources/css/test/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script src="/rest/js/controller/users.js"></script>
+</th:block>
+<th:block layout:fragment="content">
+    <section class="user text-center" ng-controller="UsersController as controller">
+        <div class="container-fluid">
+            <div class="row" ng-repeat="users in controller.users">
+                <div class="col-md-3" ng-repeat="user in users">
+                    <article class="user">
+                        <figure>
+                            <a href="/user/{{user.id}}" class="single_image">
+                                <div class="user-img-wrap user-avatar">
+                                    <div class="overlay">
+                                        <i class="fa fa-search"></i>
+                                    </div>
+                                    <img ng-if="user.avatar" src="{{user.avatar.path}}" alt="blog image"/>
+                                    <img ng-if="!user.avatar"
+                                         src="http://www.localevolutionmedia.com/wp-content/uploads/2015/02/ncf_userpic1.png"
+                                         alt="blog image"/>
+                                </div>
+                            </a>
+                            <figcaption>
+                                <h2><a href="/user/{{user.id}}" class="user-category" data-toggle="tooltip"
+                                       data-placement="top"
+                                       data-original-title="See more posts">{{user.name}}</a></h2>
+                            </figcaption>
+                        </figure>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+</th:block>
+</body>
+</html>
+

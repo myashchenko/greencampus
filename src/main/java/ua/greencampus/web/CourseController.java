@@ -26,7 +26,7 @@ public class CourseController {
     @GetMapping(value = "/create")
     public String createUser(Model model) {
         model.addAttribute("message", "create");
-        return "courseCREATE";
+        return "courseCreate";
     }
 }
 
