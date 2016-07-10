@@ -2,8 +2,6 @@ package ua.greencampus.common;
 
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import org.springframework.web.servlet.view.RedirectView;
-import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import ua.greencampus.service.AuthenticationService;
 
 import javax.servlet.http.HttpServletRequest;

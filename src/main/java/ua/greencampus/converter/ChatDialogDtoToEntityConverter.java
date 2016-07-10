@@ -22,7 +22,9 @@ public class ChatDialogDtoToEntityConverter implements Converter<ChatDialogDto, 
 
     @Override
     public ChatDialog convert(ChatDialogDto chatDialogDto) {
-        if (chatDialogDto == null) return null;
+        if (chatDialogDto == null) {
+            return null;
+        }
 
         ChatDialog chatDialog = new ChatDialog();
         Set<User> userSet = chatDialogDto.getUsersIds().stream()

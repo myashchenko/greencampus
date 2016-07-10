@@ -16,6 +16,7 @@ import java.util.Map;
  */
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/file")
 public class FileEndpoint {
 
@@ -23,7 +24,7 @@ public class FileEndpoint {
     private Cloudinary cloudinary;
 
     @PostMapping(value = "/upload")
-    public ResponseEntity FileUpload(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity fileUpload(@RequestParam("file") MultipartFile file) {
         String urlToFile = null;
         try {
             File newFile = new File(file.getOriginalFilename());
@@ -40,7 +41,7 @@ public class FileEndpoint {
 
 
     @PostMapping(value = "/theme/{id}")
-    public ResponseEntity ThemeFileUpload(@PathVariable("id") Long themeId, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity themeFileUpload(@RequestParam("file") MultipartFile file) {
         String urlToFile = file.getOriginalFilename();
 
         try {

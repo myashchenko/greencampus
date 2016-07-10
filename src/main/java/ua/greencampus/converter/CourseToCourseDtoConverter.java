@@ -21,7 +21,9 @@ public class CourseToCourseDtoConverter implements Converter<Course, CourseDto> 
 
     @Override
     public CourseDto convert(Course course) {
-        if (course == null) return null;
+        if (course == null) {
+            return null;
+        }
 
         CourseDto courseDto = new CourseDto();
         courseDto.setId(course.getId());

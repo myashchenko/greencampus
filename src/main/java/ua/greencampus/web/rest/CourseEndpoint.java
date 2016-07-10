@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
  * @author Nikolay Yashchenko
  */
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/course")
 public class CourseEndpoint {
 

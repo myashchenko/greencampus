@@ -31,7 +31,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     @Override
     @Transactional(readOnly = true)
     public MultiValueMap<String, Connection<?>> findAllConnections() {
-        MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
+        MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<>();
 
         List<SocialUser> allSocialUsers = socialUserService.findByUserId(user.getId());
         for (SocialUser socialUser : allSocialUsers) {
@@ -46,7 +46,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     @Override
     @Transactional(readOnly = true)
     public List<Connection<?>> findConnections(String providerId) {
-        List<Connection<?>> connections = new ArrayList<Connection<?>>();
+        List<Connection<?>> connections = new ArrayList<>();
 
         SocialUser socialUser = socialUserService.findByUserIdAndProviderId(user.getId(), providerId);
         if (socialUser != null) {
@@ -72,7 +72,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     @Override
     @Transactional(readOnly = true)
     public MultiValueMap<String, Connection<?>> findConnectionsToUsers(MultiValueMap<String, String> providerUserIds) {
-        MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<String, Connection<?>>();
+        MultiValueMap<String, Connection<?>> connections = new LinkedMultiValueMap<>();
 
         SocialUser socialUser = socialUserService.findByUserIdAndProviderUserIds(user.getId(), providerUserIds);
         ConnectionData connectionData = toConnectionData(socialUser);
@@ -230,7 +230,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     }
 
     private Long convertZeroToNull(Long expireTime) {
-        return (expireTime != null && expireTime == 0 ? null : expireTime);
+        return expireTime != null && expireTime == 0 ? null : expireTime;
     }
 
     private String decrypt(String encryptedText) {

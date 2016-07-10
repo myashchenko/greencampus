@@ -19,6 +19,7 @@ public class FileDto {
         this.name = name;
     }
 
+    // hibernate need
     public FileDto() {
     }
 }

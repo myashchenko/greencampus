@@ -11,7 +11,9 @@ public class ChatDialogToDtoConverter implements Converter<ChatDialog, ChatDialo
 
     @Override
     public ChatDialogDto convert(ChatDialog chatDialog) {
-        if (chatDialog == null) return null;
+        if (chatDialog == null) {
+            return null;
+        }
 
         ChatDialogDto chatDialogDto = new ChatDialogDto();
         chatDialogDto.setId(chatDialog.getId());

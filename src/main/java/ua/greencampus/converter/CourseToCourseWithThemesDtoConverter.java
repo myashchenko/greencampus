@@ -29,7 +29,9 @@ public class CourseToCourseWithThemesDtoConverter implements Converter<Course, C
 
     @Override
     public CourseWithThemesDto convert(Course course) {
-        if (course == null) return null;
+        if (course == null) {
+            return null;
+        }
 
         CourseWithThemesDto courseDto = new CourseWithThemesDto();
         courseDto.setId(course.getId());

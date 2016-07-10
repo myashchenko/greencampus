@@ -4,19 +4,18 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 import ua.greencampus.entity.SocialUser;
-import ua.greencampus.entity.User;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Nikolay Yashchenko
@@ -114,9 +113,8 @@ public class SocialUserDaoImpl implements SocialUserDao {
                 .add(Restrictions.eq(PROVIDER_USER_ID, providerUserId))
                 .list();
         List<Long> userIds = new ArrayList<>(socialUsers.size());
-        for (SocialUser socialUser : socialUsers) {
-            userIds.add(socialUser.getUser().getId());
-        }
+        userIds.addAll(socialUsers.stream()
+                .map(socialUser -> socialUser.getUser().getId()).collect(Collectors.toList()));
         return userIds;
     }
 
@@ -130,9 +128,8 @@ public class SocialUserDaoImpl implements SocialUserDao {
                 .add(Restrictions.in(PROVIDER_USER_ID, providerUserIds))
                 .list();
         List<Long> userIds = new ArrayList<>(socialUsers.size());
-        for (SocialUser socialUser : socialUsers) {
-            userIds.add(socialUser.getUser().getId());
-        }
+        userIds.addAll(socialUsers.stream().map(socialUser -> socialUser.getUser().getId())
+                .collect(Collectors.toList()));
         return userIds;
     }
 

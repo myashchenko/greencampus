@@ -1,7 +1,6 @@
 package ua.greencampus.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ua.greencampus.entity.ChatDialog;
 import ua.greencampus.entity.ChatMessage;
 
 import java.util.List;

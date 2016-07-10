@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
  * @author Arsenii on 31.03.2016.
  */
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/user")
 public class UserEndpoint {
 

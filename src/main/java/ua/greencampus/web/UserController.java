@@ -1,18 +1,21 @@
 package ua.greencampus.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
-import org.springframework.web.context.request.WebRequest;
 import ua.greencampus.common.ProviderSignInUtils;
 import ua.greencampus.dto.UserDto;
 import ua.greencampus.service.AuthenticationService;
 import ua.greencampus.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Nikolay Yashchenko
@@ -91,7 +94,7 @@ public class UserController {
     @Autowired
     private ProviderSignInUtils providerSignInUtils;
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    @GetMapping(value = "/signup")
     public String signup(Model model, ServletWebRequest request) {
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
         if (connection == null) return "redirect:/login";
@@ -110,7 +113,7 @@ public class UserController {
         return "/helper/closeWindow";
     }
 
-    @RequestMapping(value = "/signup/email", method = RequestMethod.POST)
+    @PostMapping(value = "/signup/email")
     public String continueSignup(@ModelAttribute UserDto userDto, ServletWebRequest request) {
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
         if (connection == null || userService.readByEmail(userDto.getEmail()) != null) {
@@ -118,5 +121,19 @@ public class UserController {
         }
         providerSignInUtils.doPostSignUp(userDto.getEmail(), request);
         return "/helper/closeWindow";
+    }
+
+    @PostMapping(value = "/login/http-basic")
+    @ResponseBody
+    @CrossOrigin
+    public Map<String, Object> principal(Principal principal, HttpServletRequest request) {
+        if (principal != null) {
+            Map<String, Object> result = new HashMap<>();
+            result.put("userId", authenticationService.getLoggedInUserId());
+            result.put("role", SecurityContextHolder.getContext().getAuthentication().getAuthorities()
+                    .iterator().next());
+            return result;
+        }
+        return null;
     }
 }

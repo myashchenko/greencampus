@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import ua.greencampus.common.RestAuthenticationSuccessHandler;
 
@@ -73,11 +75,25 @@ public class AppSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/auth").usernameParameter("email").passwordParameter("password")
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler((req, res, authentication) -> res.sendRedirect("/login"));
+
+        http.httpBasic().authenticationEntryPoint(getBasicAuthenticationEntryPoint());
     }
 
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public BasicAuthenticationFilter getBasicAuthentication() throws Exception {
+        return new BasicAuthenticationFilter(authenticationManagerBean(), getBasicAuthenticationEntryPoint());
+    }
+
+    @Bean
+    public BasicAuthenticationEntryPoint getBasicAuthenticationEntryPoint(){
+        BasicAuthenticationEntryPoint basicAuthenticationEntryPoint = new BasicAuthenticationEntryPoint();
+        basicAuthenticationEntryPoint.setRealmName("GreenCampus Basic Authentication");
+        return basicAuthenticationEntryPoint;
     }
 }

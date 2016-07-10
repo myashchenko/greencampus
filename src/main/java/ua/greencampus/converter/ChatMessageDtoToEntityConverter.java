@@ -28,7 +28,9 @@ public class ChatMessageDtoToEntityConverter implements Converter<ChatMessageDto
 
     @Override
     public ChatMessage convert(ChatMessageDto chatMessageDto) {
-        if (chatMessageDto == null) return null;
+        if (chatMessageDto == null) {
+            return null;
+        }
 
         ChatMessage chatMessage = null;
         if (chatMessageDto.getId() != null) {

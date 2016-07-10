@@ -59,12 +59,12 @@ public class ChatDialog {
 
     public ChatDialog prepareDialogName(Long userId) {
         if (getDialogName() == null) {
-            String dialogName = getUsers().stream()
+            String newDialogName = getUsers().stream()
                     .filter(u -> !userId.equals(u.getId()))
                     .findFirst()
                     .map(User::getName)
                     .orElseThrow(IllegalArgumentException::new); // bad data in DB !!!!
-            setDialogName(dialogName);
+            setDialogName(newDialogName);
         }
 
         return this;
@@ -72,13 +72,13 @@ public class ChatDialog {
 
     public ChatDialog prepareAvatarPath(Long userId) {
         if (getDialogName() == null) {
-            String avatarPath = getUsers().stream()
+            String newAvatarPath = getUsers().stream()
                     .filter(u -> !userId.equals(u.getId()))
                     .findFirst()
                     .map(User::getAvatar)
                     .map(FileEntity::getPath)
                     .orElse(null);
-            setAvatarPath(avatarPath);
+            setAvatarPath(newAvatarPath);
         }
         return this;
     }

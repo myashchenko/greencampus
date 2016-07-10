@@ -12,7 +12,8 @@ public class ErrorDto {
     private String key;
     private String value;
 
-    public ErrorDto() {}
+    public ErrorDto() {
+    }
 
     public ErrorDto(String key, String value) {
         this.key = key;

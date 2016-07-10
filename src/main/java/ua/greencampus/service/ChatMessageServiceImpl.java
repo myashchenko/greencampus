@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.greencampus.dao.ChatMessageDao;
-import ua.greencampus.entity.ChatDialog;
 import ua.greencampus.entity.ChatMessage;
 
 import java.util.List;

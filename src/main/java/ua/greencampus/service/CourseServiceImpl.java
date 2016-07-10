@@ -10,7 +10,6 @@ import ua.greencampus.entity.Course;
 import ua.greencampus.entity.UserCourse;
 import ua.greencampus.entity.UserCourseRole;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

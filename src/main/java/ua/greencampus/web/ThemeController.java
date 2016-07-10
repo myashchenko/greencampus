@@ -5,7 +5,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author Ivan Mikho, created on 19.05.16.
@@ -21,7 +20,9 @@ public class ThemeController {
     }
 
     @GetMapping(value = "/{id}")
-    public String getById() { return "theme"; }
+    public String getById() {
+        return "theme";
+    }
 
     @GetMapping(value = "/create")
     public String createUser(@PathVariable Long courseId, Model model) {

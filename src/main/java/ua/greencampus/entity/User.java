@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.persistence.Id;
 
 /**
  * Created by Arsenii on 21.03.2016.
@@ -15,7 +14,7 @@ import javax.persistence.Id;
 @Table(name = "users")
 @Getter
 @Setter
-@EqualsAndHashCode(of = { "id", "email" })
+@EqualsAndHashCode(of = {"id", "email"})
 public class User {
 
     @Id

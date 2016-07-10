@@ -2,7 +2,6 @@ package ua.greencampus.dao;
 
 import org.springframework.util.MultiValueMap;
 import ua.greencampus.entity.SocialUser;
-import ua.greencampus.entity.User;
 
 import java.util.List;
 import java.util.Set;

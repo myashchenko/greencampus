@@ -26,6 +26,7 @@ import java.util.List;
  * Created by Ivan Mikho on 10.04.16.
  */
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/theme")
 public class ThemeEndpoint {
 

@@ -19,7 +19,9 @@ public class FileDtotoFileEntityConverter implements Converter<FileDto, FileEnti
 
     @Override
     public FileEntity convert(FileDto fileDto) {
-        if (fileDto.getPath() == null) return null;
+        if (fileDto.getPath() == null) {
+            return null;
+        }
         FileEntity file = null;
         Long fileId = fileDto.getId();
         if (fileId != null) {
