@@ -28,7 +28,8 @@ public class ChatDialog {
     private String dialogName;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "chat_dialog_users", joinColumns = @JoinColumn(name = "chat_dialog_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JoinTable(name = "chat_dialog_users", joinColumns = @JoinColumn(name = "chat_dialog_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
     @Temporal(TemporalType.TIMESTAMP)

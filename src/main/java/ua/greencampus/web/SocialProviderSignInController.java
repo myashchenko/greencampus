@@ -19,10 +19,9 @@ public class SocialProviderSignInController extends ProviderSignInController {
     @Autowired
     public SocialProviderSignInController(ConnectionFactoryLocator connectionFactoryLocator,
                                           UsersConnectionRepository usersConnectionRepository,
-                                          UserDetailsService userDetailsService,
-                                          UserService userService) {
-        super(connectionFactoryLocator, usersConnectionRepository,
-                new SimpleSignInAdapter(userDetailsService, userService));
+                                          UserDetailsService userDetailsService, UserService userService) {
+        super(connectionFactoryLocator, usersConnectionRepository, new SimpleSignInAdapter(userDetailsService,
+                userService));
     }
 
     @GetMapping(value = "/helper/closeWindow")

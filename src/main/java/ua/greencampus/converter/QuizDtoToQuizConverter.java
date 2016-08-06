@@ -21,10 +21,8 @@ public class QuizDtoToQuizConverter implements Converter<QuizDto, Quiz> {
     private ConversionService conversionService;
 
     public QuizDtoToQuizConverter(QuizService quizService, ConversionService conversionService) {
-
         this.quizService = quizService;
         this.conversionService = conversionService;
-
     }
 
     @Override

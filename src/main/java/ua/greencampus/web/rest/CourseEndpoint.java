@@ -25,19 +25,20 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/course")
 public class CourseEndpoint {
 
-    @Autowired
-    @Qualifier("idValidator")
     private Validator courseIdValidator;
-
-    @Autowired
-    @Qualifier("courseDtoValidator")
     private Validator courseDtoValidator;
-
-    @Autowired
     private ConversionService conversionService;
+    private CourseService courseService;
 
     @Autowired
-    private CourseService courseService;
+    public CourseEndpoint(@Qualifier("idValidator") Validator courseIdValidator,
+                          @Qualifier("courseDtoValidator") Validator courseDtoValidator,
+                          ConversionService conversionService, CourseService courseService) {
+        this.courseIdValidator = courseIdValidator;
+        this.courseDtoValidator = courseDtoValidator;
+        this.conversionService = conversionService;
+        this.courseService = courseService;
+    }
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int page,

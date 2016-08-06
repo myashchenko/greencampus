@@ -20,6 +20,7 @@ public class QuizQuestionToQuizQuestionDtoConverter implements Converter<QuizQue
     public QuizQuestionToQuizQuestionDtoConverter(ConversionService conversionService) {
         this.conversionService = conversionService;
     }
+
     @Override
     public QuizQuestionDto convert(QuizQuestion quizQuestion) {
         if (quizQuestion == null) {

@@ -1,9 +1,9 @@
 package ua.greencampus.entity;
 
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -12,6 +12,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "users")
+@DynamicUpdate
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"id", "email"})

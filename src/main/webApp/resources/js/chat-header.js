@@ -14,6 +14,7 @@ $('document').ready(function() {
 
         stompClient.subscribe('/dialog/unreadCount/' + window.userId + '/new', function (message) {
             $('#message-count').text(parseInt($('#message-count').text()) + 1);
+            document.getElementById('play').play();
         });
 
         setTimeout(function () {

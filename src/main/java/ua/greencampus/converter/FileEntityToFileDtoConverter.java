@@ -1,10 +1,8 @@
 package ua.greencampus.converter;
 
-
 import org.springframework.core.convert.converter.Converter;
 import ua.greencampus.dto.FileDto;
 import ua.greencampus.entity.FileEntity;
-
 
 /**
  * Created by Arsenii on 18.04.2016.

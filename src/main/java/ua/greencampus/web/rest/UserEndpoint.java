@@ -27,30 +27,28 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/user")
 public class UserEndpoint {
 
-    @Autowired
-    @Qualifier("userIdValidator")
     private Validator userIdValidator;
-
-    @Autowired
-    @Qualifier("userDtoValidator")
     private Validator userDtoValidator;
-
-    @Autowired
-    @Qualifier("emailDtoValidator")
     private Validator emailDtoValidator;
-
-    @Autowired
-    @Qualifier("passwordDtoValidator")
     private Validator passwordDtoValidator;
-
-    @Autowired
     private ConversionService conversionService;
-
-    @Autowired
     private UserService userService;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UserEndpoint(@Qualifier("userIdValidator") Validator userIdValidator,
+                        @Qualifier("userDtoValidator") Validator userDtoValidator,
+                        @Qualifier("emailDtoValidator") Validator emailDtoValidator,
+                        @Qualifier("passwordDtoValidator") Validator passwordDtoValidator,
+                        ConversionService conversionService, UserService userService, PasswordEncoder passwordEncoder) {
+        this.userIdValidator = userIdValidator;
+        this.userDtoValidator = userDtoValidator;
+        this.emailDtoValidator = emailDtoValidator;
+        this.passwordDtoValidator = passwordDtoValidator;
+        this.conversionService = conversionService;
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int page,

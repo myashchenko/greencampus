@@ -20,8 +20,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     private SocialUserDao socialUserService;
     private ConnectionFactoryLocator connectionFactoryLocator;
 
-    public ConnectionRepositoryImpl(User user,
-                                    SocialUserDao socialUserService,
+    public ConnectionRepositoryImpl(User user, SocialUserDao socialUserService,
                                     ConnectionFactoryLocator connectionFactoryLocator) {
         this.user = user;
         this.socialUserService = socialUserService;
@@ -64,7 +63,6 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     public <A> List<Connection<A>> findConnections(Class<A> apiType) {
         String providerId = connectionFactoryLocator.getConnectionFactory(apiType).getProviderId();
 
-        // do some lame stuff to make the casting possible
         List<?> connections = findConnections(providerId);
         return (List<Connection<A>>) connections;
     }

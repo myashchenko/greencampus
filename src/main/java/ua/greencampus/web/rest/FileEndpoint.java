@@ -20,8 +20,12 @@ import java.util.Map;
 @RequestMapping(value = "/api/file")
 public class FileEndpoint {
 
-    @Autowired
     private Cloudinary cloudinary;
+
+    @Autowired
+    public FileEndpoint(Cloudinary cloudinary) {
+        this.cloudinary = cloudinary;
+    }
 
     @PostMapping(value = "/upload")
     public ResponseEntity fileUpload(@RequestParam("file") MultipartFile file) {

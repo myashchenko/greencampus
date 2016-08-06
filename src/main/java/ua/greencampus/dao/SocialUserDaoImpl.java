@@ -12,6 +12,7 @@ import org.springframework.util.MultiValueMap;
 import ua.greencampus.entity.SocialUser;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -23,12 +24,12 @@ import java.util.stream.Collectors;
 @Repository
 public class SocialUserDaoImpl implements SocialUserDao {
 
-    private static final String USER_ID = "user.id";//field of entity user
+    private static final String USER_ID = "user.id";
     private static final String PROVIDER_ID = "providerId";
     private static final String PROVIDER_USER_ID = "providerUserId";
     private static final String RANK = "rank";
 
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Override

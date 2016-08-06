@@ -9,7 +9,7 @@
     <script src="/rest/js/controller/user.js"></script>
 </th:block>
 <th:block layout:fragment="content">
-    <input type="hidden" id="userid" value="${userid}">
+    <input type="hidden" id="userid" th:value="${userid}">
     <div id="user" class="container" ng-controller="UserController as controller">
         <div class="jumbotron col-lg-6 col-md-6 col-sm-offset-3">
             <div class="row">

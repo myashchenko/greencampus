@@ -14,16 +14,12 @@ import java.util.stream.Collectors;
 public class SocialUserConnectionRepository implements UsersConnectionRepository {
 
     private SocialUserDao socialUserDao;
-
     private ConnectionFactoryLocator connectionFactoryLocator;
-
     private UserService userService;
 
 
     public SocialUserConnectionRepository(SocialUserDao socialUserDao,
-                                         ConnectionFactoryLocator connectionFactoryLocator,
-                                         UserService userService
-    ) {
+                                          ConnectionFactoryLocator connectionFactoryLocator, UserService userService) {
         this.socialUserDao = socialUserDao;
         this.connectionFactoryLocator = connectionFactoryLocator;
         this.userService = userService;

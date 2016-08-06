@@ -25,7 +25,8 @@ public class ChatMessageToDtoConverter implements Converter<ChatMessage, ChatMes
         chatMessageDto.setUserFromName(chatMessage.getUserFrom().getName());
         chatMessageDto.setUserFromId(chatMessage.getUserFrom().getId());
         chatMessageDto.setDate(dateFormat.format(chatMessage.getSendDate().getTime()));
-        chatMessageDto.setAvatarPath(Optional.ofNullable(chatMessage.getUserFrom().getAvatar()).map(FileEntity::getPath).orElse(null));
+        chatMessageDto.setAvatarPath(Optional.ofNullable(chatMessage.getUserFrom().getAvatar())
+                .map(FileEntity::getPath).orElse(null));
 
         return chatMessageDto;
     }

@@ -22,8 +22,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableTransactionManagement
-@EnableJpaRepositories(basePackageClasses = Application.class, entityManagerFactoryRef = "entityManagerFactory",
-        transactionManagerRef = "transactionManager")
+@EnableJpaRepositories(basePackageClasses = Application.class)
 public class JpaConfig {
 
     @Value("${dataSource.driverClassName}")

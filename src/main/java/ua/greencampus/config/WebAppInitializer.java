@@ -14,17 +14,13 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{
-                JpaConfig.class, WebMvcConfig.class, AppSecurityConfig.class, ApplicationConfig.class,
-                WebSocketConfig.class, CloudinaryConfig.class, SocialConfig.class
-        };
+        return new Class<?>[]{ JpaConfig.class, WebMvcConfig.class, AppSecurityConfig.class, ApplicationConfig.class,
+                WebSocketConfig.class, CloudinaryConfig.class, SocialConfig.class };
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[]{
-                WebMvcConfig.class, AppSecurityConfig.class
-        };
+        return new Class<?>[]{ WebMvcConfig.class, AppSecurityConfig.class };
     }
 
     @Override
@@ -34,6 +30,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[]{new DelegatingFilterProxy("springSecurityFilterChain")};
+        return new Filter[]{ new DelegatingFilterProxy("springSecurityFilterChain") };
     }
 }

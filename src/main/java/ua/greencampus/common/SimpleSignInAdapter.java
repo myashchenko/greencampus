@@ -28,7 +28,8 @@ public class SimpleSignInAdapter implements SignInAdapter {
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
         User user = userService.read(Long.valueOf(localUserId));
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
-        Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
+                userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(auth);
         return "helper/closeWindow";
     }

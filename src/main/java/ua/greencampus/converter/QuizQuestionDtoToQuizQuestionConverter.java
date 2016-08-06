@@ -20,7 +20,8 @@ public class QuizQuestionDtoToQuizQuestionConverter implements Converter<QuizQue
     private QuizQuestionService quizQuestionService;
     private ConversionService conversionService;
 
-    public QuizQuestionDtoToQuizQuestionConverter(QuizQuestionService quizQuestionService, ConversionService conversionService){
+    public QuizQuestionDtoToQuizQuestionConverter(QuizQuestionService quizQuestionService,
+                                                  ConversionService conversionService) {
         this.quizQuestionService = quizQuestionService;
         this.conversionService = conversionService;
     }

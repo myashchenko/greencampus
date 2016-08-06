@@ -34,22 +34,6 @@ public class SocialConnectionAdapter {
         );
     }
 
-    public String getUserProviderId() {
-        return executeActionForSocial(
-                googleApi -> googleApi.plusOperations().getGoogleProfile().getId(),
-                facebookApi -> facebookApi.userOperations().getUserProfile().getId(),
-                vkontakeApi -> String.valueOf(vkontakeApi.usersOperations().getUser().getId())
-        );
-    }
-
-    public String getProviderId(){
-        return executeActionForSocial(
-                googleApi -> "google",
-                facebookApi -> "facebook",
-                vkontakeApi -> "vkontakte"
-        );
-    }
-
     public String getAvatarUrl() {
         return executeActionForSocial(
                 googleApi -> {

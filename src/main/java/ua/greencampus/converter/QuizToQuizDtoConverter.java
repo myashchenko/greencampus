@@ -21,6 +21,7 @@ public class QuizToQuizDtoConverter implements Converter<Quiz, QuizDto> {
     public QuizToQuizDtoConverter(ConversionService conversionService) {
         this.conversionService = conversionService;
     }
+
     @Override
     public QuizDto convert(Quiz quiz) {
         if (quiz == null) {

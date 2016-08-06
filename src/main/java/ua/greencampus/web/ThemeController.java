@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * @author Ivan Mikho, created on 19.05.16.
  */
-
 @Controller
 @RequestMapping("/theme/{courseId}")
 public class ThemeController {

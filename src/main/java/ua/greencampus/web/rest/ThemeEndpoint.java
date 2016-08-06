@@ -15,12 +15,10 @@ import ua.greencampus.entity.Course;
 import ua.greencampus.entity.CourseTheme;
 import ua.greencampus.service.CourseService;
 import ua.greencampus.service.CourseThemeService;
-import ua.greencampus.validator.CourseIdValidator;
 import ua.greencampus.validator.ThemeDtoValidator;
 import ua.greencampus.validator.ThemeIdValidator;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Ivan Mikho on 10.04.16.
@@ -30,26 +28,23 @@ import java.util.List;
 @RequestMapping(value = "/api/theme")
 public class ThemeEndpoint {
 
-    @Autowired
-    @Qualifier("themeIdValidator")
-    ThemeIdValidator themeIdValidator;
+    private ThemeIdValidator themeIdValidator;
+    private ThemeDtoValidator themeDtoValidator;
+    private ConversionService conversionService;
+    private CourseThemeService themeService;
+    private CourseService courseService;
 
     @Autowired
-    @Qualifier("themeDtoValidator")
-    ThemeDtoValidator themeDtoValidator;
-
-    @Autowired
-    @Qualifier("courseIdValidator")
-    CourseIdValidator courseIdValidator;
-
-    @Autowired
-    ConversionService conversionService;
-
-    @Autowired
-    CourseThemeService themeService;
-
-    @Autowired
-    CourseService courseService;
+    public ThemeEndpoint(@Qualifier("themeIdValidator") ThemeIdValidator themeIdValidator,
+                         @Qualifier("themeDtoValidator") ThemeDtoValidator themeDtoValidator,
+                         ConversionService conversionService, CourseThemeService themeService,
+                         CourseService courseService) {
+        this.themeIdValidator = themeIdValidator;
+        this.themeDtoValidator = themeDtoValidator;
+        this.conversionService = conversionService;
+        this.themeService = themeService;
+        this.courseService = courseService;
+    }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
@@ -73,9 +68,8 @@ public class ThemeEndpoint {
         }
         CourseTheme theme = conversionService.convert(themeDto, CourseTheme.class);
         Course course = courseService.read(courseId);
-        List<CourseTheme> themes = course.getThemes();
-        themes.add(theme);
-        course = courseService.update(course);
+        course.getThemes().add(theme);
+        courseService.update(course);
         themeDto = conversionService.convert(theme, CourseThemeDto.class);
         return ResponseEntity.ok(new EntityResponse<>(themeDto));
     }

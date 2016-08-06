@@ -58,6 +58,7 @@ $('document').ready(function() {
                     var messageCount = $('#media-body-' + entry.id).find('#message-count');
                     messageCount.text(parseInt(messageCount.text()) + 1);
                 }
+                document.getElementById('play').play();
             });
         });
 
@@ -135,6 +136,7 @@ $('document').ready(function() {
                     var messageCount = $('#media-body-' + entry.id).find('#message-count');
                     messageCount.text(parseInt(messageCount.text()) + 1);
                 }
+                document.getElementById('play').play();
             });
 
             var hash = window.location.hash.replace("#", "");

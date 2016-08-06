@@ -23,11 +23,14 @@ import java.util.Map;
 @Controller
 public class UserController {
 
-    @Autowired
     private AuthenticationService authenticationService;
+    private UserService userService;
 
     @Autowired
-    private UserService userService;
+    public UserController(AuthenticationService authenticationService, UserService userService) {
+        this.authenticationService = authenticationService;
+        this.userService = userService;
+    }
 
     @GetMapping(value = "/user/{id}")
     public String getById(@PathVariable(value = "id") Long id, Model model) {

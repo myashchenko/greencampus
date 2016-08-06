@@ -39,7 +39,7 @@ public class ProviderSignInUtils extends org.springframework.social.connect.web.
         Connection<?> connection = getConnectionFromSession(request);
         if (connection != null && email != null && !email.isEmpty()) {
             SocialConnectionAdapter connectionAdapter = new SocialConnectionAdapter(connection);
-            User user = null;
+            User user;
             if ((user = userService.readByEmail(email)) == null) {
                 String avatarUrl = connectionAdapter.getAvatarUrl();
                 FileEntity avatar = null;

@@ -1,17 +1,13 @@
 package ua.greencampus.converter;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import ua.greencampus.dto.QuizAnswerDto;
 import ua.greencampus.entity.QuizAnswer;
 import ua.greencampus.service.QuizAnswerService;
 
-
 public class QuizAnswerDtoToQuizAnswerConverter implements Converter<QuizAnswerDto, QuizAnswer> {
 
-    @Autowired
-    QuizAnswerService quizAnswerService;
+    private QuizAnswerService quizAnswerService;
 
     public QuizAnswerDtoToQuizAnswerConverter(QuizAnswerService quizAnswerService) {
         this.quizAnswerService = quizAnswerService;

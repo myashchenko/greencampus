@@ -93,12 +93,9 @@ public class SocialConfig extends SocialConfigurerAdapter {
 
     @Bean(name = "connectionRepository")
     @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
-    public ConnectionRepository connectionRepository(
-            UsersConnectionRepository socialUserService,
-            AuthenticationService authenticationService) {
-        return socialUserService.createConnectionRepository(
-                authenticationService.getLoggedInUserId().toString()
-        );
+    public ConnectionRepository connectionRepository(UsersConnectionRepository socialUserService,
+                                                     AuthenticationService authenticationService) {
+        return socialUserService.createConnectionRepository(authenticationService.getLoggedInUserId().toString());
     }
 
     @Bean
