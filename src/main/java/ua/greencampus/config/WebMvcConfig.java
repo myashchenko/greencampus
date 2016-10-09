@@ -32,7 +32,7 @@ import ua.greencampus.service.AuthenticationService;
  */
 @Configuration
 @EnableWebMvc
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 @ComponentScan(basePackageClasses = Application.class,
         includeFilters = @ComponentScan.Filter({Controller.class, RestController.class, ControllerAdvice.class}),
         useDefaultFilters = false

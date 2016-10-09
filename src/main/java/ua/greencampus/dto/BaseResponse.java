@@ -25,8 +25,7 @@ public class BaseResponse {
     }
 
     public void putErrors(Errors errors) {
-        errors.getAllErrors().stream()
-                .forEach(e -> putError(e.getCode(), e.getDefaultMessage()));
+        errors.getAllErrors().forEach(e -> putError(e.getCode(), e.getDefaultMessage()));
     }
 
     public void putError(String key, String value) {

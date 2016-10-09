@@ -57,6 +57,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public Long getIdByEmail(String email) {
         List<Object> idByEmail = userDao.findIdByEmail(email);
+        if (idByEmail.isEmpty()) {
+            return null;
+        }
         return (Long) idByEmail.iterator().next();
     }
 
