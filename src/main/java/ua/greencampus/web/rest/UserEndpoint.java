@@ -106,10 +106,8 @@ public class UserEndpoint {
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id) {
-        User user = userService.delete(id);
-        UserDto userDto = conversionService.convert(user, UserDto.class);
-
-        return ResponseEntity.ok(new EntityResponse<>(userDto));
+        userService.delete(id);
+        return ResponseEntity.ok(new BaseResponse(Messages.USER_DELETED));
     }
 }
 

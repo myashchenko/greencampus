@@ -11,8 +11,6 @@ import java.util.List;
 /**
  * @author Nikolay Yashchenko
  */
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
 @Getter
 @Setter
 public class EntityListResponse<T> extends BaseResponse {
