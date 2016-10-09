@@ -20,8 +20,7 @@ import java.util.Set;
 public class ChatDialog {
 
     @Id
-    @SequenceGenerator(name = "chat_dialog_seq_gen", sequenceName = "chat_dialog_seq", allocationSize = 1)
-    @GeneratedValue(generator = "chat_dialog_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "dialog_name")

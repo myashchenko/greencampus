@@ -16,8 +16,7 @@ import java.util.List;
 public class Speciality {
 
     @Id
-    @SequenceGenerator(name = "speciality_seq_gen", sequenceName = "speciality_seq", allocationSize = 1)
-    @GeneratedValue(generator = "speciality_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name", nullable = false)

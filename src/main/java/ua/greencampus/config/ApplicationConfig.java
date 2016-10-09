@@ -1,15 +1,20 @@
 package ua.greencampus.config;
 
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import ua.greencampus.Application;
 
+import java.nio.charset.Charset;
+
+import static org.apache.commons.lang3.CharEncoding.UTF_8;
 import static org.springframework.context.annotation.ComponentScan.*;
 
 /**

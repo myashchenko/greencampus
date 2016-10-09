@@ -15,8 +15,7 @@ import javax.persistence.*;
 public class UserCourse {
 
     @Id
-    @SequenceGenerator(name = "user_course_seq_gen", sequenceName = "user_course_seq", allocationSize = 1)
-    @GeneratedValue(generator = "user_course_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

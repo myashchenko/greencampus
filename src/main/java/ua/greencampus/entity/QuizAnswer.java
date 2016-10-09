@@ -15,8 +15,7 @@ import javax.persistence.*;
 public class QuizAnswer {
 
     @Id
-    @SequenceGenerator(name = "quiz_answer_seq_gen", sequenceName = "quiz_answer_seq", allocationSize = 1)
-    @GeneratedValue(generator = "quiz_answer_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name", nullable = false)

@@ -16,8 +16,7 @@ import java.util.List;
 public class Faculty {
 
     @Id
-    @SequenceGenerator(name = "faculty_seq_gen", sequenceName = "faculty_seq", allocationSize = 1)
-    @GeneratedValue(generator = "faculty_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name", nullable = false)

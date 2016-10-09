@@ -14,8 +14,7 @@ import javax.persistence.*;
 @Setter
 public class FileEntity {
     @Id
-    @SequenceGenerator(name = "file_seq_gen", sequenceName = "file_seq", allocationSize = 1)
-    @GeneratedValue(generator = "file_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "path", nullable = false, unique = true)

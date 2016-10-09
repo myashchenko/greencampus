@@ -16,8 +16,7 @@ import java.math.BigDecimal;
 public class QuizResult {
 
     @Id
-    @SequenceGenerator(name = "quiz_result_seq_gen", sequenceName = "quiz_result_seq", allocationSize = 1)
-    @GeneratedValue(generator = "quiz_result_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

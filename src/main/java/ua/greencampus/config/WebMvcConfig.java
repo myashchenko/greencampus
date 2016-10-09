@@ -1,5 +1,7 @@
 package ua.greencampus.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -7,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,6 +29,8 @@ import org.thymeleaf.templateresolver.ITemplateResolver;
 import ua.greencampus.Application;
 import ua.greencampus.common.UserInfoInterceptor;
 import ua.greencampus.service.AuthenticationService;
+
+import java.util.List;
 
 /**
  * Created by Arsenii on 21.03.2016.
@@ -81,9 +86,12 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         return resolver;
     }
 
-    @Bean
-    public MappingJackson2HttpMessageConverter getObjectMapper() {
-        return new MappingJackson2HttpMessageConverter();
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
+        mappingJackson2HttpMessageConverter.setPrettyPrint(true);
+        mappingJackson2HttpMessageConverter.getObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        converters.add(mappingJackson2HttpMessageConverter);
     }
 
     @Override

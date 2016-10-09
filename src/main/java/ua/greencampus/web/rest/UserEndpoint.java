@@ -1,7 +1,6 @@
 package ua.greencampus.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
+import ua.greencampus.common.Messages;
 import ua.greencampus.dto.*;
 import ua.greencampus.entity.User;
 import ua.greencampus.service.UserService;
@@ -27,24 +26,12 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/user")
 public class UserEndpoint {
 
-    private Validator userIdValidator;
-    private Validator userDtoValidator;
-    private Validator emailDtoValidator;
-    private Validator passwordDtoValidator;
     private ConversionService conversionService;
     private UserService userService;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserEndpoint(@Qualifier("userIdValidator") Validator userIdValidator,
-                        @Qualifier("userDtoValidator") Validator userDtoValidator,
-                        @Qualifier("emailDtoValidator") Validator emailDtoValidator,
-                        @Qualifier("passwordDtoValidator") Validator passwordDtoValidator,
-                        ConversionService conversionService, UserService userService, PasswordEncoder passwordEncoder) {
-        this.userIdValidator = userIdValidator;
-        this.userDtoValidator = userDtoValidator;
-        this.emailDtoValidator = emailDtoValidator;
-        this.passwordDtoValidator = passwordDtoValidator;
+    public UserEndpoint(ConversionService conversionService, UserService userService, PasswordEncoder passwordEncoder) {
         this.conversionService = conversionService;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
@@ -69,27 +56,20 @@ public class UserEndpoint {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
-        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
-        userIdValidator.validate(id, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
-
         UserDto userDto = conversionService.convert(userService.read(id), UserDto.class);
         return ResponseEntity.ok(new EntityResponse<>(userDto));
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> create(@RequestBody UserDto userDto, BindingResult bindingResult) {
-        userDtoValidator.validate(userDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
+    public ResponseEntity<BaseResponse> create(@RequestBody UserDto userDto) {
         User user = conversionService.convert(userDto, User.class);
 
         if (userService.getIdByEmail(user.getEmail()) != null) {
-            return ResponseEntity.badRequest().body(new BaseResponse());
+            BaseResponse baseResponse = new BaseResponse();
+            baseResponse.putMessage(Messages.USER_ALREADY_EXISTS);
+            return ResponseEntity.badRequest().body(baseResponse);
         }
+
         user.setPassword(userDto.getPassword());
         user = userService.create(user);
         userDto = conversionService.convert(user, UserDto.class);
@@ -98,14 +78,8 @@ public class UserEndpoint {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody UserDto userDto,
-                                               BindingResult bindingResult) {
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
         userDto.setId(id);
-        emailDtoValidator.validate(userDto, bindingResult);
-        userIdValidator.validate(id, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
 
         User user = conversionService.convert(userDto, User.class);
         user = userService.update(user);
@@ -117,18 +91,13 @@ public class UserEndpoint {
     @PutMapping(value = "/pass/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> updatePassword(@PathVariable("id") Long id,
-                                                       @RequestBody PasswordDto passwordDto,
-                                                       BindingResult bindingResult) {
+                                                       @RequestBody PasswordDto passwordDto) {
         passwordDto.setId(id);
-        passwordDtoValidator.validate(passwordDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
         User user = userService.read(id);
         if (passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
         } else {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
+            return ResponseEntity.badRequest().body(new BaseResponse(Messages.PASSWORD_INCORRECT));
         }
         user = userService.update(user);
         UserDto userDto = conversionService.convert(user, UserDto.class);
@@ -137,11 +106,6 @@ public class UserEndpoint {
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id) {
-        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
-        userIdValidator.validate(id, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
         User user = userService.delete(id);
         UserDto userDto = conversionService.convert(user, UserDto.class);
 

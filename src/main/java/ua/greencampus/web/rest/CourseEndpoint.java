@@ -1,14 +1,13 @@
 package ua.greencampus.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
+import ua.greencampus.common.Messages;
 import ua.greencampus.dto.*;
 import ua.greencampus.entity.Course;
 import ua.greencampus.service.CourseService;
@@ -25,17 +24,11 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/api/course")
 public class CourseEndpoint {
 
-    private Validator courseIdValidator;
-    private Validator courseDtoValidator;
     private ConversionService conversionService;
     private CourseService courseService;
 
     @Autowired
-    public CourseEndpoint(@Qualifier("idValidator") Validator courseIdValidator,
-                          @Qualifier("courseDtoValidator") Validator courseDtoValidator,
-                          ConversionService conversionService, CourseService courseService) {
-        this.courseIdValidator = courseIdValidator;
-        this.courseDtoValidator = courseDtoValidator;
+    public CourseEndpoint(ConversionService conversionService, CourseService courseService) {
         this.conversionService = conversionService;
         this.courseService = courseService;
     }
@@ -63,24 +56,13 @@ public class CourseEndpoint {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
-        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
-        courseIdValidator.validate(id, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
-
         CourseWithThemesDto courseDto = conversionService.convert(courseService.readWithThemes(id), CourseWithThemesDto.class);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDto));
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> create(@RequestBody CourseDto courseDto, BindingResult bindingResult) {
-        courseDtoValidator.validate(courseDto, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
-
+    public ResponseEntity<BaseResponse> create(@RequestBody CourseDto courseDto) {
         Course course = conversionService.convert(courseDto, Course.class);
         course = courseService.create(course);
 
@@ -91,14 +73,8 @@ public class CourseEndpoint {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseDto courseDto,
-                                               BindingResult bindingResult) {
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseDto courseDto) {
         courseDto.setId(id);
-        courseDtoValidator.validate(courseDto, bindingResult);
-        courseIdValidator.validate(id, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
 
         Course course = conversionService.convert(courseDto, Course.class);
         course = courseService.update(course);
@@ -110,14 +86,10 @@ public class CourseEndpoint {
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id) {
-        BindingResult bindingResult = new MapBindingResult(new HashMap<>(), "id");
-        courseIdValidator.validate(id, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
-        }
+
         Course course = courseService.read(id);
         if (course == null) {
-            return ResponseEntity.badRequest().body(new BaseResponse(bindingResult));
+            return ResponseEntity.badRequest().body(new BaseResponse(Messages.COURSE_NOT_FOUND));
         }
 
         CourseDto courseDto = conversionService.convert(course, CourseDto.class);

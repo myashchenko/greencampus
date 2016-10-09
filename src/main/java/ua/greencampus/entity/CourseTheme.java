@@ -16,8 +16,7 @@ import java.util.List;
 public class CourseTheme {
 
     @Id
-    @SequenceGenerator(name = "course_theme_seq_gen", sequenceName = "course_theme_seq", allocationSize = 1)
-    @GeneratedValue(generator = "course_theme_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "title", nullable = false)

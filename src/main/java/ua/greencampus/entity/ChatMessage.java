@@ -18,8 +18,7 @@ import java.util.Calendar;
 public class ChatMessage {
 
     @Id
-    @SequenceGenerator(name = "chat_message_seq_gen", sequenceName = "chat_message_seq", allocationSize = 1)
-    @GeneratedValue(generator = "chat_message_seq_gen", strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)

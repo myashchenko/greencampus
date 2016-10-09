@@ -21,7 +21,7 @@ public class ExceptionHandlerAspect {
             return joinPoint.proceed();
         } catch(Exception ex) {
             BaseResponse errorResponse = new BaseResponse();
-            errorResponse.putError("500", "Internal Server Error");
+            errorResponse.putMessage("Internal Server Error");
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
         }
     }

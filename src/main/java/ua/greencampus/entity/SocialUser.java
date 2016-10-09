@@ -23,8 +23,7 @@ import java.util.Date;
 public class SocialUser {
 
     @Id
-    @SequenceGenerator(name = "social_user_seq", sequenceName = "social_users_seq", initialValue = 1, allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "social_user_seq")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
