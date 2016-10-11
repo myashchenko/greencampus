@@ -15,4 +15,5 @@ public interface Messages {
     String THEME_NAME_EMPTY = "theme name may not be empty";
     String COURSE_TITLE_EMPTY = "course title may not be empty";
     String ID_INCORRECT = "id may not be empty or smaller than 0";
+    String USER_DELETED = "user deleted successfully";
 }
