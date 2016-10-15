@@ -1,7 +1,6 @@
 package ua.greencampus.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,8 +8,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.*;
+import ua.greencampus.common.CheckAccess;
 import ua.greencampus.common.Messages;
+import ua.greencampus.common.CheckType;
 import ua.greencampus.dto.*;
+import ua.greencampus.entity.Role;
 import ua.greencampus.entity.User;
 import ua.greencampus.service.UserService;
 
@@ -24,15 +26,13 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/user")
-public class UserEndpoint {
+public class UserEndpoint extends AbstractEndpoint {
 
-    private ConversionService conversionService;
     private UserService userService;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserEndpoint(ConversionService conversionService, UserService userService, PasswordEncoder passwordEncoder) {
-        this.conversionService = conversionService;
+    public UserEndpoint(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -48,7 +48,7 @@ public class UserEndpoint {
         }
         List<User> userList = userService.getByParams(page, size, sort);
         List<UserDto> userDtos = userList.stream()
-                .map(c -> conversionService.convert(c, UserDto.class))
+                .map(c -> map(c, UserDto.class))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new EntityListResponse<>(userDtos));
@@ -56,13 +56,13 @@ public class UserEndpoint {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
-        UserDto userDto = conversionService.convert(userService.read(id), UserDto.class);
+        UserDto userDto = map(userService.read(id), UserDto.class);
         return ResponseEntity.ok(new EntityResponse<>(userDto));
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> create(@RequestBody UserDto userDto) {
-        User user = conversionService.convert(userDto, User.class);
+    public ResponseEntity<BaseResponse> create(@RequestBody CreateUserDto userDto) {
+        User user = map(userDto, User.class);
 
         if (userService.getIdByEmail(user.getEmail()) != null) {
             BaseResponse baseResponse = new BaseResponse();
@@ -71,19 +71,20 @@ public class UserEndpoint {
         }
 
         user.setPassword(userDto.getPassword());
+        user.setRole(Role.ROLE_UNACTIVE);
         user = userService.create(user);
-        userDto = conversionService.convert(user, UserDto.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new EntityResponse<>(userDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new EntityResponse<>(map(user, UserDto.class)));
     }
 
+    @CheckAccess(type = CheckType.USER)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
         userDto.setId(id);
 
-        User user = conversionService.convert(userDto, User.class);
+        User user = map(userDto, User.class);
         user = userService.update(user);
-        userDto = conversionService.convert(user, UserDto.class);
+        userDto = map(user, UserDto.class);
         return ResponseEntity.ok(new EntityResponse<>(userDto));
     }
 
@@ -99,9 +100,8 @@ public class UserEndpoint {
         } else {
             return ResponseEntity.badRequest().body(new BaseResponse(Messages.PASSWORD_INCORRECT));
         }
-        user = userService.update(user);
-        UserDto userDto = conversionService.convert(user, UserDto.class);
-        return ResponseEntity.ok(new EntityResponse<>(userDto));
+        userService.update(user);
+        return ResponseEntity.ok(new BaseResponse());
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)

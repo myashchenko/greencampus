@@ -16,4 +16,5 @@ public interface Messages {
     String COURSE_TITLE_EMPTY = "course title may not be empty";
     String ID_INCORRECT = "id may not be empty or smaller than 0";
     String USER_DELETED = "user deleted successfully";
+    String ACCESS_DENIED = "you do not have permissions to do this operation";
 }

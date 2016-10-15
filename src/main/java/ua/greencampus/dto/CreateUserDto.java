@@ -8,16 +8,12 @@ import ua.greencampus.common.Messages;
 import javax.validation.constraints.Size;
 
 /**
- * @author Nikolay Yashchenko
+ * @author Mykola Yashchenko
  */
 @Getter
 @Setter
-public class UserDto {
-
-    private Long id;
-    @NotEmpty(message = Messages.EMAIL_EMPTY)
-    private String email;
-    private String name;
-    private String role;
-    private FileDto avatar;
+public class CreateUserDto extends UserDto {
+    @NotEmpty(message = Messages.PASSWORD_EMPTY)
+    @Size(min = 5, message = Messages.PASSWORD_TOO_SHORT)
+    private String password;
 }

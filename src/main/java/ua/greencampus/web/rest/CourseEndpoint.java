@@ -22,14 +22,12 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/course")
-public class CourseEndpoint {
+public class CourseEndpoint extends AbstractEndpoint {
 
-    private ConversionService conversionService;
     private CourseService courseService;
 
     @Autowired
-    public CourseEndpoint(ConversionService conversionService, CourseService courseService) {
-        this.conversionService = conversionService;
+    public CourseEndpoint(CourseService courseService) {
         this.courseService = courseService;
     }
 
@@ -48,7 +46,7 @@ public class CourseEndpoint {
                 courseService.getByParams(page, size, sort) : courseService.search(keywords);
 
         List<CourseDto> courseDtos = courseList.stream()
-                .map(c -> conversionService.convert(c, CourseDto.class))
+                .map(c -> map(c, CourseDto.class))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new EntityListResponse<>(courseDtos));
@@ -56,17 +54,17 @@ public class CourseEndpoint {
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
-        CourseWithThemesDto courseDto = conversionService.convert(courseService.readWithThemes(id), CourseWithThemesDto.class);
+        CourseWithThemesDto courseDto = map(courseService.readWithThemes(id), CourseWithThemesDto.class);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDto));
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> create(@RequestBody CourseDto courseDto) {
-        Course course = conversionService.convert(courseDto, Course.class);
+        Course course = map(courseDto, Course.class);
         course = courseService.create(course);
 
-        courseDto = conversionService.convert(course, CourseDto.class);
+        courseDto = map(course, CourseDto.class);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDto));
     }
@@ -76,10 +74,10 @@ public class CourseEndpoint {
     public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseDto courseDto) {
         courseDto.setId(id);
 
-        Course course = conversionService.convert(courseDto, Course.class);
+        Course course = map(courseDto, Course.class);
         course = courseService.update(course);
 
-        courseDto = conversionService.convert(course, CourseDto.class);
+        courseDto = map(course, CourseDto.class);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDto));
     }
@@ -92,7 +90,7 @@ public class CourseEndpoint {
             return ResponseEntity.badRequest().body(new BaseResponse(Messages.COURSE_NOT_FOUND));
         }
 
-        CourseDto courseDto = conversionService.convert(course, CourseDto.class);
+        CourseDto courseDto = map(course, CourseDto.class);
         courseService.delete(course);
 
         return ResponseEntity.ok(new EntityResponse<>(courseDto));

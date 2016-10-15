@@ -15,4 +15,7 @@ public interface UserDao extends PagingAndSortingRepository<User, Long> {
 
     @Query("SELECT u.id FROM User u WHERE u.email = :email")
     List<Object> findIdByEmail(@Param("email") String email);
+
+    @Query("SELECT u.role FROM User u WHERE u.email = :email")
+    List<Object> findRoleByEmail(@Param("email") String email);
 }

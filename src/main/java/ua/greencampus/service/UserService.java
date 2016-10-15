@@ -1,6 +1,6 @@
 package ua.greencampus.service;
 
-
+import ua.greencampus.entity.Role;
 import ua.greencampus.entity.User;
 
 import java.util.List;
@@ -14,7 +14,8 @@ public interface UserService {
     User readByEmail(String email);
     User update(User user);
     void delete(User user);
-    User delete(Long id);
+    void delete(Long id);
     Long getIdByEmail(String email);
+    Role getRoleByEmail(String email);
     List<User> getByParams(int offset, int size, String sort);
 }

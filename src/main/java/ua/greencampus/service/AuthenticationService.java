@@ -1,9 +1,11 @@
 package ua.greencampus.service;
 
+import ua.greencampus.entity.Role;
+
 /**
  * @author Nikolay Yashchenko
  */
-@FunctionalInterface
 public interface AuthenticationService {
     Long getLoggedInUserId();
+    Role getLoggedInUserRole();
 }

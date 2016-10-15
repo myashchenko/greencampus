@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.greencampus.dao.UserDao;
+import ua.greencampus.entity.Role;
 import ua.greencampus.entity.User;
 
 import java.util.List;
@@ -63,12 +64,19 @@ public class UserServiceImpl implements UserService {
         return (Long) idByEmail.iterator().next();
     }
 
+    @Override
+    public Role getRoleByEmail(String email) {
+        List<Object> idByEmail = userDao.findRoleByEmail(email);
+        if (idByEmail.isEmpty()) {
+            return null;
+        }
+        return (Role) idByEmail.iterator().next();
+    }
+
     @Transactional
     @Override
-    public User delete(Long id) {
-        User user = userDao.findOne(id);
-        delete(user);
-        return user;
+    public void delete(Long id) {
+        userDao.delete(id);
     }
 
     @Transactional

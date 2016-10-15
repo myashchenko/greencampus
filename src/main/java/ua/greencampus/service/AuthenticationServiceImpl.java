@@ -5,6 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
+import ua.greencampus.entity.Role;
 
 /**
  * @author Nikolay Yashchenko
@@ -17,12 +18,24 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Long getLoggedInUserId() {
+        User user = getUser();
+        if (user != null) {
+            return userService.getIdByEmail(user.getUsername());
+        }
+        return null;
+    }
+
+    @Override
+    public Role getLoggedInUserRole() {
+        return null;
+    }
+
+    private User getUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             Object principal = auth.getPrincipal();
             if (principal instanceof User) {
-                User userDetails = (User) principal;
-                return userService.getIdByEmail(userDetails.getUsername());
+                return (User) principal;
             }
         }
         return null;

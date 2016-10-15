@@ -1,7 +1,6 @@
 package ua.greencampus.web.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.ConversionService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,34 +19,31 @@ import ua.greencampus.service.CourseThemeService;
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/api/theme")
-public class ThemeEndpoint {
+public class ThemeEndpoint extends AbstractEndpoint {
 
-    private ConversionService conversionService;
     private CourseThemeService themeService;
     private CourseService courseService;
 
     @Autowired
-    public ThemeEndpoint(ConversionService conversionService, CourseThemeService themeService,
-                         CourseService courseService) {
-        this.conversionService = conversionService;
+    public ThemeEndpoint(CourseThemeService themeService, CourseService courseService) {
         this.themeService = themeService;
         this.courseService = courseService;
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
-        CourseThemeDto themeDto = conversionService.convert(themeService.read(id), CourseThemeDto.class);
+        CourseThemeDto themeDto = map(themeService.read(id), CourseThemeDto.class);
         return ResponseEntity.ok(new EntityResponse<>(themeDto));
     }
 
     @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> create(@RequestBody CourseThemeDto themeDto,
                                                @RequestParam(name = "courseId") Long courseId) {
-        CourseTheme theme = conversionService.convert(themeDto, CourseTheme.class);
+        CourseTheme theme = map(themeDto, CourseTheme.class);
         Course course = courseService.read(courseId);
         course.getThemes().add(theme);
         courseService.update(course);
-        themeDto = conversionService.convert(theme, CourseThemeDto.class);
+        themeDto = map(theme, CourseThemeDto.class);
         return ResponseEntity.ok(new EntityResponse<>(themeDto));
     }
 
@@ -55,9 +51,9 @@ public class ThemeEndpoint {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody CourseThemeDto themeDto) {
         themeDto.setId(id);
-        CourseTheme theme = conversionService.convert(themeDto, CourseTheme.class);
+        CourseTheme theme = map(themeDto, CourseTheme.class);
         theme = themeService.update(theme);
-        themeDto = conversionService.convert(theme, CourseThemeDto.class);
+        themeDto = map(theme, CourseThemeDto.class);
         return ResponseEntity.ok(new EntityResponse<>(themeDto));
     }
 
@@ -67,7 +63,7 @@ public class ThemeEndpoint {
         if (theme == null) {
             return ResponseEntity.badRequest().body(new BaseResponse(Messages.THEME_NOT_FOUND));
         }
-        CourseThemeDto themeDto = conversionService.convert(theme, CourseThemeDto.class);
+        CourseThemeDto themeDto = map(theme, CourseThemeDto.class);
         themeService.delete(theme);
         return ResponseEntity.ok(new EntityResponse<>(themeDto));
     }
