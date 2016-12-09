@@ -12,10 +12,7 @@ import javax.persistence.*;
 @Table(name = "file")
 @Getter
 @Setter
-public class FileEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class FileEntity extends BaseEntity {
 
     @Column(name = "path", nullable = false, unique = true)
     private String path;

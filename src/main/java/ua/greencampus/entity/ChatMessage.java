@@ -14,12 +14,7 @@ import java.util.Calendar;
 @Table(name = "chat_message")
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id")
-public class ChatMessage {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class ChatMessage extends BaseEntity {
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_from")
@@ -31,9 +26,4 @@ public class ChatMessage {
     @ManyToOne(optional = false)
     @JoinColumn(name = "chat_dialog_id")
     private ChatDialog dialog;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "send_date", nullable = false)
-    private Calendar sendDate;
-
 }

@@ -85,4 +85,10 @@ public class UserServiceImpl implements UserService {
         // todo sort
         return userDao.findAll(new PageRequest(page, size)).getContent();
     }
+
+    @Transactional
+    @Override
+    public void updatePassword(Long userId, String newPassword) {
+        userDao.updatePassword(userId, newPassword);
+    }
 }

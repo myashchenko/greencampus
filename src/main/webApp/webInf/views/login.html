@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <h3>Enter your credentials</h3>
-                    <form class="signup-form" method="POST" th:object="${userDto}" action="/auth">
+                    <form class="signup-form" method="POST" th:object="${loginDto}" action="/auth">
                         <div class="form-input-group">
                             <i class="fa fa-envelope"></i>
                             <input id="email" type="email" required="required" placeholder="Enter your email"
@@ -23,8 +23,8 @@
 
                         <div class="form-input-group">
                             <i class="fa fa-lock"></i>
-                            <input id="password" required="required" type="password"
-                                   placeholder="Enter your password" th:field="*{password}"/>
+                            <input id="password" required="required" type="password" placeholder="Enter your password"
+                                   th:field="*{password}"/>
                         </div>
                         <button id="btnSub" type="submit" class="btn-fill sign-up-btn">Sign in</button>
                     </form>

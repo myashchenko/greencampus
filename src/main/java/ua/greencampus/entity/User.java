@@ -1,8 +1,6 @@
 package ua.greencampus.entity;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
@@ -15,17 +13,15 @@ import javax.persistence.*;
 @DynamicUpdate
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"id", "email"})
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@EqualsAndHashCode(of = {"email"}, callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class User extends BaseEntity {
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password", nullable = false, updatable = false)
     private String password;
 
     @Column(name = "name")
@@ -36,17 +32,6 @@ public class User {
     private FileEntity avatar;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
+    @Column(name = "role", nullable = false, updatable = false)
     private Role role;
-
-    public User(String email, String password, String name, FileEntity avatar, Role role) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.avatar = avatar;
-        this.role = role;
-    }
-
-    public User() {
-    }
 }

@@ -13,11 +13,7 @@ import java.util.List;
 @Table(name = "quiz_question")
 @Getter
 @Setter
-public class QuizQuestion {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class QuizQuestion extends BaseEntity {
 
     @Column(name = "question", nullable = false)
     private String question;

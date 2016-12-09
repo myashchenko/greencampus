@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.MapBindingResult;
@@ -12,6 +13,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import ua.greencampus.common.Messages;
+import ua.greencampus.config.AspectOrder;
 import ua.greencampus.dto.BaseResponse;
 
 import java.lang.annotation.Annotation;
@@ -23,6 +25,7 @@ import java.util.List;
  * @author Mykola Yashchenko
  */
 @Aspect
+@Order(AspectOrder.VALIDATION)
 @Component
 public class ValidationAspect {
 

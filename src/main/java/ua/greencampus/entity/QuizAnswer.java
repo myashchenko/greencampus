@@ -12,11 +12,7 @@ import javax.persistence.*;
 @Table(name = "quiz_answer")
 @Getter
 @Setter
-public class QuizAnswer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class QuizAnswer extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;

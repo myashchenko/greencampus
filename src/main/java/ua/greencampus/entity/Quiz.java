@@ -13,11 +13,7 @@ import java.util.List;
 @Table(name = "quiz")
 @Getter
 @Setter
-public class Quiz {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Quiz extends BaseEntity {
 
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     private CourseTheme courseTheme;

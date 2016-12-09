@@ -16,12 +16,7 @@ import java.util.Set;
 @Table(name = "chat_dialog")
 @Getter
 @Setter
-@EqualsAndHashCode(of = { "id" })
-public class ChatDialog {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class ChatDialog extends BaseEntity {
 
     @Column(name = "dialog_name")
     private String dialogName;
@@ -31,10 +26,6 @@ public class ChatDialog {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> users;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "update_date", nullable = false)
-    private Calendar updateDate;
-
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "dialog_unread_messages")
     @MapKeyColumn(name = "user_id")
@@ -43,10 +34,6 @@ public class ChatDialog {
 
     @Transient
     private String avatarPath;
-
-    public ChatDialog() {
-        updateDate = Calendar.getInstance();
-    }
 
     public void incrementUnreadCount(Long userId) {
         Integer count = unreadCount.get(userId);

@@ -12,4 +12,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckAccess {
     CheckType type() default CheckType.UNDEFINED;
+    boolean onlyAdmin() default false;
 }

@@ -18,4 +18,5 @@ public interface UserService {
     Long getIdByEmail(String email);
     Role getRoleByEmail(String email);
     List<User> getByParams(int offset, int size, String sort);
+    void updatePassword(Long userId, String newPassword);
 }

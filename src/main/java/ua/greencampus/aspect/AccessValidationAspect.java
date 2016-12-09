@@ -5,6 +5,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -12,19 +13,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import ua.greencampus.common.CheckAccess;
 import ua.greencampus.common.CheckType;
 import ua.greencampus.common.Messages;
+import ua.greencampus.config.AspectOrder;
 import ua.greencampus.dto.BaseResponse;
 import ua.greencampus.entity.Role;
 import ua.greencampus.service.AuthenticationService;
 
 import javax.persistence.EntityManager;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 /**
  * @author Mykola Yashchenko
  */
 @Aspect
+@Order(AspectOrder.ACCESS)
 @Component
 public class AccessValidationAspect {
 

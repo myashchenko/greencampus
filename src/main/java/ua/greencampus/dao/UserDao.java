@@ -1,5 +1,6 @@
 package ua.greencampus.dao;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +19,8 @@ public interface UserDao extends PagingAndSortingRepository<User, Long> {
 
     @Query("SELECT u.role FROM User u WHERE u.email = :email")
     List<Object> findRoleByEmail(@Param("email") String email);
+
+    @Modifying
+    @Query("UPDATE User u SET u.password = :password WHERE u.id = :id")
+    void updatePassword(@Param("id") Long userId, @Param("password") String newPassword);
 }

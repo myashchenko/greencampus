@@ -13,11 +13,7 @@ import java.math.BigDecimal;
 @Table(name = "quiz_result")
 @Getter
 @Setter
-public class QuizResult {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class QuizResult extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private User user;

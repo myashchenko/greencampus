@@ -154,7 +154,6 @@ public class ChatController {
                 .map(User::getId)
                 .filter(id -> !id.equals(userId))
                 .forEach(dialog::incrementUnreadCount);
-        dialog.setUpdateDate(Calendar.getInstance());
         dialog = chatDialogService.update(dialog);
 
         chatMessageDto = conversionService.convert(chatMessage, ChatMessageDto.class);

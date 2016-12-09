@@ -11,7 +11,7 @@
 
     <properties>
         <spring.version>4.3.2.RELEASE</spring.version>
-        <hibernate.version>5.0.5.Final</hibernate.version>
+        <hibernate.version>5.2.4.Final</hibernate.version>
         <spring.security>4.1.1.RELEASE</spring.security>
         <spring.social>1.1.4.RELEASE</spring.social>
         <spring.data>1.10.2.RELEASE</spring.data>
@@ -75,9 +75,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.4-1201-jdbc41</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-java8</artifactId>
+            <version>${hibernate.version}</version>
         </dependency>
 
         <dependency>
@@ -241,13 +241,19 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
+            <version>1.7.15</version>
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.6.4</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.1.7</version>
         </dependency>
 
         <dependency>
@@ -301,7 +307,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.2.4.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
 
         <dependency>

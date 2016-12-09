@@ -7,6 +7,7 @@ import ua.greencampus.entity.User;
  */
 public enum CheckType {
     USER(User.class, "getId"),
+
     UNDEFINED(null, null);
 
     private Class<?> tClass;

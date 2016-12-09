@@ -27,6 +27,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public Role getLoggedInUserRole() {
+        User user = getUser();
+        if (user != null) {
+            return userService.getRoleByEmail(user.getUsername());
+        }
         return null;
     }
 

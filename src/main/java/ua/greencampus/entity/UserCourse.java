@@ -1,5 +1,6 @@
 package ua.greencampus.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,11 +13,8 @@ import javax.persistence.*;
 @Table(name = "user_course")
 @Getter
 @Setter
-public class UserCourse {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@AllArgsConstructor
+public class UserCourse extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")
@@ -29,13 +27,4 @@ public class UserCourse {
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserCourseRole userRole;
-
-    public UserCourse() {
-    }
-
-    public UserCourse(User user, Course course, UserCourseRole userCourseRole) {
-        this.user = user;
-        this.course = course;
-        this.userRole = userCourseRole;
-    }
 }

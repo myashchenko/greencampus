@@ -1,5 +1,6 @@
 package ua.greencampus.web;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.ServletWebRequest;
 import ua.greencampus.common.ProviderSignInUtils;
+import ua.greencampus.dto.LoginDto;
 import ua.greencampus.dto.UserDto;
 import ua.greencampus.service.AuthenticationService;
 import ua.greencampus.service.UserService;
@@ -21,16 +23,11 @@ import java.util.Map;
  * @author Nikolay Yashchenko
  */
 @Controller
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
 
     private AuthenticationService authenticationService;
     private UserService userService;
-
-    @Autowired
-    public UserController(AuthenticationService authenticationService, UserService userService) {
-        this.authenticationService = authenticationService;
-        this.userService = userService;
-    }
 
     @GetMapping(value = "/user/{id}")
     public String getById(@PathVariable(value = "id") Long id, Model model) {
@@ -90,7 +87,7 @@ public class UserController {
     public String loginPage(@RequestParam(name = "redirect", required = false) String redirect,
                             HttpServletRequest request, Model model) {
         request.getSession().setAttribute("url_redirect_login", redirect);
-        model.addAttribute("userDto", new UserDto());
+        model.addAttribute("loginDto", new LoginDto());
         return "login";
     }
 

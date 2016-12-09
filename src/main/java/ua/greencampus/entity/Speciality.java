@@ -13,11 +13,7 @@ import java.util.List;
 @Table(name = "speciality")
 @Getter
 @Setter
-public class Speciality {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Speciality extends BaseEntity {
 
     @Column(name = "name", nullable = false)
     private String name;

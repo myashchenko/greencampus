@@ -14,11 +14,7 @@ import java.util.List;
 @NamedEntityGraph(name = "course.themes", attributeNodes = @NamedAttributeNode("themes"))
 @Getter
 @Setter
-public class Course {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class Course extends BaseEntity {
 
     @Column(name = "title", nullable = false)
     private String title;

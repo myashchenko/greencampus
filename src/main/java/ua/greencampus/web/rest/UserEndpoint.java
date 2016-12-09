@@ -89,21 +89,20 @@ public class UserEndpoint extends AbstractEndpoint {
     }
 
 
+    @CheckAccess(type = CheckType.USER)
     @PutMapping(value = "/pass/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> updatePassword(@PathVariable("id") Long id,
                                                        @RequestBody PasswordDto passwordDto) {
-        passwordDto.setId(id);
         User user = userService.read(id);
         if (passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(passwordDto.getNewPassword()));
-        } else {
-            return ResponseEntity.badRequest().body(new BaseResponse(Messages.PASSWORD_INCORRECT));
+            userService.updatePassword(id, passwordEncoder.encode(passwordDto.getNewPassword()));
+            return ResponseEntity.ok(new BaseResponse());
         }
-        userService.update(user);
-        return ResponseEntity.ok(new BaseResponse());
+        return ResponseEntity.badRequest().body(new BaseResponse(Messages.PASSWORD_INCORRECT));
     }
 
+    @CheckAccess(type = CheckType.USER)
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id) {
         userService.delete(id);
