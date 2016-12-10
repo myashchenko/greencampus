@@ -10,7 +10,7 @@ import ua.greencampus.common.Messages;
  */
 @Getter
 @Setter
-public class FileDto {
+public class FileDto extends BaseDto {
     private Long id;
     @NotEmpty(message = Messages.FILE_PATH_EMPTY)
     private String path;

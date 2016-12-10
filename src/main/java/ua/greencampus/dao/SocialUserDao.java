@@ -14,19 +14,19 @@ public interface SocialUserDao {
 
     SocialUser update(SocialUser socialUser);
 
-    List<SocialUser> findByUserId(Long userId);
+    List<SocialUser> findByUserId(String userId);
 
-    SocialUser findByUserIdAndProviderId(Long userId, String providerId);
+    SocialUser findByUserIdAndProviderId(String userId, String providerId);
 
-    SocialUser findByUserIdAndProviderUserIds(Long userId, MultiValueMap<String, String> providerUserIds);
+    SocialUser findByUserIdAndProviderUserIds(String userId, MultiValueMap<String, String> providerUserIds);
 
-    SocialUser get(Long userId, String providerId, String providerUserId);
+    SocialUser get(String userId, String providerId, String providerUserId);
 
-    SocialUser findPrimaryByUserIdAndProviderId(Long userId, String providerId);
+    SocialUser findPrimaryByUserIdAndProviderId(String userId, String providerId);
 
-    List<Long> findUserIdsByProviderIdAndProviderUserId(String providerId, String providerUserId);
+    List<String> findUserIdsByProviderIdAndProviderUserId(String providerId, String providerUserId);
 
-    List<Long> findUserIdsByProviderIdAndProviderUserIds(String providerId, Set<String> providerUserIds);
+    List<String> findUserIdsByProviderIdAndProviderUserIds(String providerId, Set<String> providerUserIds);
 
     void delete(SocialUser socialUser);
 }

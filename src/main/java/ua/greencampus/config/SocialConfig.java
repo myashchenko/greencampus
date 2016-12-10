@@ -67,11 +67,11 @@ public class SocialConfig extends SocialConfigurerAdapter {
     @Override
     public UserIdSource getUserIdSource() {
         return () -> {
-            Long loggedinUserId = authenticationService.getLoggedInUserId();
+            String loggedinUserId = authenticationService.getLoggedInUserId();
             if (loggedinUserId == null) {
                 throw new IllegalStateException("Unable to get a ConnectionRepository: no user signed in");
             }
-            return loggedinUserId.toString();
+            return loggedinUserId;
         };
     }
 

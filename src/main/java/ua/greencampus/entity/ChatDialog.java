@@ -30,21 +30,21 @@ public class ChatDialog extends BaseEntity {
     @CollectionTable(name = "dialog_unread_messages")
     @MapKeyColumn(name = "user_id")
     @Column(name = "unread_count")
-    private Map<Long, Integer> unreadCount;
+    private Map<String, Integer> unreadCount;
 
     @Transient
     private String avatarPath;
 
-    public void incrementUnreadCount(Long userId) {
+    public void incrementUnreadCount(String userId) {
         Integer count = unreadCount.get(userId);
         unreadCount.put(userId, count == null ? 1 : count + 1);
     }
 
-    public void decrementUnreadCount(Long userId) {
+    public void decrementUnreadCount(String userId) {
         unreadCount.remove(userId);
     }
 
-    public ChatDialog prepareDialogName(Long userId) {
+    public ChatDialog prepareDialogName(String userId) {
         if (getDialogName() == null) {
             String newDialogName = getUsers().stream()
                     .filter(u -> !userId.equals(u.getId()))
@@ -57,7 +57,7 @@ public class ChatDialog extends BaseEntity {
         return this;
     }
 
-    public ChatDialog prepareAvatarPath(Long userId) {
+    public ChatDialog prepareAvatarPath(String userId) {
         if (getDialogName() == null) {
             String newAvatarPath = getUsers().stream()
                     .filter(u -> !userId.equals(u.getId()))

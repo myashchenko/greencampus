@@ -10,13 +10,13 @@ import java.util.List;
  */
 public interface UserService {
     User create(User user);
-    User read(Long id);
+    User read(String id);
     User readByEmail(String email);
     User update(User user);
     void delete(User user);
-    void delete(Long id);
-    Long getIdByEmail(String email);
+    void delete(String id);
+    String getIdByEmail(String email);
     Role getRoleByEmail(String email);
     List<User> getByParams(int offset, int size, String sort);
-    void updatePassword(Long userId, String newPassword);
+    void updatePassword(String userId, String newPassword);
 }

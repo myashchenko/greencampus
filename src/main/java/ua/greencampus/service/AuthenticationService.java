@@ -6,6 +6,6 @@ import ua.greencampus.entity.Role;
  * @author Nikolay Yashchenko
  */
 public interface AuthenticationService {
-    Long getLoggedInUserId();
+    String getLoggedInUserId();
     Role getLoggedInUserRole();
 }

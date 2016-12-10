@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class CourseThemeDto {
+public class CourseThemeDto extends BaseDto {
     private Long id;
     @NotEmpty(message = Messages.THEME_NAME_EMPTY)
     private String name;

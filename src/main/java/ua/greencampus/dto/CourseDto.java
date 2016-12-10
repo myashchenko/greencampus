@@ -10,7 +10,7 @@ import ua.greencampus.common.Messages;
  */
 @Getter
 @Setter
-public class CourseDto {
+public class CourseDto extends BaseDto {
     private Long id;
     @NotEmpty(message = Messages.COURSE_TITLE_EMPTY)
     private String title;

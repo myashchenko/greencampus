@@ -134,7 +134,7 @@ public class ConnectionRepositoryImpl implements ConnectionRepository {
     public void addConnection(Connection<?> connection) {
         ConnectionData connectionData = connection.createData();
 
-        List<Long> userIds = socialUserService.findUserIdsByProviderIdAndProviderUserId(connectionData.getProviderId(),
+        List<String> userIds = socialUserService.findUserIdsByProviderIdAndProviderUserId(connectionData.getProviderId(),
                 connectionData.getProviderUserId());
         if (!userIds.isEmpty()) {
             throw new DuplicateConnectionException(new ConnectionKey(connectionData.getProviderId(),

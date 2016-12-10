@@ -1,5 +1,6 @@
 package ua.greencampus.web.rest;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -10,7 +11,6 @@ import org.springframework.validation.MapBindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.greencampus.common.CheckAccess;
 import ua.greencampus.common.Messages;
-import ua.greencampus.common.CheckType;
 import ua.greencampus.dto.*;
 import ua.greencampus.entity.Role;
 import ua.greencampus.entity.User;
@@ -23,19 +23,13 @@ import java.util.stream.Collectors;
 /**
  * @author Arsenii on 31.03.2016.
  */
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
-@CrossOrigin
 @RequestMapping(value = "/api/user")
 public class UserEndpoint extends AbstractEndpoint {
 
     private UserService userService;
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserEndpoint(UserService userService, PasswordEncoder passwordEncoder) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int page,
@@ -55,7 +49,7 @@ public class UserEndpoint extends AbstractEndpoint {
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {
+    public ResponseEntity<BaseResponse> read(@PathVariable("id") String id) {
         UserDto userDto = map(userService.read(id), UserDto.class);
         return ResponseEntity.ok(new EntityResponse<>(userDto));
     }
@@ -76,10 +70,10 @@ public class UserEndpoint extends AbstractEndpoint {
         return ResponseEntity.status(HttpStatus.CREATED).body(new EntityResponse<>(map(user, UserDto.class)));
     }
 
-    @CheckAccess(type = CheckType.USER)
+    @CheckAccess(entityType = User.class)
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> update(@PathVariable("id") Long id, @RequestBody UserDto userDto) {
+    public ResponseEntity<BaseResponse> update(@PathVariable("id") String id, @RequestBody UserDto userDto) {
         userDto.setId(id);
 
         User user = map(userDto, User.class);
@@ -89,10 +83,10 @@ public class UserEndpoint extends AbstractEndpoint {
     }
 
 
-    @CheckAccess(type = CheckType.USER)
+    @CheckAccess(entityType = User.class)
     @PutMapping(value = "/pass/{id}", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> updatePassword(@PathVariable("id") Long id,
+    public ResponseEntity<BaseResponse> updatePassword(@PathVariable("id") String id,
                                                        @RequestBody PasswordDto passwordDto) {
         User user = userService.read(id);
         if (passwordEncoder.matches(passwordDto.getOldPassword(), user.getPassword())) {
@@ -102,9 +96,9 @@ public class UserEndpoint extends AbstractEndpoint {
         return ResponseEntity.badRequest().body(new BaseResponse(Messages.PASSWORD_INCORRECT));
     }
 
-    @CheckAccess(type = CheckType.USER)
+    @CheckAccess(entityType = User.class)
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<BaseResponse> delete(@PathVariable("id") Long id) {
+    public ResponseEntity<BaseResponse> delete(@PathVariable("id") String id) {
         userService.delete(id);
         return ResponseEntity.ok(new BaseResponse(Messages.USER_DELETED));
     }

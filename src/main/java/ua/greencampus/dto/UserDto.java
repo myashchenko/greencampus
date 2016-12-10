@@ -5,16 +5,14 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.NotEmpty;
 import ua.greencampus.common.Messages;
 
-import javax.validation.constraints.Size;
-
 /**
  * @author Nikolay Yashchenko
  */
 @Getter
 @Setter
-public class UserDto {
+public class UserDto extends BaseDto {
 
-    private Long id;
+    private String id;
     @NotEmpty(message = Messages.EMAIL_EMPTY)
     private String email;
     private String name;

@@ -1,6 +1,7 @@
 package ua.greencampus.web.rest;
 
 import com.cloudinary.Cloudinary;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,18 +15,12 @@ import java.util.Map;
 /**
  * Created by Arsenii on 18.04.2016.
  */
-
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
-@CrossOrigin
 @RequestMapping(value = "/api/file")
 public class FileEndpoint {
 
     private Cloudinary cloudinary;
-
-    @Autowired
-    public FileEndpoint(Cloudinary cloudinary) {
-        this.cloudinary = cloudinary;
-    }
 
     @PostMapping(value = "/upload")
     public ResponseEntity fileUpload(@RequestParam("file") MultipartFile file) {

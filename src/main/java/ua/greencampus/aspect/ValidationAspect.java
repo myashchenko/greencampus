@@ -58,12 +58,12 @@ public class ValidationAspect {
                     }
                 } else if (PathVariable.class.isInstance(annotation)) {
                     PathVariable pathVariable = (PathVariable) annotation;
-                    if (ID_PARAM.equals(pathVariable.value())) {
-                        Long id = (Long) argument;
-                        if (id == null || id <= 0L) {
-                            return ResponseEntity.badRequest().body(new BaseResponse(Messages.ID_INCORRECT));
-                        }
-                    }
+//                    if (ID_PARAM.equals(pathVariable.value())) {
+//                        String id = (String) argument;
+//                        if (id == null || id <= 0L) {
+//                            return ResponseEntity.badRequest().body(new BaseResponse(Messages.ID_INCORRECT));
+//                        }
+//                    }
                 }
             }
         }

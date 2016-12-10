@@ -10,7 +10,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-public class QuizDto {
+public class QuizDto extends BaseDto {
     private Long id;
     private CourseThemeDto courseTheme;
     private List<QuizQuestionDto> quizQuestions;

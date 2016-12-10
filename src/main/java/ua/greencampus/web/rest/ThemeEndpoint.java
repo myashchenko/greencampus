@@ -1,5 +1,6 @@
 package ua.greencampus.web.rest;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,19 +17,13 @@ import ua.greencampus.service.CourseThemeService;
 /**
  * Created by Ivan Mikho on 10.04.16.
  */
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
-@CrossOrigin
 @RequestMapping(value = "/api/theme")
 public class ThemeEndpoint extends AbstractEndpoint {
 
     private CourseThemeService themeService;
     private CourseService courseService;
-
-    @Autowired
-    public ThemeEndpoint(CourseThemeService themeService, CourseService courseService) {
-        this.themeService = themeService;
-        this.courseService = courseService;
-    }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<BaseResponse> read(@PathVariable("id") Long id) {

@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public User read(Long id) {
+    public User read(String id) {
         return userDao.findOne(id);
     }
 
@@ -56,12 +56,12 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public Long getIdByEmail(String email) {
+    public String getIdByEmail(String email) {
         List<Object> idByEmail = userDao.findIdByEmail(email);
         if (idByEmail.isEmpty()) {
             return null;
         }
-        return (Long) idByEmail.iterator().next();
+        return (String) idByEmail.iterator().next();
     }
 
     @Override
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void delete(Long id) {
+    public void delete(String id) {
         userDao.delete(id);
     }
 
@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public void updatePassword(Long userId, String newPassword) {
+    public void updatePassword(String userId, String newPassword) {
         userDao.updatePassword(userId, newPassword);
     }
 }

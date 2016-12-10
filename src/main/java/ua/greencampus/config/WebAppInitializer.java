@@ -3,6 +3,7 @@ package ua.greencampus.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import ua.greencampus.filter.CorsFilter;
 
 import javax.servlet.Filter;
 
@@ -30,6 +31,6 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Filter[] getServletFilters() {
-        return new Filter[]{ new DelegatingFilterProxy("springSecurityFilterChain") };
+        return new Filter[]{ new DelegatingFilterProxy("springSecurityFilterChain"), new CorsFilter() };
     }
 }

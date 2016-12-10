@@ -9,12 +9,12 @@ import java.util.List;
  */
 public interface ChatDialogService {
     ChatDialog create(ChatDialog chatDialog);
-    ChatDialog createOrGet(Long userId);
-    ChatDialog read(Long id);
-    ChatDialog getByUserIds(Long id);
+    ChatDialog createOrGet(String userId);
+    ChatDialog read(String id);
+    ChatDialog getByUserIds(String id);
     ChatDialog update(ChatDialog chatDialog);
     void delete(ChatDialog chatDialog);
-    ChatDialog getByUserIds(Long userToId, Long userFromId);
-    List<ChatDialog> getByUserId(Long userId);
-    Integer getUnreadCount(Long userId);
+    ChatDialog getByUserIds(String userToId, String userFromId);
+    List<ChatDialog> getByUserId(String userId);
+    Integer getUnreadCount(String userId);
 }

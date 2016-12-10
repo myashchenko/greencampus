@@ -12,11 +12,11 @@ import java.util.Map;
  */
 @Getter
 @Setter
-public class ChatDialogDto {
-    private Long id;
+public class ChatDialogDto extends BaseDto {
+    private String id;
     private String dialogName;
-    private List<Long> usersIds;
-    private Map<Long, Integer> unreadCount;
+    private List<String> usersIds;
+    private Map<String, Integer> unreadCount;
     private String avatarPath;
 
     public ChatDialogDto() {

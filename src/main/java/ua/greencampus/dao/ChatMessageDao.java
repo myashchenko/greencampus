@@ -8,6 +8,6 @@ import java.util.List;
 /**
  * @author Nikolay Yashchenko
  */
-public interface ChatMessageDao extends JpaRepository<ChatMessage, Long> {
-    List<ChatMessage> findByDialogId(Long dialogId);
+public interface ChatMessageDao extends JpaRepository<ChatMessage, String> {
+    List<ChatMessage> findByDialogId(String dialogId);
 }

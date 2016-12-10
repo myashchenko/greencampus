@@ -1,5 +1,6 @@
 package ua.greencampus.aspect;
 
+import lombok.AllArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -8,13 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import ua.greencampus.common.CheckAccess;
-import ua.greencampus.common.CheckType;
 import ua.greencampus.common.Messages;
 import ua.greencampus.config.AspectOrder;
 import ua.greencampus.dto.BaseResponse;
+import ua.greencampus.entity.BaseEntity;
 import ua.greencampus.entity.Role;
 import ua.greencampus.service.AuthenticationService;
 
@@ -25,6 +27,7 @@ import java.lang.reflect.Method;
 /**
  * @author Mykola Yashchenko
  */
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Aspect
 @Order(AspectOrder.ACCESS)
 @Component
@@ -32,12 +35,6 @@ public class AccessValidationAspect {
 
     private AuthenticationService authenticationService;
     private EntityManager entityManager;
-
-    @Autowired
-    public AccessValidationAspect(AuthenticationService authenticationService, EntityManager entityManager) {
-        this.authenticationService = authenticationService;
-        this.entityManager = entityManager;
-    }
 
     @Around("@annotation(ua.greencampus.common.CheckAccess) && execution(* *(..))")
     public Object aroundController(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -51,8 +48,8 @@ public class AccessValidationAspect {
 
             for (Annotation annotation : argAnnotations[i]) {
                 if (PathVariable.class.isInstance(annotation)) {
-                    Long id = (Long) argument;
-                    Long loggedInUserId = authenticationService.getLoggedInUserId();
+                    String id = (String) argument;
+                    String loggedInUserId = authenticationService.getLoggedInUserId();
                     Role loggedInUserRole = authenticationService.getLoggedInUserRole();
                     if (loggedInUserId == null) {
                         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -63,16 +60,13 @@ public class AccessValidationAspect {
                     }
 
                     CheckAccess checkAccessAnnotation = method.getDeclaredAnnotation(CheckAccess.class);
-                    CheckType type = checkAccessAnnotation.type();
-                    if (type == CheckType.UNDEFINED) {
-                        throw new RuntimeException();
-                    }
 
-                    Object entity = entityManager.find(type.getEntityClass(), id);
-                    Class<?> entityClass = entity.getClass();
-                    Method getMethod = entityClass.getMethod(type.getMethod());
-                    Long currentId = (Long) getMethod.invoke(entity);
-                    if (!loggedInUserId.equals(currentId)) {
+                    BaseEntity entity = entityManager.find(checkAccessAnnotation.entityType(), id);
+
+                    String entityAuthor = entity.getCreatedBy();
+                    String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+
+                    if (!entityAuthor.equals(currentUser)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new BaseResponse(
                                 Messages.ACCESS_DENIED));
                     }

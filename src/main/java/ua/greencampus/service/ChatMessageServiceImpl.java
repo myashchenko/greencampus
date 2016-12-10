@@ -25,7 +25,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Transactional(readOnly = true)
     @Override
-    public ChatMessage read(Long id) {
+    public ChatMessage read(String id) {
         return chatMessageDao.findOne(id);
     }
 
@@ -43,7 +43,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<ChatMessage> getByDialogId(Long dialogId) {
+    public List<ChatMessage> getByDialogId(String dialogId) {
         return chatMessageDao.findByDialogId(dialogId);
     }
 }

@@ -50,9 +50,8 @@ public class SocialUserConnectionRepository implements UsersConnectionRepository
         if (userId == null) {
             throw new IllegalArgumentException("userId cannot be null");
         }
-        Long longUserId = Long.parseLong(userId);
         return new ConnectionRepositoryImpl(
-                userService.read(longUserId),
+                userService.read(userId),
                 socialUserDao,
                 connectionFactoryLocator
         );

@@ -26,7 +26,7 @@ public class SimpleSignInAdapter implements SignInAdapter {
 
     @Override
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request) {
-        User user = userService.read(Long.valueOf(localUserId));
+        User user = userService.read(localUserId);
         UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
         Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
                 userDetails.getAuthorities());

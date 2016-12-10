@@ -29,7 +29,7 @@ public class ChatDialogDaoImpl implements ChatDialogDao {
     }
 
     @Override
-    public ChatDialog read(Long id) {
+    public ChatDialog read(String id) {
         return entityManager.find(ChatDialog.class, id);
     }
 
@@ -44,19 +44,19 @@ public class ChatDialogDaoImpl implements ChatDialogDao {
     }
 
     @Override
-    public ChatDialog getByUserIds(Long userToId, Long userFromId) {
+    public ChatDialog getByUserIds(String userToId, String userFromId) {
         String query = "select c1.chat_dialog_id from chat_dialog_users as c1 \n" +
                 "join chat_dialog_users as c2 on \n" +
                 "c2.user_id = :user_id2 AND \n" +
                 "c1.user_id = :user_id1 AND \n" +
                 "c1.chat_dialog_id = c2.chat_dialog_id";
         Object dialogId = entityManager.unwrap(Session.class)
-                .createSQLQuery(query)
+                .createNativeQuery(query)
                 .setParameter("user_id2", userToId)
                 .setParameter("user_id1", userFromId)
                 .uniqueResult();
         if (dialogId != null) {
-            return read(((BigInteger) dialogId).longValue());
+            return read(dialogId.toString());
         } else {
             return null;
         }
@@ -64,17 +64,17 @@ public class ChatDialogDaoImpl implements ChatDialogDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<ChatDialog> getByUserId(Long userId) {
+    public List<ChatDialog> getByUserId(String userId) {
         return entityManager.unwrap(Session.class).createCriteria(ChatDialog.class)
                 .createAlias("users", "u")
                 .add(Restrictions.eq("u.id", userId))
-                .addOrder(Order.desc("updateDate"))
+                .addOrder(Order.desc("updatedDate"))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
 
     @Override
-    public Integer getUnreadCount(Long userId) {
+    public Integer getUnreadCount(String userId) {
         BigInteger result = (BigInteger) entityManager.unwrap(Session.class)
                 .createSQLQuery("select sum(unread_count) from dialog_unread_messages where user_id = :user_id")
                 .setParameter("user_id", userId)

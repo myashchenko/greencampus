@@ -1,5 +1,6 @@
 package ua.greencampus.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,28 +11,40 @@ import ua.greencampus.entity.Role;
 /**
  * @author Nikolay Yashchenko
  */
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    @Autowired
+    private static ThreadLocal<String> currentUserId = new ThreadLocal<>();
+    private static ThreadLocal<Role> currentUserRole = new ThreadLocal<>();
+
     private UserService userService;
 
     @Override
-    public Long getLoggedInUserId() {
-        User user = getUser();
-        if (user != null) {
-            return userService.getIdByEmail(user.getUsername());
+    public String getLoggedInUserId() {
+        String id = currentUserId.get();
+        if (id == null) {
+            User user = getUser();
+            if (user != null) {
+                id = userService.getIdByEmail(user.getUsername());
+                currentUserId.set(id);
+            }
         }
-        return null;
+
+        return id;
     }
 
     @Override
     public Role getLoggedInUserRole() {
-        User user = getUser();
-        if (user != null) {
-            return userService.getRoleByEmail(user.getUsername());
+        Role role = currentUserRole.get();
+        if (role == null) {
+            User user = getUser();
+            if (user != null) {
+                role = userService.getRoleByEmail(user.getUsername());
+                currentUserRole.set(role);
+            }
         }
-        return null;
+        return role;
     }
 
     private User getUser() {

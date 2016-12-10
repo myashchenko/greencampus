@@ -1,5 +1,7 @@
 package ua.greencampus.web;
 
+import ma.glasnost.orika.MapperFacade;
+import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
@@ -19,10 +21,9 @@ import ua.greencampus.entity.User;
 import ua.greencampus.service.AuthenticationService;
 import ua.greencampus.service.ChatDialogService;
 import ua.greencampus.service.ChatMessageService;
+import ua.greencampus.service.UserService;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -33,11 +34,13 @@ import java.util.stream.Collectors;
 @Controller
 public class ChatController {
 
+    private MapperFacade mapperFacade = new DefaultMapperFactory.Builder().build().getMapperFacade();
+
     @Autowired
     private AuthenticationService authenticationService;
 
     @Autowired
-    private ConversionService conversionService;
+    private UserService userService;
 
     @Autowired
     private ChatMessageService chatMessageService;
@@ -84,70 +87,69 @@ public class ChatController {
     }
 
     @PostMapping(value = "/chat/new/{userId}")
-    public String createChat(@PathVariable(value = "userId") Long userToId) {
+    public String createChat(@PathVariable(value = "userId") String userToId) {
         ChatDialog chatDialog;
         if ((chatDialog = chatDialogService.getByUserIds(userToId, authenticationService.getLoggedInUserId())) == null) {
-            ChatDialogDto chatDialogDto = new ChatDialogDto();
-            chatDialogDto.setUsersIds(Arrays.asList(userToId, authenticationService.getLoggedInUserId()));
-            chatDialog = conversionService.convert(chatDialogDto, ChatDialog.class);
+            chatDialog = new ChatDialog();
+            chatDialog.setUsers(new LinkedHashSet<>(Arrays.asList(userService.read(userToId),
+                    userService.read(authenticationService.getLoggedInUserId()))));
             chatDialog = chatDialogService.create(chatDialog);
             chatDialog.prepareDialogName(userToId);
             chatDialog.prepareAvatarPath(userToId);
-            chatDialogDto = conversionService.convert(chatDialog, ChatDialogDto.class);
 
-            simpMessagingTemplate.convertAndSend("/dialog/" + userToId + "/new", chatDialogDto);
+            simpMessagingTemplate.convertAndSend("/dialog/" + userToId + "/new", mapperFacade.map(chatDialog, ChatDialogDto.class));
 
         }
         return "redirect:/chat#" + chatDialog.getId();
     }
 
     @MessageMapping("/ws/chat/dialogs/{userId}")
-    public void getDialogs(@Validated @DestinationVariable(value = "userId") Long userId) {
+    public void getDialogs(@Validated @DestinationVariable(value = "userId") String userId) {
         List<ChatDialog> chatDialogs = chatDialogService.getByUserId(userId);
 
         List<ChatDialogDto> result = chatDialogs.stream()
                 .map(c -> c.prepareDialogName(userId))
                 .map(c -> c.prepareAvatarPath(userId))
-                .map(d -> conversionService.convert(d, ChatDialogDto.class))
+                .map(d -> mapperFacade.map(d, ChatDialogDto.class))
                 .collect(Collectors.toList());
 
         simpMessagingTemplate.convertAndSend("/dialogs/" + userId, result);
     }
 
     @MessageMapping("/ws/chat/dialog/{dialogId}/{userId}")
-    public void getChatMessages(@Validated @DestinationVariable(value = "dialogId") Long dialogId,
-                                @Validated @DestinationVariable(value = "userId") Long userId) {
+    public void getChatMessages(@Validated @DestinationVariable(value = "dialogId") String dialogId,
+                                @Validated @DestinationVariable(value = "userId") String userId) {
         List<ChatMessage> messages = chatMessageService.getByDialogId(dialogId);
         List<ChatMessageDto> result = messages.stream()
-                .map(m -> conversionService.convert(m, ChatMessageDto.class))
+                .map(m -> mapperFacade.map(m, ChatMessageDto.class))
                 .collect(Collectors.toList());
 
         simpMessagingTemplate.convertAndSend("/dialog/" + dialogId + "/" + userId, result);
     }
 
-    @MessageMapping("/ws/chat/dialog/new")
-    public void createDialog(@Validated ChatDialogDto chatDialogDto) {
-        ChatDialog chatDialog = conversionService.convert(chatDialogDto, ChatDialog.class);
-        chatDialog = chatDialogService.create(chatDialog);
-
-        for (User user : chatDialog.getUsers()) {
-            final ChatDialog finalChatDialog = chatDialog;
-            executorService.execute(() -> {
-                finalChatDialog.prepareDialogName(user.getId());
-                finalChatDialog.prepareAvatarPath(user.getId());
-                ChatDialogDto chatDialogDtoTemp = conversionService.convert(finalChatDialog, ChatDialogDto.class);
-
-                simpMessagingTemplate.convertAndSend("/dialogs/" + user.getId() + "/new", chatDialogDtoTemp);
-            });
-        }
-    }
+//    @MessageMapping("/ws/chat/dialog/new")
+//    public void createDialog(@Validated ChatDialogDto chatDialogDto) {
+//        ChatDialog chatDialog = conversionService.convert(chatDialogDto, ChatDialog.class);
+//        chatDialog = chatDialogService.create(chatDialog);
+//
+//        for (User user : chatDialog.getUsers()) {
+//            final ChatDialog finalChatDialog = chatDialog;
+//            executorService.execute(() -> {
+//                finalChatDialog.prepareDialogName(user.getId());
+//                finalChatDialog.prepareAvatarPath(user.getId());
+//                ChatDialogDto chatDialogDtoTemp = conversionService.convert(finalChatDialog, ChatDialogDto.class);
+//
+//                simpMessagingTemplate.convertAndSend("/dialogs/" + user.getId() + "/new", chatDialogDtoTemp);
+//            });
+//        }
+//    }
 
     @MessageMapping("/ws/chat/dialog/{dialogId}/new/{userId}")
-    public void handleNewMessage(@Validated @DestinationVariable(value = "dialogId") Long dialogId,
-                                 @Validated @DestinationVariable(value = "userId") Long userId,
+    public void handleNewMessage(@Validated @DestinationVariable(value = "dialogId") String dialogId,
+                                 @Validated @DestinationVariable(value = "userId") String userId,
                                  ChatMessageDto chatMessageDto) {
         chatMessageDto.setUserFromId(userId);
-        ChatMessage chatMessage = conversionService.convert(chatMessageDto, ChatMessage.class);
+        ChatMessage chatMessage = mapperFacade.map(chatMessageDto, ChatMessage.class);
         chatMessage = chatMessageService.create(chatMessage);
         ChatDialog dialog = chatMessage.getDialog();
         dialog.getUsers().stream()
@@ -156,7 +158,7 @@ public class ChatController {
                 .forEach(dialog::incrementUnreadCount);
         dialog = chatDialogService.update(dialog);
 
-        chatMessageDto = conversionService.convert(chatMessage, ChatMessageDto.class);
+        chatMessageDto = mapperFacade.map(chatMessage, ChatMessageDto.class);
 
         for (User user : dialog.getUsers()) {
             final ChatMessageDto finalChatMessageDto = chatMessageDto;
@@ -172,15 +174,15 @@ public class ChatController {
     }
 
     @MessageMapping("/ws/chat/dialog/{dialogId}/read/{userId}")
-    public void readDialog(@Validated @DestinationVariable(value = "dialogId") Long dialogId,
-                           @Validated @DestinationVariable(value = "userId") Long userId) {
+    public void readDialog(@Validated @DestinationVariable(value = "dialogId") String dialogId,
+                           @Validated @DestinationVariable(value = "userId") String userId) {
         ChatDialog chatDialog = chatDialogService.read(dialogId);
         chatDialog.decrementUnreadCount(userId);
         chatDialogService.update(chatDialog);
     }
 
     @MessageMapping("/ws/chat/dialog/unreadCount/{userId}")
-    public void getUnreadCount(@Validated @DestinationVariable(value = "userId") Long userId) {
+    public void getUnreadCount(@Validated @DestinationVariable(value = "userId") String userId) {
         simpMessagingTemplate.convertAndSend("/dialog/unreadCount/" + userId, chatDialogService.getUnreadCount(userId));
     }
 }

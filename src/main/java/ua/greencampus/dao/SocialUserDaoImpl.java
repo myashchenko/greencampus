@@ -47,7 +47,7 @@ public class SocialUserDaoImpl implements SocialUserDao {
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)
-    public List<SocialUser> findByUserId(Long userId) {
+    public List<SocialUser> findByUserId(String userId) {
         return (List<SocialUser>) entityManager.unwrap(Session.class)
                 .createCriteria(SocialUser.class)
                 .add(Restrictions.eq(USER_ID, userId))
@@ -57,7 +57,7 @@ public class SocialUserDaoImpl implements SocialUserDao {
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)
-    public SocialUser findByUserIdAndProviderId(Long userId, String providerId) {
+    public SocialUser findByUserIdAndProviderId(String userId, String providerId) {
         return (SocialUser) entityManager.unwrap(Session.class).createCriteria(SocialUser.class)
                 .add(Restrictions.eq(USER_ID, userId))
                 .add(Restrictions.eq(PROVIDER_ID, providerId))
@@ -67,7 +67,7 @@ public class SocialUserDaoImpl implements SocialUserDao {
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)
-    public SocialUser findByUserIdAndProviderUserIds(Long userId, MultiValueMap<String, String> providerUserIds) {
+    public SocialUser findByUserIdAndProviderUserIds(String userId, MultiValueMap<String, String> providerUserIds) {
         Criteria criteria = entityManager.unwrap(Session.class).createCriteria(SocialUser.class);
         criteria.add(Restrictions.eq(USER_ID, userId));
         Disjunction or = Restrictions.disjunction();
@@ -84,7 +84,7 @@ public class SocialUserDaoImpl implements SocialUserDao {
 
     @Override
     @Transactional(readOnly = true)
-    public SocialUser get(Long userId, String providerId, String providerUserId) {
+    public SocialUser get(String userId, String providerId, String providerUserId) {
         return (SocialUser) entityManager.unwrap(Session.class).createCriteria(SocialUser.class)
                 .add(Restrictions.eq(USER_ID, userId))
                 .add(Restrictions.eq(PROVIDER_ID, providerId))
@@ -95,7 +95,7 @@ public class SocialUserDaoImpl implements SocialUserDao {
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)
-    public SocialUser findPrimaryByUserIdAndProviderId(Long userId, String providerId) {
+    public SocialUser findPrimaryByUserIdAndProviderId(String userId, String providerId) {
         return (SocialUser) entityManager.unwrap(Session.class).createCriteria(SocialUser.class)
                 .add(Restrictions.eq(USER_ID, userId))
                 .add(Restrictions.eq(PROVIDER_ID, providerId))
@@ -106,13 +106,13 @@ public class SocialUserDaoImpl implements SocialUserDao {
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)
-    public List<Long> findUserIdsByProviderIdAndProviderUserId(String providerId, String providerUserId) {
+    public List<String> findUserIdsByProviderIdAndProviderUserId(String providerId, String providerUserId) {
         List<SocialUser> socialUsers = (List<SocialUser>) entityManager.unwrap(Session.class)
                 .createCriteria(SocialUser.class)
                 .add(Restrictions.eq(PROVIDER_ID, providerId))
                 .add(Restrictions.eq(PROVIDER_USER_ID, providerUserId))
                 .list();
-        List<Long> userIds = new ArrayList<>(socialUsers.size());
+        List<String> userIds = new ArrayList<>(socialUsers.size());
         userIds.addAll(socialUsers.stream()
                 .map(socialUser -> socialUser.getUser().getId()).collect(Collectors.toList()));
         return userIds;
@@ -121,13 +121,13 @@ public class SocialUserDaoImpl implements SocialUserDao {
     @SuppressWarnings("unchecked")
     @Override
     @Transactional(readOnly = true)
-    public List<Long> findUserIdsByProviderIdAndProviderUserIds(String providerId, Set<String> providerUserIds) {
+    public List<String> findUserIdsByProviderIdAndProviderUserIds(String providerId, Set<String> providerUserIds) {
         List<SocialUser> socialUsers = (List<SocialUser>) entityManager.unwrap(Session.class)
                 .createCriteria(SocialUser.class)
                 .add(Restrictions.eq(PROVIDER_ID, providerId))
                 .add(Restrictions.in(PROVIDER_USER_ID, providerUserIds))
                 .list();
-        List<Long> userIds = new ArrayList<>(socialUsers.size());
+        List<String> userIds = new ArrayList<>(socialUsers.size());
         userIds.addAll(socialUsers.stream().map(socialUser -> socialUser.getUser().getId())
                 .collect(Collectors.toList()));
         return userIds;

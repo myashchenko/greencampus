@@ -8,12 +8,12 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class ChatMessageDto {
-    private Long id;
-    private Long userFromId;
+public class ChatMessageDto extends BaseDto {
+    private String id;
+    private String userFromId;
     private String userFromName;
     private String text;
     private String date;
-    private Long dialogId;
+    private String dialogId;
     private String avatarPath;
 }

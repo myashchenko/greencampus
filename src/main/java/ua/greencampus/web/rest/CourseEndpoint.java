@@ -1,5 +1,6 @@
 package ua.greencampus.web.rest;
 
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,17 +19,12 @@ import java.util.stream.Collectors;
 /**
  * @author Nikolay Yashchenko
  */
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @RestController
-@CrossOrigin
 @RequestMapping(value = "/api/course")
 public class CourseEndpoint extends AbstractEndpoint {
 
     private CourseService courseService;
-
-    @Autowired
-    public CourseEndpoint(CourseService courseService) {
-        this.courseService = courseService;
-    }
 
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getByParams(@RequestParam(value = "page", defaultValue = "0", required = false) int page,

@@ -35,8 +35,8 @@ public class ChatDialogServiceImpl implements ChatDialogService {
 
     @Transactional
     @Override
-    public ChatDialog createOrGet(Long userId) {
-        Long loggedInUserId = authenticationService.getLoggedInUserId();
+    public ChatDialog createOrGet(String userId) {
+        String loggedInUserId = authenticationService.getLoggedInUserId();
         Optional.ofNullable(loggedInUserId).orElseThrow(IllegalStateException::new);
 
         ChatDialog chatDialog = getByUserIds(userId, loggedInUserId);
@@ -55,13 +55,13 @@ public class ChatDialogServiceImpl implements ChatDialogService {
 
     @Transactional(readOnly = true)
     @Override
-    public ChatDialog read(Long id) {
+    public ChatDialog read(String id) {
         return chatDialogDao.read(id);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public ChatDialog getByUserIds(Long id) {
+    public ChatDialog getByUserIds(String id) {
         return chatDialogDao.read(id);
     }
 
@@ -79,19 +79,19 @@ public class ChatDialogServiceImpl implements ChatDialogService {
 
     @Transactional(readOnly = true)
     @Override
-    public ChatDialog getByUserIds(Long userToId, Long userFromId) {
+    public ChatDialog getByUserIds(String userToId, String userFromId) {
         return chatDialogDao.getByUserIds(userToId, userFromId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<ChatDialog> getByUserId(Long userId) {
+    public List<ChatDialog> getByUserId(String userId) {
         return chatDialogDao.getByUserId(userId);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Integer getUnreadCount(Long userId) {
+    public Integer getUnreadCount(String userId) {
         return chatDialogDao.getUnreadCount(userId);
     }
 }

@@ -1,5 +1,7 @@
 package ua.greencampus.common;
 
+import ua.greencampus.entity.BaseEntity;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -11,6 +13,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckAccess {
-    CheckType type() default CheckType.UNDEFINED;
-    boolean onlyAdmin() default false;
+    Class<? extends BaseEntity> entityType();
 }

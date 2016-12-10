@@ -9,10 +9,10 @@ import java.util.List;
  */
 public interface ChatDialogDao {
     ChatDialog create(ChatDialog chatDialog);
-    ChatDialog read(Long id);
+    ChatDialog read(String id);
     ChatDialog update(ChatDialog chatDialog);
     void delete(ChatDialog chatDialog);
-    ChatDialog getByUserIds(Long userToId, Long userFromId);
-    List<ChatDialog> getByUserId(Long userId);
-    Integer getUnreadCount(Long userId);
+    ChatDialog getByUserIds(String userToId, String userFromId);
+    List<ChatDialog> getByUserId(String userId);
+    Integer getUnreadCount(String userId);
 }

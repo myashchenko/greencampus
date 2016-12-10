@@ -10,11 +10,11 @@ import java.util.List;
 public interface ChatMessageService {
     ChatMessage create(ChatMessage chatMessage);
 
-    ChatMessage read(Long id);
+    ChatMessage read(String id);
 
     ChatMessage update(ChatMessage chatMessage);
 
     void delete(ChatMessage chatMessage);
 
-    List<ChatMessage> getByDialogId(Long dialogId);
+    List<ChatMessage> getByDialogId(String dialogId);
 }

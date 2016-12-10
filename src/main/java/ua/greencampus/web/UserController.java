@@ -37,7 +37,7 @@ public class UserController {
 
     @GetMapping(value = "/user/account")
     public String getUser(Model model) {
-        Long id = authenticationService.getLoggedInUserId();
+        String id = authenticationService.getLoggedInUserId();
         model.addAttribute("userid", id);
         return "userRead";
     }
@@ -58,7 +58,7 @@ public class UserController {
 
     @GetMapping(value = "/user/update")
     public String updateForUser(Model model) {
-        Long id = authenticationService.getLoggedInUserId();
+        String id = authenticationService.getLoggedInUserId();
         model.addAttribute("userid", id);
         model.addAttribute("message", "update");
         return "userUpdate";
@@ -66,7 +66,7 @@ public class UserController {
 
     @GetMapping(value = "/user/update/pass")
     public String updatePassword(Model model) {
-        Long id = authenticationService.getLoggedInUserId();
+        String id = authenticationService.getLoggedInUserId();
         model.addAttribute("userid", id);
         model.addAttribute("message", "update");
         return "userPassword";

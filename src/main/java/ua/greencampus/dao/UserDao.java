@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * @author Nikolay Yashchenko
  */
-public interface UserDao extends PagingAndSortingRepository<User, Long> {
+public interface UserDao extends PagingAndSortingRepository<User, String> {
     User findByEmail(String email);
 
     @Query("SELECT u.id FROM User u WHERE u.email = :email")
@@ -22,5 +22,5 @@ public interface UserDao extends PagingAndSortingRepository<User, Long> {
 
     @Modifying
     @Query("UPDATE User u SET u.password = :password WHERE u.id = :id")
-    void updatePassword(@Param("id") Long userId, @Param("password") String newPassword);
+    void updatePassword(@Param("id") String userId, @Param("password") String newPassword);
 }

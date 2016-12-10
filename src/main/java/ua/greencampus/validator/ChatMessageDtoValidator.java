@@ -24,7 +24,7 @@ public class ChatMessageDtoValidator implements Validator {
             errors.reject("bad_text", "text mustn't be empty");
         }
 
-        if (chatMessageDto.getDialogId() == null || chatMessageDto.getDialogId() <= 0L) {
+        if (chatMessageDto.getDialogId() == null) {
             errors.reject("bad_dialog_id", "dialog id must be > 0");
         }
     }
