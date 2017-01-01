@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import ua.greencampus.common.CheckAccess;
@@ -18,8 +17,8 @@ import ua.greencampus.config.AspectOrder;
 import ua.greencampus.dto.BaseResponse;
 import ua.greencampus.entity.BaseEntity;
 import ua.greencampus.entity.Role;
+import ua.greencampus.security.EntityAccessCheckService;
 import ua.greencampus.service.AuthenticationService;
-
 import javax.persistence.EntityManager;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -33,8 +32,9 @@ import java.lang.reflect.Method;
 @Component
 public class AccessValidationAspect {
 
-    private AuthenticationService authenticationService;
-    private EntityManager entityManager;
+    private final AuthenticationService authenticationService;
+    private final EntityManager entityManager;
+    private final EntityAccessCheckService entityAccessCheckService;
 
     @Around("@annotation(ua.greencampus.common.CheckAccess) && execution(* *(..))")
     public Object aroundController(ProceedingJoinPoint joinPoint) throws Throwable {
@@ -63,10 +63,7 @@ public class AccessValidationAspect {
 
                     BaseEntity entity = entityManager.find(checkAccessAnnotation.entityType(), id);
 
-                    String entityAuthor = entity.getCreatedBy();
-                    String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-
-                    if (!entityAuthor.equals(currentUser)) {
+                    if (!entityAccessCheckService.isAllowed(entity)) {
                         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new BaseResponse(
                                 Messages.ACCESS_DENIED));
                     }

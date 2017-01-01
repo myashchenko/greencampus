@@ -34,9 +34,4 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false, updatable = false)
     private Role role;
-
-    @Override
-    public String getCreatedBy() {
-        return email;
-    }
 }

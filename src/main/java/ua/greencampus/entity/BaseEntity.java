@@ -32,4 +32,8 @@ public abstract class BaseEntity {
 
     @Column(name = "updated_date")
     private LocalDateTime updatedDate;
+
+    public final String getCreatedBy() {
+        return createdBy;
+    }
 }

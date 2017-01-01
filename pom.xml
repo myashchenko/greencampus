@@ -12,7 +12,7 @@
     <properties>
         <spring.version>4.3.2.RELEASE</spring.version>
         <hibernate.version>5.2.4.Final</hibernate.version>
-        <spring.security>4.1.1.RELEASE</spring.security>
+        <spring.security>4.2.0.RELEASE</spring.security>
         <spring.social>1.1.4.RELEASE</spring.social>
         <spring.data>1.10.2.RELEASE</spring.data>
         <jackson.core>2.5.4</jackson.core>
@@ -113,6 +113,12 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.security}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-messaging</artifactId>
             <version>${spring.security}</version>
         </dependency>
 
@@ -382,11 +388,28 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>3.0.1</version>
             </plugin>
+
+            <!--<plugin>-->
+                <!--<groupId>com.qulice</groupId>-->
+                <!--<artifactId>qulice-maven-plugin</artifactId>-->
+                <!--<version>0.17</version>-->
+                <!--<configuration>-->
+                    <!--<license>file:${basedir}/LICENSE.txt</license>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>check</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
